@@ -7,6 +7,6 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   // IMPORTANT: schimbă cu domeniul real înainte de publicare.
   // E folosit pentru canonical, OpenGraph, JSON-LD și sitemap.
-  site: 'https://slabeste-usor.ro',
+  site: 'https://www.slabeste-usor.ro',
   integrations: [sitemap()],
 });
