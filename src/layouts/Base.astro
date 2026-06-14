@@ -68,6 +68,13 @@ const foodDecor = Array.from({ length: SHOW }, (_, i) => FOOD_ALL[(pathHash + i)
       // (fără JS, conținutul rămâne vizibil normal — bun pentru SEO/no-JS).
       document.documentElement.classList.add("js");
     </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VEWMS439Q5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-VEWMS439Q5');
+  </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1685017237553493" crossorigin="anonymous"></script>
   </head>
   <body class={bodyClass}>
