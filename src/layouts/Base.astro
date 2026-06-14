@@ -143,6 +143,25 @@ const foodDecor = Array.from({ length: SHOW }, (_, i) => FOOD_ALL[(pathHash + i)
           <a href="/alimente-sanatoase/" class="nav-cta nav-cta-special" data-i18n="nav.alimente">Alimente Sănătoase</a>
           <a href="/despre/" class="nav-cta" data-i18n="nav.despre">Despre</a>
         </div>
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Meniu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="nav-mobile-menu" id="nav-mobile-menu" hidden>
+          <div class="nav-search-wrap nav-search-mobile">
+            <input
+              type="search"
+              id="nav-search-mobile"
+              placeholder="Caută dietă..."
+              autocomplete="off"
+              aria-label="Caută dietă după nume"
+            />
+            <ul id="nav-search-results-mobile" role="listbox" aria-label="Rezultate căutare" hidden></ul>
+          </div>
+          <a href="/" class="nav-mobile-link" data-i18n="nav.diete">Diete</a>
+          <a href="/calculatoare/" class="nav-mobile-link" data-i18n="nav.calculatoare">Calculatoare</a>
+          <a href="/alimente-sanatoase/" class="nav-mobile-link" data-i18n="nav.alimente">Alimente Sănătoase</a>
+          <a href="/despre/" class="nav-mobile-link" data-i18n="nav.despre">Despre</a>
+        </div>
       </nav>
       <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
     </header>
@@ -175,6 +194,25 @@ const foodDecor = Array.from({ length: SHOW }, (_, i) => FOOD_ALL[(pathHash + i)
     </footer>
 
     <script id="nav-search-data" type="application/json" set:html={JSON.stringify(toateDietele)} />
+
+    <script>
+      // Hamburger menu
+      const hamburger = document.getElementById('nav-hamburger') as HTMLButtonElement | null;
+      const mobileMenu = document.getElementById('nav-mobile-menu') as HTMLElement | null;
+      hamburger?.addEventListener('click', () => {
+        const open = hamburger.getAttribute('aria-expanded') === 'true';
+        hamburger.setAttribute('aria-expanded', open ? 'false' : 'true');
+        if (open) { mobileMenu?.setAttribute('hidden', ''); }
+        else { mobileMenu?.removeAttribute('hidden'); }
+      });
+      // Închide meniul la click pe link
+      mobileMenu?.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          hamburger?.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('hidden', '');
+        });
+      });
+    </script>
 
     <script>
       // Reveal-on-scroll

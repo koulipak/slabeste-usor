@@ -261,14 +261,74 @@ img { max-width: 100%; height: auto; display: block; }
   text-decoration: none;
 }
 
+/* ── Hamburger button ────────────────────────── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 100;
+}
+.nav-hamburger span {
+  display: block;
+  height: 2.5px;
+  background: var(--navy);
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.nav-hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.nav-hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+/* ── Mobile dropdown menu ────────────────────── */
+.nav-mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff7ed;
+  border-bottom: 1.5px solid #f5dfc0;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 99;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.nav-mobile-menu[hidden] { display: none; }
+.nav-mobile-link {
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f5dfc0;
+  text-decoration: none;
+}
+.nav-mobile-link:last-child { border-bottom: none; }
+.nav-mobile-link:hover { color: var(--verde); }
+.nav-search-mobile #nav-search-mobile {
+  width: 100%;
+  padding: 0.45rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.9rem;
+  outline: none;
+}
+
 /* ── Mobile nav ─────────────────────────────── */
 @media (max-width: 640px) {
-  #nav-search { width: 120px; font-size: 0.8rem; padding: 0.3rem 0.65rem; }
-  #nav-search:focus { width: 150px; }
-  .nav-links { gap: 0.5rem; }
-  .nav-cta { padding: 0.4rem 0.7rem; font-size: 0.75rem; letter-spacing: 0.04em; }
-  .nav-links a[href="/alimente-sanatoase/"],
-  .nav-links a[href="/despre/"] { display: none; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
 }
 
 /* Progress bar */
