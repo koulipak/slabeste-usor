@@ -475,8 +475,10 @@ const vedete = [
   .vedete-disclaimer p { margin: 0; }
 
   @media (max-width: 600px) {
-    .vedeta-card { padding: 1.25rem; }
+    .vedeta-card { padding: 1.25rem; overflow: hidden; }
     .vedeta-header { gap: 1rem; }
     .kg-nr { font-size: 1.5rem; }
+    .vedeta-detalii { grid-template-columns: 1fr; }
+    .vedeta-card--simpla { max-width: 100%; }
   }
 </style>
