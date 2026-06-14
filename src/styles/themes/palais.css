@@ -288,10 +288,6 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* ── Mobile dropdown menu ────────────────────── */
 .nav-mobile-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
   background: #fff7ed;
   border-bottom: 1.5px solid #f5dfc0;
   padding: 1rem 1.25rem;
@@ -300,6 +296,8 @@ img { max-width: 100%; height: auto; display: block; }
   gap: 0.75rem;
   z-index: 99;
   box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
 }
 .nav-mobile-menu[hidden] { display: none; }
 .nav-mobile-link {

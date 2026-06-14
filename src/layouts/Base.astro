@@ -146,25 +146,15 @@ const foodDecor = Array.from({ length: SHOW }, (_, i) => FOOD_ALL[(pathHash + i)
         <button class="nav-hamburger" id="nav-hamburger" aria-label="Meniu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
-        <div class="nav-mobile-menu" id="nav-mobile-menu" hidden>
-          <div class="nav-search-wrap nav-search-mobile">
-            <input
-              type="search"
-              id="nav-search-mobile"
-              placeholder="Caută dietă..."
-              autocomplete="off"
-              aria-label="Caută dietă după nume"
-            />
-            <ul id="nav-search-results-mobile" role="listbox" aria-label="Rezultate căutare" hidden></ul>
-          </div>
-          <a href="/" class="nav-mobile-link" data-i18n="nav.diete">Diete</a>
-          <a href="/calculatoare/" class="nav-mobile-link" data-i18n="nav.calculatoare">Calculatoare</a>
-          <a href="/alimente-sanatoase/" class="nav-mobile-link" data-i18n="nav.alimente">Alimente Sănătoase</a>
-          <a href="/despre/" class="nav-mobile-link" data-i18n="nav.despre">Despre</a>
-        </div>
       </nav>
       <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
     </header>
+    <div class="nav-mobile-menu" id="nav-mobile-menu" hidden>
+      <a href="/" class="nav-mobile-link" data-i18n="nav.diete">Diete</a>
+      <a href="/calculatoare/" class="nav-mobile-link" data-i18n="nav.calculatoare">Calculatoare</a>
+      <a href="/alimente-sanatoase/" class="nav-mobile-link" data-i18n="nav.alimente">Alimente Sănătoase</a>
+      <a href="/despre/" class="nav-mobile-link" data-i18n="nav.despre">Despre</a>
+    </div>
 
     <div class="vedete-banner">
       <a href="/vedete-care-au-slabit/" data-i18n="banner.vedete">⭐ Vezi cum au slăbit cele mai cunoscute vedete! ⭐</a>
