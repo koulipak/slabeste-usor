@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 68" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="avoSkin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5a7a3a"/>
+      <stop offset="100%" stop-color="#3d5228"/>
+    </linearGradient>
+    <linearGradient id="avoFlesh" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4e88a"/>
+      <stop offset="100%" stop-color="#a8c95f"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fb923c"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+    <linearGradient id="orangeLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fed7aa"/>
+      <stop offset="100%" stop-color="#fb923c"/>
+    </linearGradient>
+    <clipPath id="circleClip">
+      <circle cx="34" cy="34" r="30"/>
+    </clipPath>
+    <filter id="softShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#00000018"/>
+    </filter>
+  </defs>
+
+  <!-- Jumătatea stângă: AVOCADO -->
+  <g clip-path="url(#circleClip)">
+    <path d="M 34,4 A 30,30 0 0 0 34,64 Z" fill="url(#avoSkin)"/>
+    <path d="M 34,12 C 29,12 22,17 20,24 C 18,30 19,38 23,44
+             C 26,49 30,52 34,53 L 34,12 Z"
+          fill="url(#avoFlesh)"/>
+    <ellipse cx="26" cy="34" rx="7.5" ry="9.5" fill="#7c4d2e"/>
+    <ellipse cx="26" cy="34" rx="4.8" ry="6.2" fill="#a0683e"/>
+    <ellipse cx="25" cy="32.5" rx="1.8" ry="2.5" fill="#c49070" opacity="0.5"/>
+
+    <!-- Jumătatea dreaptă: TALIE PORTOCALIE -->
+    <path d="M 34,4
+             C 49,4 62,14 63,27
+             C 64,31 59,33 56,34
+             C 59,35 64,37 63,41
+             C 62,53 49,63 34,64 Z"
+          fill="url(#orangeGrad)"/>
+
+    <path d="M 54,27 C 57,30 59,32 56,34 C 59,36 57,38 54,41"
+          fill="none" stroke="url(#orangeLight)"
+          stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+
+    <line x1="57" y1="31" x2="63" y2="31" stroke="#fed7aa" stroke-width="0.85" opacity="0.65"/>
+    <line x1="58" y1="33" x2="65" y2="33" stroke="#fed7aa" stroke-width="0.85" opacity="0.65"/>
+    <line x1="58" y1="35" x2="65" y2="35" stroke="#fed7aa" stroke-width="0.85" opacity="0.65"/>
+    <line x1="57" y1="37" x2="63" y2="37" stroke="#fed7aa" stroke-width="0.85" opacity="0.65"/>
+  </g>
+
+  <!-- Linie separare -->
+  <line x1="34" y1="4" x2="34" y2="64" stroke="#fff" stroke-width="1" opacity="0.4"/>
+
+  <!-- Ganteră -->
+  <line x1="31" y1="23" x2="39" y2="15" stroke="#4b5563" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="29.5" cy="24.2" rx="4.2" ry="2.6" fill="#374151"/>
+  <ellipse cx="29.5" cy="24.2" rx="2.6" ry="1.6" fill="#4b5563"/>
+  <ellipse cx="40.5" cy="14.0" rx="4.2" ry="2.6" fill="#374151"/>
+  <ellipse cx="40.5" cy="14.0" rx="2.6" ry="1.6" fill="#4b5563"/>
+
+  <!-- Frunzuliță -->
+  <path d="M 36,20 C 40,14 46,16 43,22 C 39,18 37,20 36,20 Z"
+        fill="#6aad50" opacity="0.9"/>
+  <line x1="36.5" y1="20" x2="42" y2="21.5"
+        stroke="#3d8030" stroke-width="0.7" stroke-linecap="round"/>
+
+  <!-- Contur EKG portocaliu -->
+  <path d="
+    M 34,4
+    A 30,30 0 0 0 34,64
+    C 50,64 63.5,51 63.5,37
+    L 64,35.5
+    L 65,32
+    L 68,27
+    L 61,42
+    L 64,36.5
+    L 63.5,34
+    C 63.5,17.5 50,4 34,4
+    Z
+  " fill="none" stroke="#ea580c" stroke-width="0.9"
+    stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Contur negru fin exterior -->
+  <circle cx="34" cy="34" r="32"
+          fill="none" stroke="#111" stroke-width="0.6" opacity="0.45"/>
+</svg>

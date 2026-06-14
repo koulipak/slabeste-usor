@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" role="img" aria-hidden="true">
+  <defs>
+    <clipPath id="badge-sus">
+      <polygon points="0,0 44,0 0,44"/>
+    </clipPath>
+  </defs>
+  <rect width="44" height="44" rx="11" fill="#1c3461"/>
+  <rect width="44" height="44" rx="11" fill="#f5c227" clip-path="url(#badge-sus)"/>
+  <rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="none" stroke="#e8180c" stroke-width="0.7"/>
+  <line x1="0" y1="44" x2="44" y2="0" stroke="#fff" stroke-width="1" opacity="0.25"/>
+  <path d="M22 5 C14 8 8 15 8 22 C8 31 14 37 22 40 C30 37 36 31 36 22 C36 15 30 8 22 5Z"
+        fill="none" stroke="#ffffff" stroke-width="1.9" stroke-linejoin="round"/>
+  <line x1="22" y1="8" x2="22" y2="39" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="22" y1="17" x2="15" y2="22" stroke="#ffffff" stroke-width="1.1" stroke-linecap="round" opacity="0.85"/>
+  <line x1="22" y1="24" x2="14" y2="29" stroke="#ffffff" stroke-width="1.1" stroke-linecap="round" opacity="0.65"/>
+  <line x1="22" y1="17" x2="29" y2="22" stroke="#ffffff" stroke-width="1.1" stroke-linecap="round" opacity="0.85"/>
+  <line x1="22" y1="24" x2="30" y2="29" stroke="#ffffff" stroke-width="1.1" stroke-linecap="round" opacity="0.65"/>
+</svg>

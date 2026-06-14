@@ -1,0 +1,93 @@
+---
+import Base from "../layouts/Base.astro";
+import Faq from "../components/Faq.astro";
+import { ACTIVITATI } from "../lib/calc";
+
+const faq = [
+  {
+    intrebare: "Cum se calculează caloriile arse la sport?",
+    raspuns:
+      "Cu formula bazată pe MET (echivalentul metabolic): calorii = MET × greutate (kg) × durată (ore). Fiecare activitate are o valoare MET care arată cât de intensă este față de repaus.",
+  },
+  {
+    intrebare: "Cât de exacte sunt valorile?",
+    raspuns:
+      "Sunt estimări. Caloriile reale arse depind de intensitate, condiție fizică, masă musculară și tehnică. Folosește rezultatul ca reper, nu ca valoare exactă.",
+  },
+  {
+    intrebare: "Trebuie să mănânc înapoi caloriile arse la sport?",
+    raspuns:
+      "Nu neapărat. Dacă scopul este slăbirea, mișcarea contribuie la deficitul caloric. Mâncatul integral al caloriilor arse poate anula acest deficit, mai ales că estimările tind să fie generoase.",
+  },
+];
+---
+
+<Base
+  titlu="Calculator calorii arse — câte calorii arzi la sport"
+  descriere="Calculator gratuit pentru caloriile arse: află câte calorii consumi la mers, alergare, ciclism, înot și alte activități, în funcție de greutate și durată."
+>
+  <nav class="breadcrumb"><a href="/" data-i18n="bc.acasa">Acasă</a> › <a href="/calculatoare/" data-i18n="bc.calc">Calculatoare</a> › <span data-i18n="arse.bc">Calorii arse</span></nav>
+  <h1 data-i18n="arse.h1">Calculator calorii arse</h1>
+  <p class="lead" data-i18n="arse.lead">
+    Află câte calorii arzi la diferite activități, în funcție de greutatea ta și de cât durează.
+    Datele rămân în browserul tău.
+  </p>
+
+  <form class="tool" id="arse-form">
+    <div class="camp">
+      <label for="greutate" data-i18n="arse.greutate">Greutate (kg)</label>
+      <input type="number" id="greutate" min="30" max="300" step="0.1" value="70" required />
+    </div>
+    <div class="camp">
+      <label for="activitate" data-i18n="arse.activitate">Activitate</label>
+      <select id="activitate">
+        {ACTIVITATI.map((a, i) => (
+          <option value={a.met} selected={i === 0}>{a.nume}</option>
+        ))}
+      </select>
+    </div>
+    <div class="camp">
+      <label for="durata" data-i18n="arse.durata">Durată (minute)</label>
+      <input type="number" id="durata" min="1" max="600" step="1" value="30" required />
+    </div>
+    <button class="btn" type="submit" data-i18n="arse.btn">Calculează</button>
+
+    <div class="rezultat gol" id="rezultat" role="status" aria-live="polite">
+      <div><span class="mare" id="arse-val">—</span> <span class="sub" data-i18n="arse.kcal-sub">kcal arse</span></div>
+      <p class="sub" style="margin-top:0.75rem;" data-i18n="arse.nota">
+        Estimare pe baza echivalentului metabolic (MET). Valoarea reală variază cu intensitatea și
+        condiția fizică.
+      </p>
+    </div>
+  </form>
+
+  <div class="prose">
+    <h2 data-i18n="arse.h2">Cum funcționează</h2>
+    <p data-i18n-html="arse.p-html">
+      Calculatorul folosește formula <strong>MET × greutate × durată</strong>. MET (echivalentul
+      metabolic) arată de câte ori o activitate consumă mai multă energie decât statul în repaus —
+      de exemplu, alergarea are un MET mult mai mare decât mersul lejer.
+    </p>
+  </div>
+
+  <Faq intrebari={faq} />
+</Base>
+
+<script>
+  import { caloriiArse, rotunjit } from "../lib/calc";
+
+  const form = document.getElementById("arse-form") as HTMLFormElement;
+  const rezultat = document.getElementById("rezultat")!;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const kg = +(document.getElementById("greutate") as HTMLInputElement).value;
+    const met = +(document.getElementById("activitate") as HTMLSelectElement).value;
+    const minute = +(document.getElementById("durata") as HTMLInputElement).value;
+    if (!kg || !minute) return;
+
+    const kcal = caloriiArse(met, kg, minute);
+    document.getElementById("arse-val")!.textContent = String(rotunjit(kcal));
+    rezultat.classList.remove("gol");
+  });
+</script>

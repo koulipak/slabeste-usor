@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 68" role="img" aria-label="Slăbește Ușor — Biblioteca de Diete">
+  <defs>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f87171"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+    <linearGradient id="tapeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9ca3af"/>
+      <stop offset="50%" stop-color="#6b7280"/>
+      <stop offset="100%" stop-color="#9ca3af"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ── Badge antracit ─────────────────────── -->
+  <rect x="2" y="2" width="64" height="64" rx="15" fill="#1f2937"/>
+  <!-- margine subtire -->
+  <rect x="2" y="2" width="64" height="64" rx="15" fill="none" stroke="#374151" stroke-width="1"/>
+
+  <!-- ── Măr — contur roșu, formă realistă ─── -->
+  <!--
+    Formă măr cu două lobi la vârf și talie cinșuită la y≈38
+    Notch centru: (33,23), lob stâng vârf:(19,15), lob drept vârf:(47,15)
+  -->
+  <path d="
+    M 33,23
+    C 30,16  23,12  18,16
+    C 12,20  9,27   9,34
+    C 9,37   10,38  12,39
+    C 9,41   9,47   13,53
+    C 17,59  24,63  33,62
+    C 42,63  49,59  53,53
+    C 57,47  57,41  54,39
+    C 56,38  57,37  57,34
+    C 57,27  54,20  48,16
+    C 43,12  36,16  33,23 Z
+  " fill="none" stroke="url(#redGrad)" stroke-width="2.4" stroke-linejoin="round"/>
+
+  <!-- ── Bandă centimetru la talie ─────────── -->
+  <!-- linia benzii (orizontală, y=39) -->
+  <line x1="9"  y1="39" x2="57" y2="39" stroke="url(#tapeGrad)" stroke-width="1.4"/>
+  <!-- tichete mari (la 8px) -->
+  <line x1="9"  y1="36.2" x2="9"  y2="41.8" stroke="#6b7280" stroke-width="1.1"/>
+  <line x1="17" y1="36.2" x2="17" y2="41.8" stroke="#6b7280" stroke-width="1.1"/>
+  <line x1="25" y1="36.2" x2="25" y2="41.8" stroke="#6b7280" stroke-width="1.1"/>
+  <line x1="33" y1="36.2" x2="33" y2="41.8" stroke="#6b7280" stroke-width="1.1"/>
+  <line x1="41" y1="36.2" x2="41" y2="41.8" stroke="#6b7280" stroke-width="1.1"/>
+  <line x1="49" y1="36.2" x2="49" y2="41.8" stroke="#6b7280" stroke-width="1.1"/>
+  <line x1="57" y1="36.2" x2="57" y2="41.8" stroke="#6b7280" stroke-width="1.1"/>
+  <!-- tichete mici (la 4px) -->
+  <line x1="13" y1="37.5" x2="13" y2="40.5" stroke="#9ca3af" stroke-width="0.8"/>
+  <line x1="21" y1="37.5" x2="21" y2="40.5" stroke="#9ca3af" stroke-width="0.8"/>
+  <line x1="29" y1="37.5" x2="29" y2="40.5" stroke="#9ca3af" stroke-width="0.8"/>
+  <line x1="37" y1="37.5" x2="37" y2="40.5" stroke="#9ca3af" stroke-width="0.8"/>
+  <line x1="45" y1="37.5" x2="45" y2="40.5" stroke="#9ca3af" stroke-width="0.8"/>
+  <line x1="53" y1="37.5" x2="53" y2="40.5" stroke="#9ca3af" stroke-width="0.8"/>
+  <!-- cifre pe bandă -->
+  <text x="6"  y="35.2" font-family="monospace" font-size="3.8" fill="#9ca3af" font-weight="bold">60</text>
+  <text x="22" y="35.2" font-family="monospace" font-size="3.8" fill="#9ca3af" font-weight="bold">70</text>
+  <text x="38" y="35.2" font-family="monospace" font-size="3.8" fill="#9ca3af" font-weight="bold">80</text>
+
+  <!-- ── Ganteră minimalistă (codița mărului) ─ -->
+  <!-- bara -->
+  <line x1="30" y1="22" x2="38" y2="14" stroke="#4b5563" stroke-width="2" stroke-linecap="round"/>
+  <!-- disc stâng — 2 cercuri concentrice pentru efect 3D -->
+  <ellipse cx="28.5" cy="23.2" rx="4.2" ry="2.6" fill="#374151"/>
+  <ellipse cx="28.5" cy="23.2" rx="2.6" ry="1.6" fill="#4b5563"/>
+  <!-- disc drept -->
+  <ellipse cx="39.5" cy="13.0" rx="4.2" ry="2.6" fill="#374151"/>
+  <ellipse cx="39.5" cy="13.0" rx="2.6" ry="1.6" fill="#4b5563"/>
+
+  <!-- ── Frunzuliță lângă ganteră ─────────── -->
+  <path d="M 35,19 C 39,13 45,15 42,21 C 38,17 36,19 35,19 Z"
+        fill="#10b981" opacity="0.8"/>
+  <!-- nervura frunzuliței -->
+  <line x1="35.5" y1="19" x2="41" y2="20.5" stroke="#059669" stroke-width="0.7" stroke-linecap="round"/>
+
+  <!-- ── Text ────────────────────────────── -->
+  <!-- SLĂBEȘTE — gri antracit, light -->
+  <text x="80" y="29"
+        font-family="'Segoe UI',Helvetica,Arial,sans-serif"
+        font-weight="300" font-size="19" letter-spacing="2.5"
+        fill="#1f2937">SLĂBEȘTE</text>
+  <!-- UȘOR — verde smarald, bold -->
+  <text x="80" y="50"
+        font-family="'Segoe UI',Helvetica,Arial,sans-serif"
+        font-weight="700" font-size="19" letter-spacing="2.5"
+        fill="#10b981">UȘOR</text>
+  <!-- tagline — biblioteca de diete -->
+  <text x="81.5" y="61"
+        font-family="'Segoe UI',Helvetica,Arial,sans-serif"
+        font-weight="300" font-size="7.5" letter-spacing="2"
+        fill="#9ca3af">BIBLIOTECA DE DIETE</text>
+</svg>

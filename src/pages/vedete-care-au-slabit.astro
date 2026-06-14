@@ -1,0 +1,482 @@
+﻿---
+import Base from "../layouts/Base.astro";
+
+const vedete = [
+  {
+    nume: "Mirela Vaida",
+    kilograme: 3,
+    dieta: "Deficit caloric",
+    dietaSlug: "deficit-caloric",
+    strategie: [
+      "6 mese mici pe zi la ore fixe — metabolism activ, fără senzație de foame",
+      "Porții slab calorice, accent pe legume, proteine slabe și cereale integrale",
+      "Abordare de menținere și slăbire moderată, fără restricții extreme",
+    ],
+    miscare: null,
+  },
+  {
+    nume: "Sore (Mihalache)",
+    kilograme: 9,
+    dieta: "Post intermitent 16:8",
+    dietaSlug: "post-intermitent-16-8",
+    strategie: [
+      "Post intermitent — 16 ore de post zilnic, toate mesele într-o fereastră de 8 ore",
+      "Renunțarea la carne — alimentație predominant vegetariană",
+      "Antrenamente intense zilnice — dans profesionist ca factor principal al transformarii",
+    ],
+    miscare: "Dans profesionist intens, zilnic — factorul principal care a declanșat transformarea fizică.",
+  },
+  {
+    nume: "Nicoleta Luciu",
+    kilograme: 12,
+    dieta: "Dietă vegană",
+    dietaSlug: "dieta-vegana",
+    strategie: [
+      "Alimentație vegană și raw-vegan — fructe, legume, nuci și semințe în stare naturală",
+      "Eliminarea completă a glutenului și a zahărului",
+      "Renunțarea la cafea și la toate stimulentele",
+    ],
+    miscare: null,
+  },
+  {
+    nume: "Anda Adam",
+    kilograme: 12,
+    dieta: "Dieta Nalep",
+    dietaSlug: "dieta-nalep",
+    strategie: [
+      "Eliminarea completă a sării adăugate și a zahărului — singura regulă esențială",
+      "Poți mânca aproape orice altceva, fără să numeri calorii",
+      "Condimentare exclusiv cu ierburi aromatice, lămâie și oțet",
+      "Dietă structurată în 3 faze, personalizată de Dr. Antonio Trombetta",
+    ],
+    miscare: null,
+  },
+  {
+    nume: "Mara Bănică",
+    kilograme: 17,
+    dieta: "Dieta Rina",
+    dietaSlug: "dieta-rina",
+    strategie: [
+      "Regim strict de 9 săptămâni structurat pe etape cu categorii alimentare diferite",
+      "Prima săptămână: exclusiv brânzeturi slabe și legume crude",
+      "Fiecare etapă ulterioară introduce treptat noi categorii alimentare",
+      "Zero abateri — disciplina strictă a fost cheia transformării",
+    ],
+    miscare: null,
+  },
+  {
+    nume: "Andreea Marin",
+    kilograme: 20,
+    dieta: "Deficit caloric",
+    dietaSlug: "deficit-caloric",
+    strategie: [
+      "Plan alimentar personalizat creat împreună cu un nutriționist",
+      "Primă lună de detoxifiere pentru resetarea metabolismului",
+      "5 mese pe zi la ore fixe — micul dejun, gustare, prânz, gustare, cină",
+      "Proces lent și sustenabil, desfășurat pe parcursul a aproximativ 2 ani",
+    ],
+    miscare: null,
+  },
+  {
+    nume: "Luminița Anghel",
+    kilograme: 30,
+    dieta: "Dietă low-carb",
+    dietaSlug: "dieta-low-carb",
+    strategie: [
+      "Eliminare completă a făinoaselor (pâine, paste, patiserie)",
+      "Zero dulciuri și zahăr adăugat",
+      "Porții mici la fiecare masă",
+      "Cina luată devreme seara, înainte de ora 18:00",
+    ],
+    miscare: null,
+  },
+  {
+    nume: "John Goodman",
+    kilograme: 90,
+    dieta: "Dieta Mediteraneană",
+    dietaSlug: "dieta-mediteraneana",
+    strategie: [
+      "Renunțarea completă la alcool",
+      "Pește, carne slabă de pui, legume proaspete, nuci, ulei de măsline",
+      "Eliminarea alimentelor procesate și a fast-food-ului",
+      "Mese regulate, fără sărituri peste mâncare",
+    ],
+    miscare: "Antrenor personal și minimum 10.000–12.000 de pași pe zi, pe banda de alergat sau bicicleta eliptică.",
+  },
+  {
+    nume: "Oana Roman & Gabriela Cristea",
+    kilograme: 30,
+    dieta: "Deficit caloric",
+    dietaSlug: "deficit-caloric",
+    strategie: [
+      "Monitorizarea caloriilor și controlul strict al porțiilor",
+      "Eliminarea completă a gustărilor nesănătoase",
+      "Înlocuirea gustărilor cu legume proaspete și proteine slabe",
+    ],
+    miscare: null,
+  },
+  {
+    nume: "Jessica Simpson",
+    kilograme: 45,
+    dieta: "Dietă bogată în proteine",
+    dietaSlug: "dieta-bogata-in-proteine",
+    strategie: [
+      "Dietă bazată pe proteine slabe și fibre",
+      "Eliminarea alimentelor procesate",
+    ],
+    miscare: "14.000 de pași zilnic și circuit strict de exerciții fizice.",
+  },
+  {
+    nume: "Adele",
+    kilograme: 45,
+    dieta: "Dieta Sirtfood",
+    dietaSlug: "dieta-sirtfood",
+    strategie: [
+      "Alimente bogate în activatori de sirtuină: ceai verde, kale, hrișcă, cacao pură, turmeric, afine, suc verde",
+      "Faza inițială: 1.000 de calorii pe zi",
+    ],
+    miscare: "Antrenamente intense de tip circuit și pilates.",
+  },
+  {
+    nume: "Jessica Alba & Halle Berry",
+    kilograme: null,
+    dieta: "Deficit caloric",
+    dietaSlug: "deficit-caloric",
+    strategie: [
+      "3 mese principale + 2 gustări pe zi, ~1.700 de calorii zilnic",
+      "Alimentație 100% curată — fără zahăr rafinat, fără sosuri din comerț, fără sodiu în exces",
+      "Meniu tipic: albușuri cu căpșuni la micul dejun, somon cu salată la prânz, piept de pui cu legume seara",
+    ],
+    miscare: null,
+  },
+  {
+    nume: "Hugh Jackman & Terry Crews",
+    kilograme: null,
+    dieta: "Post intermitent 16:8",
+    dietaSlug: "post-intermitent-16-8",
+    strategie: [
+      "Toate mesele zilei într-o fereastră de 8 ore (ex. 14:00–22:00)",
+      "16 ore de post — doar apă, ceai sau cafea neagră fără zahăr sau lapte",
+    ],
+    miscare: null,
+  },
+  {
+    nume: "Chris Pratt",
+    kilograme: 27,
+    dieta: "Dieta Paleo",
+    dietaSlug: "dieta-paleo",
+    strategie: [
+      "Eliminare completă a carbohidraților rafinați, lactatelor, leguminoaselor și alcoolului",
+      "Alimentație bazată exclusiv pe carne de vită, pui, pește, ouă, nuci, semințe și legume verzi",
+      "Consum mare de apă zilnic",
+    ],
+    miscare: null,
+  },
+  {
+    nume: "Natalie Portman",
+    kilograme: 9,
+    dieta: "Deficit caloric",
+    dietaSlug: "deficit-caloric",
+    strategie: [
+      "Regim hipocaloric extrem bazat exclusiv pe fructe și legume",
+      "Aport caloric foarte redus, menținut pe durata pregătirii pentru film",
+    ],
+    miscare: "Antrenamente intense de balet — 8 ore pe zi timp de un an, pentru rolul din Black Swan.",
+  },
+  {
+    nume: "David Harbour",
+    kilograme: 36,
+    dieta: "Post intermitent 16:8",
+    dietaSlug: "post-intermitent-16-8",
+    strategie: [
+      "Post intermitent — fereastră de alimentație restricționată și perioade de post zilnic",
+      "Alimentație curată în fereastra permisă, fără exces caloric",
+    ],
+    miscare: "Pilates intensiv ca bază a antrenamentului — flexibilitate, forță și compoziție corporală. Transformarea a fost motivată de rolul din Stranger Things sezonul 4.",
+  },
+  {
+    nume: "Jacob Batalon",
+    kilograme: 45,
+    dieta: "Dietă vegană",
+    dietaSlug: "dieta-vegana",
+    strategie: [
+      "Alimentație 100% plant-based — fără carne, lactate sau ouă",
+      "Accent pe leguminoase, cereale integrale, legume și fructe ca surse principale de energie",
+      "Controlul porțiilor și al caloriilor în cadrul stilului de viață vegan",
+    ],
+    miscare: "Antrenamente 6 zile pe săptămână — combinație de forță și cardio, factor esențial în transformarea sa.",
+  },
+  {
+    nume: "Post Malone",
+    kilograme: 25,
+    dieta: "Deficit caloric",
+    dietaSlug: "deficit-caloric",
+    strategie: [
+      "Eliminarea completă a sucurilor carbogazoase și a băuturilor îndulcite",
+      "Alegeri alimentare mai sănătoase, fără un regim strict impus",
+      "Fără medicamente sau suplimente — transformare exclusiv prin schimbarea obiceiurilor",
+    ],
+    miscare: null,
+  },
+  {
+    nume: "Fat Joe",
+    kilograme: 30,
+    dieta: "Dietă low-carb",
+    dietaSlug: "dieta-low-carb",
+    strategie: [
+      "Eliminarea completă a pâinii, pastelor și orezului",
+      "Renunțarea la băuturile îndulcite și la fast-food",
+      "Mese bazate pe proteine slabe și legume",
+    ],
+    miscare: null,
+  },
+  {
+    nume: "Kim Kardashian",
+    kilograme: 7,
+    dieta: "Dieta Atkins",
+    dietaSlug: "dieta-atkins",
+    strategie: [
+      "Dieta Atkins 40 — maximum 40g de carbohidrați pe zi",
+      "Eliminarea completă a zahărului și a dulciurilor",
+      "Hidratare intensă zilnică",
+      "Alimentație bazată pe proteine, grăsimi sănătoase și legume cu conținut scăzut de carbohidrați",
+    ],
+    miscare: null,
+  },
+  {
+    nume: "Khloé Kardashian",
+    kilograme: 27,
+    dieta: "Dietă bogată în proteine",
+    dietaSlug: "dieta-bogata-in-proteine",
+    strategie: [
+      "Protocol conceput de nutriționistul Dr. Philip Goglia: proteine slabe, carbohidrați reduși, grăsimi sănătoase",
+      "8 mese mici pe zi — metabolism activ constant, fără senzație de foame extremă",
+      "A experimentat și dieta ketogenică pe perioade scurte pentru accelerarea slăbirii",
+      "Eliminarea zahărului rafinat, a alcoolului și a alimentelor procesate",
+    ],
+    miscare: "Antrenamente zilnice de forță și cardio împreună cu antrenorul personal Gunnar Peterson.",
+  },
+  {
+    nume: "Jelly Roll",
+    kilograme: 90,
+    dieta: "Dietă bogată în proteine",
+    dietaSlug: "dieta-bogata-in-proteine",
+    strategie: [
+      "Dietă bogată în proteine și legume, fără alimente procesate",
+      "Renunțarea completă la alcool",
+      "Fără medicamente sau injecții de slăbit — transformare 100% prin stil de viață",
+      "A început cu mersul pe jos zilnic, progresând treptat până la alergare",
+    ],
+    miscare: "A pornit de la plimbări scurte și a ajuns să alerge un 5K complet — o transformare pe care a documentat-o public pentru a inspira alți oameni.",
+  },
+  {
+    nume: "Jennifer Hudson",
+    kilograme: 36,
+    dieta: "Weight Watchers",
+    dietaSlug: "dieta-weight-watchers",
+    strategie: [
+      "Sistem de puncte alocat fiecărui aliment — niciun aliment nu e interzis",
+      "Controlul riguros al porțiilor: dacă dorea o felie de pizza, îți calcula restul zilei în funcție de bugetul de puncte",
+    ],
+    miscare: null,
+  },
+];
+---
+
+<Base
+  titlu="Vedete care au slăbit — povești reale de transformare"
+  descriere="Cum au slăbit vedetele din România și din lume: diete, strategii și kilograme jos. Povești reale, fără minuni — doar schimbări de stil de viață."
+  bodyClass="pg-vedete"
+>
+  <div class="vedete-hero">
+    <h1 data-i18n="vedete.h1">Vedete care au slăbit</h1>
+    <p class="lead" data-i18n="vedete.lead">
+      Cum au reușit personalitățile publice să slăbească — ce diete au urmat, ce obiceiuri au schimbat
+      și câte kilograme au dat jos. Fără formule magice, doar schimbări reale de stil de viață.
+    </p>
+  </div>
+
+  <div class="vedete-grid">
+    {vedete.map((v) => (
+      <article class={`vedeta-card${!v.miscare ? ' vedeta-card--simpla' : ''}`}>
+        <div class="vedeta-header">
+          {v.kilograme ? (
+            <div class="vedeta-kg">
+              <span class="kg-nr">−{v.kilograme}</span>
+              <span class="kg-label">kg</span>
+            </div>
+          ) : null}
+          <div class="vedeta-intro">
+            <h2>{v.nume}</h2>
+            {v.dietaSlug && <a href={`/dieta/${v.dietaSlug}/`} class="badge badge-categorie">{v.dieta}</a>}
+          </div>
+        </div>
+
+        <div class="vedeta-detalii">
+          <div class="vedeta-bloc">
+            <h3 data-i18n="vedete.strategie">🍽️ Strategia alimentară</h3>
+            <ul>
+              {v.strategie.map((s) => <li>{s}</li>)}
+            </ul>
+          </div>
+
+          {v.miscare && (
+            <div class="vedeta-bloc">
+              <h3 data-i18n="vedete.miscare">🏃 Mișcare</h3>
+              <p>{v.miscare}</p>
+            </div>
+          )}
+        </div>
+
+      </article>
+    ))}
+  </div>
+
+  <div class="vedete-disclaimer">
+    <p data-i18n-html="vedete.disclaimer-html">
+      ⚠️ Poveștile de mai sus sunt prezentate în scop informativ și documentar. Rezultatele individuale
+      variază în funcție de organism, stare de sănătate și consistență. Înainte de a urma orice dietă,
+      consultă un medic sau nutriționist. Vezi <a href="/disclaimer-medical/">disclaimerul medical</a>.
+    </p>
+  </div>
+</Base>
+
+<style>
+  .vedete-hero { margin-bottom: 2.5rem; }
+
+  .vedete-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .vedeta-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem 2rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .vedeta-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .vedeta-card--simpla {
+    max-width: 62%;
+  }
+
+  .vedeta-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .vedeta-kg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #dcfce7;
+    border-radius: 14px;
+    padding: 0.75rem 1.1rem;
+    min-width: 70px;
+    flex-shrink: 0;
+  }
+
+  .kg-nr {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: #16a34a;
+    line-height: 1;
+  }
+
+  .kg-label {
+    font-size: 0.8rem;
+    color: #16a34a;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .vedeta-intro h2 {
+    margin: 0 0 0.25rem;
+    font-size: 1.4rem;
+  }
+
+  .vedeta-titlu {
+    color: var(--text-soft);
+    font-size: 0.95rem;
+    margin: 0 0 0.6rem;
+  }
+
+  .vedeta-rezumat {
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+
+  .vedeta-detalii {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .vedeta-bloc {
+    background: var(--bg, #f9fafb);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+  }
+
+  .vedeta-bloc h3 {
+    font-size: 0.95rem;
+    margin: 0 0 0.6rem;
+    color: var(--text);
+  }
+
+  .vedeta-bloc ul {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+
+  .vedeta-bloc li {
+    font-size: 0.92rem;
+    color: var(--text-soft);
+    margin-bottom: 0.3rem;
+    line-height: 1.5;
+  }
+
+  .vedeta-bloc p {
+    font-size: 0.92rem;
+    color: var(--text-soft);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .vedeta-sursa {
+    font-size: 0.8rem;
+    color: var(--text-soft);
+    font-style: italic;
+    margin: 0;
+  }
+
+  .vedete-disclaimer {
+    background: #fef9c3;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    font-size: 0.88rem;
+    color: #713f12;
+    line-height: 1.6;
+  }
+
+  .vedete-disclaimer p { margin: 0; }
+
+  @media (max-width: 600px) {
+    .vedeta-card { padding: 1.25rem; }
+    .vedeta-header { gap: 1rem; }
+    .kg-nr { font-size: 1.5rem; }
+  }
+</style>

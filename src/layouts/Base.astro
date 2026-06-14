@@ -1,0 +1,417 @@
+---
+import "@fontsource-variable/nunito";
+import "@fontsource-variable/fraunces";
+import "../styles/global.css";
+import { getCollection } from "astro:content";
+
+const toateDietele = (await getCollection("diete", ({ data }) => data.publicat))
+  .map((d) => ({ titlu: d.data.titlu, slug: d.id }))
+  .sort((a, b) => a.titlu.localeCompare(b.titlu, "ro"));
+
+interface Props {
+  titlu: string;
+  descriere: string;
+  imagine?: string;
+  tipPagina?: "website" | "article";
+  bodyClass?: string;
+}
+
+const { titlu, descriere, imagine, tipPagina = "website", bodyClass = "" } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const imagineUrl = imagine ? new URL(imagine, Astro.site).href : undefined;
+const titluComplet = `${titlu} | Diete&Calculatoare slabit`;
+const anul = new Date().getFullYear();
+
+const FOOD_ALL = [
+  '/decor/alimente.jpg',
+  '/decor/healthy.webp',
+  '/decor/lapte1.webp',
+  '/decor/mm.jpg',
+  '/decor/peste1.jpg',
+  '/decor/peste2.webp',
+  '/decor/pui1.jpg',
+  '/decor/natural.webp',
+];
+const pathHash = Astro.url.pathname.split('').reduce((s, c) => s + c.charCodeAt(0), 0);
+const SHOW = 3;
+const foodDecor = Array.from({ length: SHOW }, (_, i) => FOOD_ALL[(pathHash + i) % FOOD_ALL.length]);
+---
+
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{titluComplet}</title>
+    <meta name="description" content={descriere} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- OpenGraph (Facebook, WhatsApp, etc.) -->
+    <meta property="og:type" content={tipPagina} />
+    <meta property="og:title" content={titluComplet} />
+    <meta property="og:description" content={descriere} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="ro_RO" />
+    {imagineUrl && <meta property="og:image" content={imagineUrl} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content={imagine ? "summary_large_image" : "summary"} />
+    <meta name="twitter:title" content={titluComplet} />
+    <meta name="twitter:description" content={descriere} />
+
+    <slot name="head" />
+    <script is:inline src="/lang.js"></script>
+    <script is:inline>
+      // marcăm că JS e activ — animațiile de reveal se aplică doar atunci
+      // (fără JS, conținutul rămâne vizibil normal — bun pentru SEO/no-JS).
+      document.documentElement.classList.add("js");
+    </script>
+  </head>
+  <body class={bodyClass}>
+    <!-- Intro zbor — apare o singură dată per sesiune -->
+    <div id="intro-zbor" aria-hidden="true">
+      <button id="lang-toggle-btn" class="iz-lang-btn" title="Switch to English" aria-label="Schimbă limba">
+        <img src="/logo-badge.svg" alt="" class="iz-badge-colt" />
+        <img id="lang-flag" class="iz-lang-flag" src="/flags/ro.svg" alt="" aria-hidden="true" draggable="false" />
+      </button>
+      <div class="iz-piramida-wrap">
+        <img src="/decor/piramida.jpg" alt="" class="iz-piramida" />
+      </div>
+      <div class="iz-titlu">
+        <span class="iz-logo">Slăbește<br>Uș<svg class="iz-om" viewBox="0 0 74 84" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill-rule="evenodd" fill="currentColor" d="M37,1 C44,1 50,6 51,13 C52,19 49,25 43,27 C56,30 64,41 64,53 C64,65 56,74 43,75 L40,76 L34,76 C21,74 10,65 10,53 C10,41 18,30 31,27 C25,25 22,19 23,13 C24,6 30,1 37,1 Z M37,34 C29,34 22,42 22,51 C22,61 29,68 37,68 C45,68 52,61 52,51 C52,42 45,34 37,34 Z"/>
+          <path d="M14,40 Q5,46 3,56" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M60,40 Q69,46 71,56" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <rect x="25" y="74" width="10" height="7" rx="3" fill="currentColor"/>
+          <rect x="39" y="74" width="10" height="7" rx="3" fill="currentColor"/>
+        </svg>r</span>
+        <span class="iz-sub" data-i18n="intro.sub">biblioteca ta de diete</span>
+      </div>
+      <div class="iz-click" data-i18n="intro.click">▸ click pentru a continua</div>
+    </div>
+
+    <div class="bg-decor" aria-hidden="true">
+      <span class="blob b1"></span>
+      <span class="blob b2"></span>
+      <span class="blob b3"></span>
+      <span class="blob b4"></span>
+      <span class="blob b5"></span>
+      {foodDecor.map((src, i) => (
+        <img class={`food-decor fd${i + 1}`} src={src} alt="" />
+      ))}
+    </div>
+
+    <header class="site-header">
+      <img src="/decor/alergator.png" alt="" class="logo-alerg logo-alerg-g7" aria-hidden="true" />
+      <img src="/decor/alergator.png" alt="" class="logo-alerg logo-alerg-g6" aria-hidden="true" />
+      <img src="/decor/alergator.png" alt="" class="logo-alerg logo-alerg-g5" aria-hidden="true" />
+      <img src="/decor/alergator.png" alt="" class="logo-alerg logo-alerg-g4" aria-hidden="true" />
+      <img src="/decor/alergator.png" alt="" class="logo-alerg logo-alerg-g3" aria-hidden="true" />
+      <img src="/decor/alergator.png" alt="" class="logo-alerg logo-alerg-g2" aria-hidden="true" />
+      <img src="/decor/alergator.png" alt="" class="logo-alerg logo-alerg-g1" aria-hidden="true" />
+      <img src="/decor/alergator.png" alt="" class="logo-alerg" aria-hidden="true" />
+      <nav class="container">
+        <div class="logo">
+          <button id="btn-intro" class="logo-btn" aria-label="Deschide intro — Slăbește Ușor">
+            <img src="/logo-concept3.svg" alt="Slăbește Ușor" class="logo-img" />
+          </button>
+        </div>
+        <div class="nav-links">
+          <div class="nav-search-wrap">
+            <input
+              type="search"
+              id="nav-search"
+              placeholder="Caută dietă..."
+              data-i18n-ph="nav.search"
+              autocomplete="off"
+              aria-label="Caută dietă după nume"
+            />
+            <ul id="nav-search-results" role="listbox" aria-label="Rezultate căutare" hidden></ul>
+          </div>
+          <a href="/" class="nav-cta" data-i18n="nav.diete">Diete</a>
+          <a href="/calculatoare/" class="nav-cta" data-i18n="nav.calculatoare">Calculatoare</a>
+          <a href="/alimente-sanatoase/" class="nav-cta nav-cta-special" data-i18n="nav.alimente">Alimente Sănătoase</a>
+          <a href="/despre/" class="nav-cta" data-i18n="nav.despre">Despre</a>
+        </div>
+      </nav>
+      <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+    </header>
+
+    <div class="vedete-banner">
+      <a href="/vedete-care-au-slabit/" data-i18n="banner.vedete">⭐ Vezi cum au slăbit cele mai cunoscute vedete! ⭐</a>
+    </div>
+
+    <main class="container">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p class="disclaimer" data-i18n-html="footer.disclaimer-html">
+          ⚕️ Informațiile de pe acest site au scop pur informativ și nu înlocuiesc sfatul unui
+          medic sau nutriționist. Înainte de a începe orice dietă, consultă un specialist.
+          Vezi <a href="/disclaimer-medical/">disclaimerul medical</a>.
+        </p>
+        <p class="footer-nav">
+          <a href="/despre/" data-i18n="footer.link-despre">Despre</a> ·
+          <a href="/vedete-care-au-slabit/" data-i18n="footer.link-vedete">Vedete care au slăbit</a> ·
+          <a href="/contact/" data-i18n="footer.link-contact">Contact</a> ·
+          <a href="/confidentialitate/" data-i18n="footer.link-confidentialitate">Confidențialitate</a> ·
+          <a href="/termeni/" data-i18n="footer.link-termeni">Termeni</a> ·
+          <a href="/disclaimer-medical/" data-i18n="footer.link-disclaimer">Disclaimer medical</a>
+        </p>
+        <p data-i18n="footer.copyright">© {anul} Slăbește Ușor — bibliotecă de diete și unelte gratuite.</p>
+      </div>
+    </footer>
+
+    <script id="nav-search-data" type="application/json" set:html={JSON.stringify(toateDietele)} />
+
+    <script>
+      // Reveal-on-scroll
+      const motionOff = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const tinte = document.querySelectorAll(
+        ".card, .tool-card, .tool, .lista-box, .meniu-zi .masa, .nota-contraindicatii, .faq details, .vedeta-card, .mag-card"
+      );
+      if (motionOff || !("IntersectionObserver" in window)) {
+        tinte.forEach((el) => el.classList.add("in"));
+      } else {
+        tinte.forEach((el) => el.classList.add("reveal"));
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("in");
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -40px 0px" }
+        );
+        tinte.forEach((el) => io.observe(el));
+      }
+
+      // Intro zbor
+      const zbor = document.getElementById('intro-zbor');
+      if (zbor) {
+        if (sessionStorage.getItem('intro-vazut')) {
+          zbor.remove();
+        } else {
+          document.body.style.overflow = 'hidden';
+          const dismiss = () => {
+            zbor.classList.add('pleaca');
+            document.body.style.overflow = '';
+            sessionStorage.setItem('intro-vazut', '1');
+            zbor.addEventListener('transitionend', (e) => {
+              if (e.target !== zbor) return;
+              zbor.remove();
+              // Dacă nu suntem pe homepage, mergem acolo ca să apară modalul de vârstă
+              if (window.location.pathname !== '/') {
+                window.location.href = '/';
+              }
+            }, { once: true });
+          };
+          // butonul de limbă nu trebuie să închidă intro-ul
+          const langBtn = document.getElementById('lang-toggle-btn');
+          if (langBtn) {
+            langBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              // If on a diet page, switch between /dieta/{slug}/ and /en/dieta/{slug}/
+              var p = window.location.pathname;
+              var roMatch = p.match(/^\/dieta\/([^/]+)\//);
+              var enMatch = p.match(/^\/en\/dieta\/([^/]+)\//);
+              if (roMatch) {
+                try { localStorage.setItem('site-lang', 'en'); } catch (err) {}
+                window.location.href = '/en/dieta/' + roMatch[1] + '/';
+              } else if (enMatch) {
+                try { localStorage.setItem('site-lang', 'ro'); } catch (err) {}
+                window.location.href = '/dieta/' + enMatch[1] + '/';
+              } else if (window.siteI18n) {
+                window.siteI18n.toggle();
+              }
+            });
+          }
+          // afișăm indicatorul de click după ce imaginile aterizează
+          setTimeout(() => zbor.classList.add('gata'), 1800);
+          zbor.addEventListener('click', dismiss, { once: true });
+        }
+      }
+
+      // ── Tranziție 4 colțuri ──────────────────────────────────
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var colturi = Array.from(document.querySelectorAll('.tr-colt'));
+
+      function trAduna() {
+        colturi.forEach(function(c) {
+          c.classList.remove('pleaca');
+          c.getBoundingClientRect();
+          c.classList.add('intra');
+        });
+      }
+
+      function trRetrage() {
+        colturi.forEach(function(c) {
+          c.classList.remove('intra');
+          c.classList.add('pleaca');
+        });
+      }
+
+      if (!reduceMotion && colturi.length === 4) {
+        // Pagina nouă: panourile acoperă, apoi se retrag spre colțuri
+        if (sessionStorage.getItem('tr-activ')) {
+          sessionStorage.removeItem('tr-activ');
+          // pornim acoperit → retragem imediat
+          colturi.forEach(function(c) { c.classList.add('intra'); });
+          colturi[0].getBoundingClientRect(); // reflow
+          requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+              trRetrage();
+              document.body.classList.add('compune');
+              setTimeout(function() { document.body.classList.remove('compune'); }, 900);
+            });
+          });
+        }
+
+        // Click pe link intern → panourile se adună din colțuri → navigăm
+        document.addEventListener('click', function(e) {
+          var t = e.target;
+          if (!(t instanceof Element)) return;
+          var a = t.closest('a');
+          if (!a) return;
+          var href = a.getAttribute('href');
+          if (!href || href.startsWith('http') || href.startsWith('mailto') ||
+              href.startsWith('#') || href.startsWith('tel')) return;
+          e.preventDefault();
+          trAduna();
+          sessionStorage.setItem('tr-activ', '1');
+          setTimeout(function() { window.location.href = href; }, 700);
+        });
+      }
+
+      // ── Nav search ──────────────────────────────────────────────
+      (function () {
+        const input = document.getElementById('nav-search') as HTMLInputElement | null;
+        const list  = document.getElementById('nav-search-results') as HTMLUListElement | null;
+        if (!input || !list) return;
+
+        const DIETE: { titlu: string; slug: string }[] = JSON.parse(
+          document.getElementById('nav-search-data')!.textContent!
+        );
+
+        let activeIdx = -1;
+
+        function render(q: string) {
+          const q2 = q.trim().toLowerCase();
+          list!.innerHTML = '';
+          activeIdx = -1;
+          if (!q2) { list!.hidden = true; return; }
+          const hits = DIETE.filter(d => d.titlu.toLowerCase().includes(q2)).slice(0, 8);
+          if (!hits.length) { list!.hidden = true; return; }
+          hits.forEach((d, i) => {
+            const li = document.createElement('li');
+            li.setAttribute('role', 'option');
+            li.setAttribute('aria-selected', 'false');
+            li.dataset.href = `/dieta/${d.slug}/`;
+            li.textContent = d.titlu;
+            li.addEventListener('mousedown', (e) => {
+              e.preventDefault();
+              window.location.href = `/dieta/${d.slug}/`;
+            });
+            list!.appendChild(li);
+          });
+          list!.hidden = false;
+        }
+
+        function setActive(idx: number) {
+          const items = list!.querySelectorAll('li');
+          items.forEach((li, i) => {
+            const active = i === idx;
+            li.setAttribute('aria-selected', String(active));
+            li.classList.toggle('active', active);
+          });
+          activeIdx = idx;
+        }
+
+        input.addEventListener('input', () => render(input.value));
+        input.addEventListener('keydown', (e) => {
+          const items = list!.querySelectorAll('li');
+          if (e.key === 'ArrowDown') { e.preventDefault(); setActive(Math.min(activeIdx + 1, items.length - 1)); }
+          else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(Math.max(activeIdx - 1, 0)); }
+          else if (e.key === 'Enter' && activeIdx >= 0) {
+            const href = (items[activeIdx] as HTMLElement).dataset.href;
+            if (href) window.location.href = href;
+          }
+          else if (e.key === 'Escape') { list!.hidden = true; input.value = ''; }
+        });
+        input.addEventListener('blur', () => setTimeout(() => { list!.hidden = true; }, 150));
+        input.addEventListener('focus', () => { if (input.value) render(input.value); });
+      })();
+
+// Buton intro — click pe text logo redeschide intro-ul
+      document.getElementById('btn-intro')?.addEventListener('click', () => {
+        sessionStorage.removeItem('intro-vazut');
+        window.location.reload();
+      });
+
+      // Progress bar scroll
+      const bar = document.getElementById("reading-progress");
+      if (bar) {
+        const update = () => {
+          const total = document.documentElement.scrollHeight - window.innerHeight;
+          bar.style.width = total > 0 ? `${(window.scrollY / total) * 100}%` : "0%";
+        };
+        window.addEventListener("scroll", update, { passive: true });
+        update();
+      }
+    </script>
+
+    <style is:global>
+      .logo-spin { display: block; transform-origin: center center; flex-shrink: 0; }
+      /* Runner Flash — traverseaza header de la stanga la dreapta */
+      .logo-alerg {
+        position: absolute;
+        height: 42px;
+        width: auto;
+        top: 50%;
+        left: 0;
+        z-index: 9;
+        filter: hue-rotate(170deg) saturate(2.2);
+        mix-blend-mode: multiply;
+        pointer-events: none;
+        animation: logo-alergare 6s linear infinite;
+      }
+      .logo-alerg-g1 { animation-delay: 0.06s;  opacity: 0.55; filter: hue-rotate(170deg) saturate(1.6); }
+      .logo-alerg-g2 { animation-delay: 0.09s;  opacity: 0.42; filter: hue-rotate(170deg) saturate(1.2); }
+      .logo-alerg-g3 { animation-delay: 0.12s;  opacity: 0.30; filter: hue-rotate(170deg) saturate(0.8); }
+      .logo-alerg-g4 { animation-delay: 0.15s;  opacity: 0.20; filter: hue-rotate(170deg) saturate(0.5); }
+      .logo-alerg-g5 { animation-delay: 0.18s;  opacity: 0.13; filter: hue-rotate(170deg) saturate(0.25); }
+      .logo-alerg-g6 { animation-delay: 0.21s;  opacity: 0.07; filter: saturate(0.1); }
+      .logo-alerg-g7 { animation-delay: 0.24s;  opacity: 0.04; filter: saturate(0); }
+      @keyframes logo-alergare {
+        0%      { transform: translateY(-50%) translateX(-60px); }
+        82%     { transform: translateY(-50%) translateX(calc(100vw + 60px)); }
+        82.01%  { transform: translateY(-50%) translateX(-60px); }
+        100%    { transform: translateY(-50%) translateX(-60px); }
+      }
+      .logo-btn {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        display: block;
+        line-height: 0;
+      }
+      .logo-img {
+        height: 46px;
+        width: auto;
+        display: block;
+      }
+    </style>
+    <script>
+      (function() {
+        // logo-spin removed — animatia e CSS pura pe .logo-alerg
+      })();
+    </script>
+  </body>
+</html>

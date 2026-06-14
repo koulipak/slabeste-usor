@@ -1,0 +1,102 @@
+---
+import Base from "../layouts/Base.astro";
+import Faq from "../components/Faq.astro";
+
+const faq = [
+  {
+    intrebare: "Cum se calculează greutatea ideală?",
+    raspuns:
+      "Cea mai folosită metodă pornește de la intervalul de IMC sănătos (18,5–24,9) aplicat înălțimii tale. Există și formule clasice (Devine, Robinson) care estimează o singură valoare în funcție de înălțime și sex. Calculatorul îți arată ambele.",
+  },
+  {
+    intrebare: "Există o singură greutate ideală?",
+    raspuns:
+      "Nu. Greutatea sănătoasă este un interval, nu o cifră fixă. Două persoane de aceeași înălțime pot fi sănătoase la greutăți diferite, în funcție de masa musculară și constituție. Folosește intervalul ca reper, nu ca țintă rigidă.",
+  },
+  {
+    intrebare: "Formulele se aplică la copii?",
+    raspuns:
+      "Nu. Aceste formule sunt valabile pentru adulți. La copii și adolescenți se folosesc curbe de creștere specifice vârstei, evaluate de medicul pediatru.",
+  },
+];
+---
+
+<Base
+  titlu="Calculator greutate ideală — intervalul sănătos pentru înălțimea ta"
+  descriere="Calculator gratuit de greutate ideală: află intervalul de greutate sănătoasă pentru înălțimea ta (după IMC) plus estimările formulelor clasice Devine și Robinson."
+>
+  <nav class="breadcrumb"><a href="/" data-i18n="bc.acasa">Acasă</a> › <a href="/calculatoare/" data-i18n="bc.calc">Calculatoare</a> › <span data-i18n="gi.bc">Greutate ideală</span></nav>
+  <h1 data-i18n="gi.h1">Calculator greutate ideală</h1>
+  <p class="lead" data-i18n="gi.lead">
+    Află intervalul de greutate sănătoasă pentru înălțimea ta, plus estimările formulelor clasice.
+    Greutatea ideală e un interval, nu o cifră fixă. Datele rămân în browserul tău.
+  </p>
+
+  <form class="tool" id="gi-form">
+    <div class="camp">
+      <label data-i18n="gi.sex">Sex</label>
+      <div class="radios">
+        <label><input type="radio" name="sex" value="barbat" checked /> <span data-i18n="gi.barbat">Bărbat</span></label>
+        <label><input type="radio" name="sex" value="femeie" /> <span data-i18n="gi.femeie">Femeie</span></label>
+      </div>
+    </div>
+    <div class="camp">
+      <label for="inaltime" data-i18n="gi.inaltime">Înălțime (cm)</label>
+      <input type="number" id="inaltime" min="120" max="230" value="175" required />
+    </div>
+    <button class="btn" type="submit" data-i18n="gi.btn">Calculează</button>
+
+    <div class="rezultat gol" id="rezultat" role="status" aria-live="polite">
+      <div><span class="mare" id="interval-val">—</span> <span class="sub" data-i18n="gi.interval-sub">interval sănătos (kg)</span></div>
+      <table>
+        <tr><td data-i18n="gi.imc-interval">Interval sănătos (IMC 18,5–24,9)</td><td id="imc-interval">—</td></tr>
+        <tr><td data-i18n="gi.devine">Formula Devine</td><td id="devine-val">—</td></tr>
+        <tr><td data-i18n="gi.robinson">Formula Robinson</td><td id="robinson-val">—</td></tr>
+      </table>
+      <p class="sub" style="margin-top:0.75rem;" data-i18n="gi.nota">
+        Reper informativ. Greutatea potrivită pentru tine depinde și de masa musculară,
+        constituție și starea de sănătate.
+      </p>
+    </div>
+  </form>
+
+  <div class="prose">
+    <h2 data-i18n="gi.h2">Cum funcționează</h2>
+    <p data-i18n-html="gi.p-html">
+      Metoda principală derivă <strong>intervalul de greutate sănătoasă</strong> din IMC-ul normal
+      (18,5–24,9) aplicat înălțimii tale. În plus, afișăm două <strong>formule clasice</strong> —
+      Devine și Robinson — care dau o valoare orientativă unică în funcție de înălțime și sex.
+      Diferențele dintre ele arată exact de ce „greutatea ideală" e un interval, nu o singură cifră.
+    </p>
+  </div>
+
+  <Faq intrebari={faq} />
+</Base>
+
+<script>
+  import {
+    intervalGreutateSanatoasa,
+    greutateDevine,
+    greutateRobinson,
+    rotunjit,
+    type Sex,
+  } from "../lib/calc";
+
+  const form = document.getElementById("gi-form") as HTMLFormElement;
+  const rezultat = document.getElementById("rezultat")!;
+  const set = (id: string, v: string) => (document.getElementById(id)!.textContent = v);
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const sex = (form.querySelector<HTMLInputElement>('input[name="sex"]:checked')!.value) as Sex;
+    const cm = +(document.getElementById("inaltime") as HTMLInputElement).value;
+    if (!cm) return;
+
+    const { min, max } = intervalGreutateSanatoasa(cm);
+    set("interval-val", `${rotunjit(min)}–${rotunjit(max)}`);
+    set("imc-interval", `${rotunjit(min)}–${rotunjit(max)} kg`);
+    set("devine-val", `${rotunjit(greutateDevine(sex, cm))} kg`);
+    set("robinson-val", `${rotunjit(greutateRobinson(sex, cm))} kg`);
+    rezultat.classList.remove("gol");
+  });
+</script>

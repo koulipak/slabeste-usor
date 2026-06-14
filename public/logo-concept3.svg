@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228 68" role="img" aria-label="Slăbește Ușor — Nutriție în Mișcare">
+  <defs>
+    <linearGradient id="avoSkin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5a7a3a"/>
+      <stop offset="100%" stop-color="#3d5228"/>
+    </linearGradient>
+    <linearGradient id="avoFlesh" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4e88a"/>
+      <stop offset="100%" stop-color="#a8c95f"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fb923c"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+    <linearGradient id="orangeLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fed7aa"/>
+      <stop offset="100%" stop-color="#fb923c"/>
+    </linearGradient>
+    <!-- Clip la cercul logo -->
+    <clipPath id="circleClip">
+      <circle cx="33" cy="33" r="29"/>
+    </clipPath>
+    <filter id="softShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#00000018"/>
+    </filter>
+  </defs>
+
+  <!-- ─── Jumătatea stângă: AVOCADO ─────────────────── -->
+  <g clip-path="url(#circleClip)">
+    <!-- Coajă -->
+    <path d="M 33,3.5 A 29.5,29.5 0 0 0 33,62.5 Z"
+          fill="url(#avoSkin)"/>
+    <!-- Pulpă -->
+    <path d="M 33,12 C 28,12 21,17 19,24 C 17,30 18,37 22,43
+             C 25,48 29,51 33,52 L 33,12 Z"
+          fill="url(#avoFlesh)"/>
+    <!-- Sâmbure -->
+    <ellipse cx="25" cy="33" rx="7" ry="9" fill="#7c4d2e"/>
+    <ellipse cx="25" cy="33" rx="4.5" ry="6" fill="#a0683e"/>
+    <ellipse cx="24" cy="31.5" rx="1.8" ry="2.5" fill="#c49070" opacity="0.5"/>
+
+    <!-- Jumătatea dreaptă: TALIE PORTOCALIE -->
+    <path d="M 33,3.5
+             C 48,4 61,14 62,26
+             C 63,30 58,32 55,33
+             C 58,34 63,36 62,40
+             C 61,52 48,62 33,62.5 Z"
+          fill="url(#orangeGrad)"/>
+
+    <!-- Highlight waist -->
+    <path d="M 53,26 C 56,29 58,31 55,33 C 58,35 56,37 53,40"
+          fill="none" stroke="url(#orangeLight)"
+          stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+
+    <!-- Tichete bandă centimetru pe talie -->
+    <line x1="56" y1="30" x2="62" y2="30" stroke="#fed7aa" stroke-width="0.85" opacity="0.65"/>
+    <line x1="57" y1="32" x2="64" y2="32" stroke="#fed7aa" stroke-width="0.85" opacity="0.65"/>
+    <line x1="57" y1="34" x2="64" y2="34" stroke="#fed7aa" stroke-width="0.85" opacity="0.65"/>
+    <line x1="56" y1="36" x2="62" y2="36" stroke="#fed7aa" stroke-width="0.85" opacity="0.65"/>
+  </g>
+
+  <!-- Linia de separare (diametru vertical) -->
+  <line x1="33" y1="3.5" x2="33" y2="62.5"
+        stroke="#fff" stroke-width="1" opacity="0.4"/>
+
+  <!-- ─── Ganteră (codița) ─────────────────────────── -->
+  <line x1="30" y1="22" x2="38" y2="14"
+        stroke="#4b5563" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="28.5" cy="23.2" rx="4.2" ry="2.6" fill="#374151"/>
+  <ellipse cx="28.5" cy="23.2" rx="2.6" ry="1.6" fill="#4b5563"/>
+  <ellipse cx="39.5" cy="13.0" rx="4.2" ry="2.6" fill="#374151"/>
+  <ellipse cx="39.5" cy="13.0" rx="2.6" ry="1.6" fill="#4b5563"/>
+
+  <!-- Frunzuliță -->
+  <path d="M 35,19 C 39,13 45,15 42,21 C 38,17 36,19 35,19 Z"
+        fill="#6aad50" opacity="0.9"/>
+  <line x1="35.5" y1="19" x2="41" y2="20.5"
+        stroke="#3d8030" stroke-width="0.7" stroke-linecap="round"/>
+
+  <!-- ─── CONTUR EKG — linie portocalie subțire ────── -->
+  <!--
+    Jumătatea stângă: arc curat (contraclorar din vârf în jos)
+    Jumătatea dreaptă: traiect EKG cu spike QRS la ecvatorul cercului (y=33)
+    Spike: baseline → P-undă mică → QRS sus (67,27) → QRS jos (60,41) → revenire
+  -->
+  <path d="
+    M 33,3.5
+    A 29.5,29.5 0 0 0 33,62.5
+    C 49.3,62.5 62.5,49.3 62.5,36
+    L 63,34.5
+    L 64,31
+    L 67,26
+    L 60,41
+    L 63,35.5
+    L 62.5,33
+    C 62.5,16.7 49.3,3.5 33,3.5
+    Z
+  " fill="none"
+    stroke="#ea580c"
+    stroke-width="0.85"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    filter="url(#softShadow)"/>
+
+  <!-- ─── Chenar dreptunghiular fin negru (tot logo-ul) ── -->
+  <rect x="1" y="1" width="226" height="66" rx="10"
+        fill="none" stroke="#111" stroke-width="0.6" opacity="0.5"/>
+
+  <!-- ─── TEXT ─────────────────────────────────────── -->
+  <text x="78" y="28"
+        font-family="'Segoe UI',Helvetica,Arial,sans-serif"
+        font-weight="800" font-size="20" letter-spacing="1"
+        fill="#1f2937">SLĂBEȘTE</text>
+  <text x="78" y="51"
+        font-family="'Segoe UI',Helvetica,Arial,sans-serif"
+        font-weight="800" font-size="20" letter-spacing="1"
+        fill="#ea580c">UȘOR</text>
+  <text x="79" y="63"
+        font-family="Georgia,'Times New Roman',serif"
+        font-weight="400" font-style="italic" font-size="8.5" letter-spacing="0.6"
+        fill="#92400e">Biblioteca de Diete</text>
+</svg>

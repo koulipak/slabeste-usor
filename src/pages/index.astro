@@ -1,0 +1,264 @@
+---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import { CATEGORII, CARACTERISTICI, getCategorie } from "../data/taxonomie";
+import { GRUPE_VARSTA, VARSTE_DIETE } from "../data/varste";
+import { dificultateText } from "../lib/format";
+
+const diete = (await getCollection("diete", ({ data }) => !data.draft)).sort((a, b) =>
+  a.data.titlu.localeCompare(b.data.titlu, "ro")
+);
+---
+
+<Base
+  titlu="Diete de slăbit — bibliotecă completă"
+  descriere="Bibliotecă neutră de diete de slăbit: keto, post intermitent, mediteraneană, Dukan, Rina și altele. Filtrează după tip și decide singur. Plus calculatoare gratuite de calorii, IMC și greutate ideală."
+  bodyClass="pg-home"
+>
+
+  <!-- ── Modal vârstă ───────────────────────────────────────────── -->
+  <div id="modal-varsta" class="modal-varsta" role="dialog" aria-modal="true" aria-labelledby="mv-titlu">
+    <div class="mv-card">
+      <p class="mv-intro" data-i18n="modal.bun-venit">👋 Bun venit!</p>
+      <h2 id="mv-titlu" class="mv-titlu" data-i18n="modal.titlu">Din ce grupă de vârstă faci parte?</h2>
+      <p class="mv-sub" data-i18n="modal.sub">Îți arătăm dietele cele mai potrivite pentru tine.</p>
+      <div class="mv-optiuni">
+        {GRUPE_VARSTA.map((g) => (
+          <button class="mv-btn" data-varsta={g.slug}>
+            <span class="mv-icon">{g.icon}</span>
+            <span class="mv-label">{g.eticheta}</span>
+            <span class="mv-desc" data-varsta-desc={g.slug}>{g.descriere}</span>
+          </button>
+        ))}
+      </div>
+      <button class="mv-skip" id="mv-skip" data-i18n="modal.skip">Arată toate dietele</button>
+    </div>
+  </div>
+
+  <h1 data-i18n="home.h1">Diete</h1>
+  <p class="lead" data-i18n="home.lead">
+    Compară dietele de slăbit fără să fii împins spre una anume. Vezi cum funcționează fiecare,
+    ce mănânci și ce eviți, avantaje și dezavantaje — apoi decide singur ce ți se potrivește.
+    Și calculează-ți gratuit caloriile, IMC-ul și greutatea ideală.
+  </p>
+
+  <!-- Banner vârstă activă -->
+  <div id="banner-varsta" class="banner-varsta" hidden>
+    <span id="banner-text">
+      <span data-i18n="banner.filtrat-pentru">Diete filtrate pentru grupa:</span>
+      <span id="banner-varsta-label"></span>
+    </span>
+    <button id="banner-schimba" class="banner-schimba" data-i18n="banner.schimba">Schimbă vârsta</button>
+  </div>
+
+  <section aria-label="Filtre">
+    <p class="filtru-grup-titlu" data-i18n="home.filtru-tip">Tip de dietă</p>
+    <div class="filtre" data-grup="categorie">
+      <button class="filtru-btn" data-val="*" aria-pressed="true">Toate</button>
+      {CATEGORII.map((c) => (
+        <button class="filtru-btn" data-val={c.slug} aria-pressed="false">{c.nume}</button>
+      ))}
+    </div>
+
+    <p class="filtru-grup-titlu" data-i18n="home.filtru-car">Caracteristici</p>
+    <div class="filtre" data-grup="caracteristica">
+      <button class="filtru-btn" data-val="*" aria-pressed="true">Toate</button>
+      {CARACTERISTICI.map((c) => (
+        <button class="filtru-btn" data-val={c.slug} aria-pressed="false">{c.nume}</button>
+      ))}
+    </div>
+
+    <p class="filtru-grup-titlu" data-i18n="home.filtru-dif">Dificultate</p>
+    <div class="filtre" data-grup="dificultate">
+      <button class="filtru-btn" data-val="*" aria-pressed="true" data-i18n="filter.toate">Toate</button>
+      <button class="filtru-btn filtru-dif-usoara" data-val="usoara" aria-pressed="false" data-i18n="diff.usoara">Ușoară</button>
+      <button class="filtru-btn filtru-dif-moderata" data-val="moderata" aria-pressed="false" data-i18n="diff.moderata">Moderată</button>
+      <button class="filtru-btn filtru-dif-stricta" data-val="stricta" aria-pressed="false" data-i18n="diff.stricta">Strictă</button>
+    </div>
+
+    <p class="filtru-grup-titlu" data-i18n="home.filtru-var">Vârstă</p>
+    <div class="filtre" data-grup="varsta">
+      <button class="filtru-btn" data-val="*" aria-pressed="true">Toate</button>
+      {GRUPE_VARSTA.map((g) => (
+        <button class="filtru-btn" data-val={g.slug} aria-pressed="false">{g.eticheta}</button>
+      ))}
+    </div>
+  </section>
+
+  <p class="rezultate-count" hidden><span id="count">{diete.length}</span> <span data-i18n="res.diete">diete</span></p>
+
+  <div class="grid" id="lista-diete">
+    {diete.map((d) => {
+      const varsteRec = VARSTE_DIETE[d.id] ?? ["18-30", "30-50", "50plus"];
+      return (
+        <article
+          class="card"
+          data-categorie={d.data.categorie}
+          data-caracteristici={d.data.caracteristici.join(" ")}
+          data-varste={varsteRec.join(" ")}
+          data-dificultate={d.data.dificultate}
+        >
+          {d.data.imagine ? (
+            <a href={`/dieta/${d.id}/`} class="card-img-link">
+              <Image src={d.data.imagine} alt={d.data.imagineAlt ?? d.data.titlu} widths={[260, 520]} loading="lazy" />
+            </a>
+          ) : (
+            <div class="card-img-ph">
+              <a href={`/dieta/${d.id}/`} class="bol" aria-label={d.data.titlu}>🥗</a>
+            </div>
+          )}
+          <div class="card-body">
+            <span class="badge badge-categorie" data-cat-sg={d.data.categorie}>{getCategorie(d.data.categorie)?.numeSingular}</span>
+            <h3 data-diet-titlu={d.id}>{d.data.titlu}</h3>
+            <p class="card-meta" data-diet-principiu={d.id}>{d.data.principiu}</p>
+            <p class="card-meta"><small><span data-i18n="card.dificultate">Dificultate:</span> <span data-dif-val={d.data.dificultate}>{dificultateText(d.data.dificultate)}</span></small></p>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+
+  <p id="gol" hidden data-i18n="gol.text">Nicio dietă nu corespunde filtrelor selectate.</p>
+
+</Base>
+
+<script>
+  // ── Stare globală filtre ──────────────────────────────────────────
+  const stare = { categorie: "*", caracteristica: "*", varsta: "*", dificultate: "*" };
+
+  const ETICHETE_VARSTA: Record<string, Record<string, string>> = {
+    ro: { "18-30": "18–30 ani 🏃", "30-50": "30–50 ani 🧘", "50plus": "Peste 50 de ani 🌿" },
+    en: { "18-30": "18–30 years 🏃", "30-50": "30–50 years 🧘", "50plus": "Over 50 🌿" },
+  };
+
+  function aplica() {
+    const cards = Array.from(document.querySelectorAll<HTMLElement>("#lista-diete .card"));
+    let vizibile = 0;
+
+    cards.forEach((card) => {
+      const okCat  = stare.categorie     === "*" || card.dataset.categorie === stare.categorie;
+      const carac  = (card.dataset.caracteristici ?? "").split(" ").filter(Boolean);
+      const okCar  = stare.caracteristica === "*" || carac.includes(stare.caracteristica);
+      const varste = (card.dataset.varste ?? "").split(" ").filter(Boolean);
+      const okVar  = stare.varsta        === "*" || varste.includes(stare.varsta);
+      const okDif  = stare.dificultate   === "*" || card.dataset.dificultate === stare.dificultate;
+      const arata  = okCat && okCar && okVar && okDif;
+
+      if (arata) {
+        vizibile++;
+        if (card.style.display === "none") {
+          card.style.display = "";
+          requestAnimationFrame(() => requestAnimationFrame(() => card.classList.remove("card-out")));
+        } else {
+          card.classList.remove("card-out");
+        }
+        // badge recomandat
+        card.classList.toggle("card-recomandat", stare.varsta !== "*");
+      } else {
+        card.classList.add("card-out");
+      }
+    });
+
+    document.getElementById("count")!.textContent = String(vizibile);
+    document.getElementById("gol")!.hidden = vizibile > 0;
+
+    setTimeout(() => {
+      cards.forEach((card) => {
+        if (card.classList.contains("card-out")) card.style.display = "none";
+      });
+    }, 250);
+  }
+
+  // ── Filtre categorie / caracteristică ────────────────────────────
+  document.querySelectorAll<HTMLElement>(".filtre").forEach((grup) => {
+    const cheie = grup.dataset.grup as "categorie" | "caracteristica" | "dificultate" | "varsta";
+    grup.querySelectorAll<HTMLButtonElement>(".filtru-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        stare[cheie] = btn.dataset.val!;
+        grup.querySelectorAll(".filtru-btn").forEach((b) =>
+          b.setAttribute("aria-pressed", b === btn ? "true" : "false")
+        );
+        aplica();
+      });
+    });
+  });
+
+  // ── Modal vârstă ─────────────────────────────────────────────────
+  const modal  = document.getElementById("modal-varsta")!;
+  const banner = document.getElementById("banner-varsta") as HTMLElement;
+  const bannerText = document.getElementById("banner-text")!;
+
+  function aplicaVarsta(slug: string) {
+    stare.varsta = slug;
+    aplica();
+    if (slug !== "*") {
+      // stocăm slug-ul activ pe elementul banner (pentru actualizare la schimb de limbă)
+      banner.dataset.varstaActiva = slug;
+      // setăm label-ul în limba curentă
+      const lang = (window as any).siteI18n?.getLang?.() ?? "ro";
+      const lbl = document.getElementById("banner-varsta-label");
+      if (lbl) lbl.textContent = " " + (ETICHETE_VARSTA[lang]?.[slug] ?? ETICHETE_VARSTA.ro[slug]);
+      banner.hidden = false;
+    } else {
+      delete banner.dataset.varstaActiva;
+      banner.hidden = true;
+    }
+    sessionStorage.setItem("varsta-aleasa", slug);
+  }
+
+  function inchideModal() {
+    modal.classList.add("mv-iese");
+    modal.addEventListener("animationend", () => modal.remove(), { once: true });
+  }
+
+  // Butoane din modal
+  modal.querySelectorAll<HTMLButtonElement>(".mv-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      aplicaVarsta(btn.dataset.varsta!);
+      inchideModal();
+    });
+  });
+
+  document.getElementById("mv-skip")!.addEventListener("click", () => {
+    aplicaVarsta("*");
+    inchideModal();
+  });
+
+  // Buton schimbă vârsta din banner
+  document.getElementById("banner-schimba")!.addEventListener("click", () => {
+    stare.varsta = "*";
+    banner.hidden = true;
+    sessionStorage.removeItem("varsta-aleasa");
+    aplica();
+    // re-afișează modalul
+    document.body.appendChild(modal);
+    modal.classList.remove("mv-iese");
+    modal.classList.add("mv-intra");
+  });
+
+  // La prima vizită — arată modalul; la vizitele ulterioare — restaurează selecția
+  const varstaStocata = sessionStorage.getItem("varsta-aleasa");
+  if (varstaStocata !== null) {
+    modal.remove();
+    if (varstaStocata !== "*") {
+      aplicaVarsta(varstaStocata);
+    }
+  } else {
+    // Prima vizită: așteptăm să dispară intro-ul, apoi afișăm modalul
+    const zbor = document.getElementById("intro-zbor");
+    if (zbor) {
+      // Intro există — așteptăm să fie eliminat din DOM, apoi arătăm modalul
+      const obs = new MutationObserver(() => {
+        if (!document.getElementById("intro-zbor")) {
+          obs.disconnect();
+          setTimeout(() => modal.classList.add("mv-intra"), 300);
+        }
+      });
+      obs.observe(document.body, { childList: true, subtree: false });
+    } else {
+      // Intro deja dispărut (e.g. reîncărcare) — arătăm imediat
+      setTimeout(() => modal.classList.add("mv-intra"), 400);
+    }
+  }
+</script>

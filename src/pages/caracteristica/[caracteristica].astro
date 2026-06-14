@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import Base from "../../layouts/Base.astro";
+import { CARACTERISTICI, getCategorie } from "../../data/taxonomie";
+import { dificultateText } from "../../lib/format";
+
+export async function getStaticPaths() {
+  const diete = await getCollection("diete", ({ data }) => !data.draft);
+  return CARACTERISTICI.map((car) => ({
+    params: { caracteristica: car.slug },
+    props: {
+      car,
+      diete: diete
+        .filter((d) => d.data.caracteristici.includes(car.slug))
+        .sort((a, b) => a.data.titlu.localeCompare(b.data.titlu, "ro")),
+    },
+  }));
+}
+
+const { car, diete } = Astro.props;
+---
+
+<Base titlu={`Diete: ${car.nume}`} descriere={car.descriere}>
+  <nav class="breadcrumb"><a href="/" data-i18n="bc.acasa">Acasă</a> › {car.nume}</nav>
+  <h1>Diete — {car.nume}</h1>
+  <p class="lead">{car.descriere}</p>
+
+  {diete.length === 0 ? (
+    <p>Încă nu avem diete cu această caracteristică. Revino curând!</p>
+  ) : (
+    <div class="grid">
+      {diete.map((d) => (
+        <article class="card">
+          {d.data.imagine ? (
+            <a href={`/dieta/${d.id}/`} class="card-img-link">
+              <Image src={d.data.imagine} alt={d.data.imagineAlt ?? d.data.titlu} widths={[260, 520]} loading="lazy" />
+            </a>
+          ) : (
+            <div class="card-img-ph">
+              <a href={`/dieta/${d.id}/`} class="bol" aria-label={d.data.titlu}>🥗</a>
+            </div>
+          )}
+          <div class="card-body">
+            <span class="badge badge-categorie" data-cat-sg={d.data.categorie}>{getCategorie(d.data.categorie)?.numeSingular}</span>
+            <h3 data-diet-titlu={d.id}>{d.data.titlu}</h3>
+            <p class="card-meta" data-diet-principiu={d.id}>{d.data.principiu}</p>
+            <p class="card-meta"><small><span data-i18n="card.dificultate">Dificultate:</span> <span data-dif-val={d.data.dificultate}>{dificultateText(d.data.dificultate)}</span></small></p>
+          </div>
+        </article>
+      ))}
+    </div>
+  )}
+
+  <nav class="sectiune-alte">
+    <h2>Alte caracteristici</h2>
+    {CARACTERISTICI.filter((x) => x.slug !== car.slug).map((x) => (
+      <a href={`/caracteristica/${x.slug}/`} class="badge">{x.nume}</a>
+    ))}
+  </nav>
+</Base>

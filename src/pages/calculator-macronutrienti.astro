@@ -1,0 +1,96 @@
+---
+import Base from "../layouts/Base.astro";
+import Faq from "../components/Faq.astro";
+import { PROFILURI_MACRO } from "../lib/calc";
+
+const faq = [
+  {
+    intrebare: "Ce sunt macronutrienții?",
+    raspuns:
+      "Macronutrienții sunt cele trei surse principale de calorii din alimentație: proteinele și carbohidrații (câte 4 kcal pe gram) și grăsimile (9 kcal pe gram). Împărțirea lor potrivită ajută la sațietate și la păstrarea masei musculare.",
+  },
+  {
+    intrebare: "Cum îmi calculez macronutrienții pentru slăbit?",
+    raspuns:
+      "Pornești de la caloriile tale zilnice (de obicei caloriile de menținere minus un deficit) și le împarți pe procente: de exemplu 30% proteine, 40% carbohidrați, 30% grăsimi. Calculatorul transformă aceste procente în grame.",
+  },
+  {
+    intrebare: "Ce raport de macronutrienți e cel mai bun?",
+    raspuns:
+      "Nu există un raport universal. Un profil echilibrat funcționează pentru majoritatea, low-carb sau keto pentru cei care preferă mai puțini carbohidrați, iar un aport mai mare de proteine ajută la păstrarea masei musculare. Alege în funcție de preferințe și de cum te simți.",
+  },
+];
+---
+
+<Base
+  titlu="Calculator macronutrienți — proteine, carbohidrați, grăsimi"
+  descriere="Calculator gratuit de macronutrienți: împarte caloriile zilnice pe proteine, carbohidrați și grăsimi, în funcție de profilul ales (echilibrat, low-carb, keto)."
+>
+  <nav class="breadcrumb"><a href="/" data-i18n="bc.acasa">Acasă</a> › <a href="/calculatoare/" data-i18n="bc.calc">Calculatoare</a> › <span data-i18n="macro.bc">Calculator macronutrienți</span></nav>
+  <h1 data-i18n="macro.h1">Calculator macronutrienți</h1>
+  <p class="lead" data-i18n-html="macro.lead-html">
+    Împarte-ți caloriile zilnice pe proteine, carbohidrați și grăsimi. Dacă nu-ți știi necesarul
+    caloric, află-l întâi cu <a href="/calculator-calorii/">calculatorul de calorii</a>.
+  </p>
+
+  <form class="tool" id="macro-form">
+    <div class="camp">
+      <label for="calorii" data-i18n="macro.calorii">Calorii pe zi (kcal)</label>
+      <input type="number" id="calorii" min="800" max="6000" step="10" value="2000" required />
+    </div>
+    <div class="camp">
+      <label for="profil" data-i18n="macro.profil">Profil de macronutrienți</label>
+      <select id="profil">
+        {PROFILURI_MACRO.map((p, i) => (
+          <option value={p.slug} selected={i === 0}>{p.nume} — {p.descriere}</option>
+        ))}
+      </select>
+    </div>
+    <button class="btn" type="submit" data-i18n="macro.btn">Calculează</button>
+
+    <div class="rezultat gol" id="rezultat" role="status" aria-live="polite">
+      <table>
+        <tr><td data-i18n="macro.prot">🥩 Proteine</td><td id="prot-val">—</td></tr>
+        <tr><td data-i18n="macro.carb">🍞 Carbohidrați</td><td id="carb-val">—</td></tr>
+        <tr><td data-i18n="macro.gras">🥑 Grăsimi</td><td id="gras-val">—</td></tr>
+      </table>
+      <p class="sub" style="margin-top:0.75rem;" data-i18n="macro.nota">
+        Valori orientative pe zi. 1 g proteine / carbohidrați = 4 kcal, 1 g grăsimi = 9 kcal.
+      </p>
+    </div>
+  </form>
+
+  <div class="prose">
+    <h2 data-i18n="macro.h2">Cum funcționează</h2>
+    <p data-i18n-html="macro.p-html">
+      Calculatorul ia totalul tău de calorii și îl împarte pe cele trei categorii după procentele
+      profilului ales, apoi transformă caloriile în grame. Profilul <strong>echilibrat</strong>
+      merge pentru majoritatea oamenilor; <strong>low-carb</strong> și <strong>keto</strong> reduc
+      carbohidrații; <strong>bogat în proteine</strong> susține masa musculară.
+    </p>
+  </div>
+
+  <Faq intrebari={faq} />
+</Base>
+
+<script>
+  import { PROFILURI_MACRO, macronutrienti, rotunjit } from "../lib/calc";
+
+  const form = document.getElementById("macro-form") as HTMLFormElement;
+  const rezultat = document.getElementById("rezultat")!;
+  const set = (id: string, v: string) => (document.getElementById(id)!.textContent = v);
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const calorii = +(document.getElementById("calorii") as HTMLInputElement).value;
+    const slug = (document.getElementById("profil") as HTMLSelectElement).value;
+    const profil = PROFILURI_MACRO.find((p) => p.slug === slug)!;
+    if (!calorii) return;
+
+    const m = macronutrienti(calorii, profil);
+    set("prot-val", `${rotunjit(m.proteineG)} g (${profil.proteine}%)`);
+    set("carb-val", `${rotunjit(m.carboG)} g (${profil.carbo}%)`);
+    set("gras-val", `${rotunjit(m.grasimiG)} g (${profil.grasimi}%)`);
+    rezultat.classList.remove("gol");
+  });
+</script>

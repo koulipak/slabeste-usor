@@ -1,0 +1,128 @@
+---
+import Base from "../layouts/Base.astro";
+import Faq from "../components/Faq.astro";
+import { NIVELURI_ACTIVITATE } from "../lib/calc";
+
+const faq = [
+  {
+    intrebare: "Câte calorii trebuie să mănânc ca să slăbesc?",
+    raspuns:
+      "De obicei se pornește de la un deficit de 300–500 kcal sub necesarul zilnic (TDEE), ceea ce duce la o slăbire de aproximativ 0,3–0,5 kg pe săptămână. Calculatorul îți arată direct aceste valori pe baza datelor tale.",
+  },
+  {
+    intrebare: "Ce este TDEE?",
+    raspuns:
+      "TDEE (Total Daily Energy Expenditure) este numărul total de calorii pe care le arzi într-o zi: metabolismul de bază (BMR) înmulțit cu un factor de activitate. Este caloriile de menținere — dacă mănânci atât, greutatea rămâne stabilă.",
+  },
+  {
+    intrebare: "Ce formulă folosește calculatorul?",
+    raspuns:
+      "Folosește ecuația Mifflin-St Jeor pentru metabolismul de bază, considerată cea mai precisă pentru populația generală, apoi aplică un factor de activitate de la 1,2 (sedentar) la 1,9 (extrem de activ).",
+  },
+  {
+    intrebare: "Rezultatul este exact?",
+    raspuns:
+      "Este o estimare. Necesarul real variază în funcție de masa musculară, genetică, somn și alți factori. Folosește valoarea ca punct de plecare și ajusteaz-o după cum evoluează greutatea ta în 2–3 săptămâni.",
+  },
+];
+---
+
+<Base
+  titlu="Calculator calorii (TDEE) — câte calorii arzi pe zi"
+  descriere="Calculator gratuit de calorii: află câte calorii arzi pe zi (TDEE) și de câte ai nevoie ca să slăbești, să menții sau să iei în greutate. Formula Mifflin-St Jeor."
+>
+  <nav class="breadcrumb"><a href="/" data-i18n="bc.acasa">Acasă</a> › <a href="/calculatoare/" data-i18n="bc.calc">Calculatoare</a> › <span data-i18n="cc.bc">Calculator calorii</span></nav>
+  <h1 data-i18n="cc.h1">Calculator calorii (TDEE)</h1>
+  <p class="lead" data-i18n="cc.lead">
+    Află câte calorii arzi într-o zi și câte ar trebui să mănânci ca să slăbești, să menții sau
+    să iei în greutate. Datele rămân în browserul tău — nu se trimit nicăieri.
+  </p>
+
+  <form class="tool" id="tdee-form">
+    <div class="camp">
+      <label data-i18n="cc.sex">Sex</label>
+      <div class="radios">
+        <label><input type="radio" name="sex" value="barbat" checked /> <span data-i18n="cc.barbat">Bărbat</span></label>
+        <label><input type="radio" name="sex" value="femeie" /> <span data-i18n="cc.femeie">Femeie</span></label>
+      </div>
+    </div>
+    <div class="camp">
+      <label for="varsta" data-i18n="cc.varsta">Vârstă (ani)</label>
+      <input type="number" id="varsta" min="14" max="100" value="30" required />
+    </div>
+    <div class="camp">
+      <label for="inaltime" data-i18n="cc.inaltime">Înălțime (cm)</label>
+      <input type="number" id="inaltime" min="120" max="230" value="175" required />
+    </div>
+    <div class="camp">
+      <label for="greutate" data-i18n="cc.greutate">Greutate (kg)</label>
+      <input type="number" id="greutate" min="30" max="300" step="0.1" value="80" required />
+    </div>
+    <div class="camp">
+      <label for="activitate" data-i18n="cc.activitate">Nivel de activitate</label>
+      <select id="activitate">
+        {NIVELURI_ACTIVITATE.map((n) => (
+          <option value={n.factor}>{n.nume} — {n.exemplu}</option>
+        ))}
+      </select>
+    </div>
+    <button class="btn" type="submit" data-i18n="cc.btn">Calculează</button>
+
+    <div class="rezultat gol" id="rezultat" role="status" aria-live="polite">
+      <div><span class="mare" id="tdee-val">—</span> <span class="sub" data-i18n="cc.kcal-zi">kcal/zi (menținere)</span></div>
+      <table>
+        <tr><td data-i18n="cc.bmr">Metabolism de bază (BMR)</td><td id="bmr-val">—</td></tr>
+        <tr><td data-i18n="cc.mentinere">Menținere (TDEE)</td><td id="mentinere-val">—</td></tr>
+        <tr><td data-i18n="cc.slab-usor">Slăbire ușoară (−300 kcal)</td><td id="slab-usor-val">—</td></tr>
+        <tr><td data-i18n="cc.slab">Slăbire (−500 kcal, ~0,5 kg/săpt.)</td><td id="slab-val">—</td></tr>
+        <tr><td data-i18n="cc.surplus">Creștere în masă (+300 kcal)</td><td id="surplus-val">—</td></tr>
+      </table>
+      <p class="sub" style="margin-top:0.75rem;" data-i18n="cc.nota">
+        Estimare informativă. Nu coborî sub ~1200 kcal/zi (femei) / ~1500 kcal/zi (bărbați)
+        fără îndrumarea unui specialist.
+      </p>
+    </div>
+  </form>
+
+  <div class="prose">
+    <h2 data-i18n="cc.h2">Cum funcționează</h2>
+    <p data-i18n-html="cc.p-html">
+      Calculatorul estimează întâi <strong>metabolismul de bază (BMR)</strong> — caloriile pe care
+      corpul le consumă în repaus complet — folosind ecuația Mifflin-St Jeor. Apoi îl înmulțește
+      cu un <strong>factor de activitate</strong> ca să obțină <strong>TDEE</strong>, totalul ars
+      într-o zi obișnuită. Ca să slăbești, mănânci sub TDEE; ca să iei în greutate, peste.
+    </p>
+  </div>
+
+  <Faq intrebari={faq} />
+</Base>
+
+<script>
+  import { bmrMifflin, tdee, rotunjit, type Sex } from "../lib/calc";
+
+  const form = document.getElementById("tdee-form") as HTMLFormElement;
+  const rezultat = document.getElementById("rezultat")!;
+  const set = (id: string, v: string) => (document.getElementById(id)!.textContent = v);
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const sex = (form.querySelector<HTMLInputElement>('input[name="sex"]:checked')!.value) as Sex;
+    const varsta = +(document.getElementById("varsta") as HTMLInputElement).value;
+    const cm = +(document.getElementById("inaltime") as HTMLInputElement).value;
+    const kg = +(document.getElementById("greutate") as HTMLInputElement).value;
+    const factor = +(document.getElementById("activitate") as HTMLSelectElement).value;
+    if (!varsta || !cm || !kg) return;
+
+    const bmr = bmrMifflin(sex, kg, cm, varsta);
+    const t = tdee(bmr, factor);
+    const f = (n: number) => `${rotunjit(n)} kcal`;
+
+    set("tdee-val", String(rotunjit(t)));
+    set("bmr-val", f(bmr));
+    set("mentinere-val", f(t));
+    set("slab-usor-val", f(t - 300));
+    set("slab-val", f(t - 500));
+    set("surplus-val", f(t + 300));
+    rezultat.classList.remove("gol");
+  });
+</script>

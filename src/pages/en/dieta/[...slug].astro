@@ -1,0 +1,167 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import Base from "../../../layouts/Base.astro";
+import DietaStructuredData from "../../../components/DietaStructuredData.astro";
+import Faq from "../../../components/Faq.astro";
+import { getCategorie, getCaracteristica } from "../../../data/taxonomie";
+
+export async function getStaticPaths() {
+  const diete = await getCollection("dieteEn", ({ data }) => !data.draft);
+  return diete.map((dieta) => ({
+    params: { slug: dieta.id },
+    props: { dieta },
+  }));
+}
+
+const { dieta } = Astro.props;
+const d = dieta.data;
+const { Content } = await render(dieta);
+
+const categorie = getCategorie(d.categorie);
+const imagineUrl = d.imagine ? new URL(d.imagine.src, Astro.site).href : undefined;
+const url = new URL(`/en/dieta/${dieta.id}/`, Astro.site).href;
+
+// Difficulty text in English
+function diffText(dif: string) {
+  if (dif === "usoara") return "Easy";
+  if (dif === "stricta") return "Strict";
+  return "Moderate";
+}
+
+// Category name in English
+const catNames: Record<string, { name: string; singular: string }> = {
+  "low-carb":            { name: "Low-Carb",              singular: "Low-Carb" },
+  "bogate-in-proteine":  { name: "High-Protein",           singular: "High-Protein" },
+  "post-intermitent":    { name: "Intermittent Fasting",   singular: "Intermittent Fasting" },
+  "pe-plante":           { name: "Plant-Based",            singular: "Plant-Based" },
+  "echilibrate":         { name: "Balanced",               singular: "Balanced" },
+  "structurate":         { name: "Structured",             singular: "Structured" },
+};
+const catEn = catNames[d.categorie] ?? { name: d.categorie, singular: d.categorie };
+---
+
+<Base titlu={d.titlu} descriere={d.descriere} imagine={d.imagine?.src} tipPagina="article" bodyClass="pg-dieta">
+  <DietaStructuredData
+    slot="head"
+    titlu={d.titlu}
+    descriere={d.descriere}
+    imagineUrl={imagineUrl}
+    autor={d.autor}
+    publicat={d.publicat}
+    actualizat={d.actualizat}
+    url={url}
+    cuvinteCheie={d.cuvinteCheie}
+  />
+
+  <nav class="breadcrumb">
+    <a href="/">Home</a> ›
+    <a href={`/en/categorie/${d.categorie}/`}>{catEn.name}</a> ›
+    {d.titlu}
+  </nav>
+
+  <article class="dieta-hero">
+    <p>
+      <span class="badge badge-categorie" data-cat-sg={d.categorie}>{catEn.singular}</span>
+    </p>
+    <h1>{d.titlu}</h1>
+
+    <div class="stat-bloc" style="margin:1.2rem 0 1.5rem;">
+      <div class="stat" data-dif={d.dificultate}><span>difficulty</span><strong>{diffText(d.dificultate)}</strong></div>
+      {d.durataTipica && <div class="stat"><span>typical duration</span><strong>{d.durataTipica}</strong></div>}
+      <div class="stat"><span>type</span><strong>{catEn.singular}</strong></div>
+    </div>
+
+    <p class="lead">{d.principiu}</p>
+
+    {d.imagine && (
+      <Image src={d.imagine} alt={d.imagineAlt ?? d.titlu} widths={[400, 800, 1080]} loading="eager" />
+    )}
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <details class="acordeon" open>
+      <summary>
+        <em class="acordeon-icon">+</em>
+        <h2>What you eat and what you avoid</h2>
+      </summary>
+      <div class="acordeon-continut">
+        <div class="doua-coloane">
+          <div class="lista-box permise">
+            <h3>✓ What you eat</h3>
+            <ul>{d.alimentePermise.map((a) => <li>{a}</li>)}</ul>
+          </div>
+          {d.alimenteEvitate.length > 0 && (
+            <div class="lista-box evitate">
+              <h3>✕ What you avoid</h3>
+              <ul>{d.alimenteEvitate.map((a) => <li>{a}</li>)}</ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </details>
+
+    {d.meniuExemplu.length > 0 && (
+      <details class="acordeon">
+        <summary>
+          <em class="acordeon-icon">+</em>
+          <h2>Sample one-day menu</h2>
+        </summary>
+        <div class="acordeon-continut">
+          <section class="meniu-zi">
+            {d.meniuExemplu.map((m) => (
+              <div class="masa"><strong>{m.masa}:</strong> {m.descriere}</div>
+            ))}
+          </section>
+        </div>
+      </details>
+    )}
+
+    {(d.avantaje.length > 0 || d.dezavantaje.length > 0) && (
+      <details class="acordeon" open>
+        <summary>
+          <em class="acordeon-icon">+</em>
+          <h2>Pros and cons</h2>
+        </summary>
+        <div class="acordeon-continut">
+          <div class="pro-contra">
+            {d.avantaje.length > 0 && (
+              <div class="lista-box permise">
+                <h3>Pros</h3>
+                <ul>{d.avantaje.map((a) => <li>{a}</li>)}</ul>
+              </div>
+            )}
+            {d.dezavantaje.length > 0 && (
+              <div class="lista-box evitate">
+                <h3>Cons</h3>
+                <ul>{d.dezavantaje.map((a) => <li>{a}</li>)}</ul>
+              </div>
+            )}
+          </div>
+        </div>
+      </details>
+    )}
+
+    {d.contraindicatii.length > 0 && (
+      <details class="acordeon" open>
+        <summary>
+          <em class="acordeon-icon">+</em>
+          <h2>⚠️ Who should avoid this diet</h2>
+        </summary>
+        <div class="acordeon-continut">
+          <section class="nota-contraindicatii">
+            <ul>{d.contraindicatii.map((c) => <li>{c}</li>)}</ul>
+            <p><small>
+              Indicative list. Before starting any diet, especially if you have a medical condition,
+              consult a doctor or nutritionist.
+            </small></p>
+          </section>
+        </div>
+      </details>
+    )}
+
+    <Faq intrebari={d.faq} />
+  </article>
+</Base>

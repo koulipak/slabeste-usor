@@ -1,0 +1,1151 @@
+/* ============================================================
+   Temă „GoodFit" — editorial cald, reinterpretat pentru Slăbește Ușor
+   (inspirat de goodfit-445 pe godly.website, NU copiat)
+   ------------------------------------------------------------
+   ADN preluat: hârtie crem caldă, titluri serif display mari
+   (Fraunces), blocuri de culoare caldă, forme de arcadă, spațiu
+   generos, accente coral/piersică.
+   Reinterpretare proprie: verdele „sănătate" rămâne culoarea de
+   acțiune (brandul nostru), bolurile cu mâncare și calculatoarele
+   rămân. Toate clasele din tema Uno sunt păstrate — doar reîmbrăcate.
+   Font corp = stack de sistem (zero request extern, GDPR-safe);
+   font titluri = Fraunces (importat în Base.astro).
+   ============================================================ */
+:root {
+  /* Brand (sănătate) — verde editorial, ușor mai profund decât în Uno */
+  --verde: #1f7a52;
+  --verde-inchis: #155c3d;
+  --verde-deschis: #e7f1ea;
+
+  /* Paletă caldă GoodFit (reinterpretată) */
+  --coral: #ff6b4f;
+  --coral-soft: #ffe6de;
+  --piersica: #ffb27a;
+  --roz: #f4789e;
+  --roz-soft: #ffe3ec;
+  --mustar: #f0b429;
+  --mustar-soft: #fbeecb;
+  --terra: #c66a45;
+
+  /* aliasuri pentru clasele moștenite din Uno (ca să nu rămână variabile goale) */
+  --albastru: #1f7a52;     /* „albastrul" devine verdele de acțiune */
+  --portocaliu: var(--coral);
+  --galben: var(--mustar);
+  --teal: #1f9e8f;
+  --mov: var(--roz);
+  --lime: #bfe3b0;
+
+  /* Neutre — hârtie crem caldă */
+  --bg: #fdf8f2;
+  --surface: #ffffff;
+  --text: #12100c;
+  --text-soft: #4a4038;
+  --border: #ecdfce;
+
+  --max-w: 1140px;
+  --radius: 26px;
+  --radius-sm: 16px;
+  --shadow: 0 14px 34px rgba(80, 50, 25, 0.08);
+  --shadow-hover: 0 22px 50px rgba(80, 50, 25, 0.16);
+
+  --serif: "Fraunces Variable", "Fraunces", Georgia, "Times New Roman", serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  text-shadow: 0 1px 6px rgba(253,248,242,0.8);
+  /* tente calde, foarte subtile, peste hârtia crem */
+  background-image:
+    radial-gradient(at 16% 10%, rgba(255, 107, 79, 0.04), transparent 42%),
+    radial-gradient(at 84% 4%, rgba(244, 120, 158, 0.03), transparent 40%),
+    radial-gradient(at 50% 98%, rgba(31, 122, 82, 0.03), transparent 46%),
+    radial-gradient(at 96% 66%, rgba(240, 180, 41, 0.03), transparent 40%);
+  background-attachment: fixed;
+  color: var(--text);
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Strat decorativ: forme calde care plutesc lent (paletă caldă) --- */
+.bg-decor { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.blob { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.08; will-change: transform; }
+.b1 { width: 480px; height: 480px; background: var(--coral); top: -130px; left: -90px; animation: drift-a 48s ease-in-out infinite; }
+.b2 { width: 400px; height: 400px; background: var(--roz); top: 6%; right: -110px; animation: drift-b 54s ease-in-out infinite; opacity: 0.14; }
+.b3 { width: 440px; height: 440px; background: var(--verde); bottom: -150px; left: 10%; animation: drift-c 52s ease-in-out infinite; opacity: 0.12; }
+.b4 { width: 340px; height: 340px; background: var(--mustar); bottom: 5%; right: 12%; animation: drift-a 60s ease-in-out infinite; opacity: 0.13; }
+.b5 { width: 320px; height: 320px; background: var(--piersica); top: 40%; left: 42%; animation: drift-b 56s ease-in-out infinite; opacity: 0.12; }
+
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, 26px) scale(1.05); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-34px, 22px) scale(1.04); }
+}
+@keyframes drift-c {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(26px, -30px) scale(1.06); }
+}
+
+/* --- Reveal-on-scroll (doar când JS e activ) --- */
+.js .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.js .reveal.in { opacity: 1; transform: none; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.container {
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: 1.35rem;
+}
+
+
+a { color: var(--verde-inchis); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* --- Header --- */
+.site-header {
+  background: rgba(247, 238, 225, 0.82);
+  backdrop-filter: saturate(160%) blur(12px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.site-header nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 0.95rem;
+}
+.logo {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.55rem;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  font-variation-settings: "opsz" 40, "SOFT" 30;
+}
+.nav-links { display: flex; align-items: center; gap: 1.6rem; }
+.nav-links a { color: var(--text-soft); font-weight: 600; }
+.nav-links a:hover { color: var(--text); text-decoration: none; }
+
+/* ── Nav search ─────────────────────────────── */
+.nav-search-wrap { position: relative; }
+#nav-search {
+  width: 190px;
+  padding: 0.38rem 0.85rem;
+  border: 1.5px solid var(--border, #ddd);
+  border-radius: 999px;
+  background: var(--surface, #fff);
+  color: var(--text);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s, width 0.25s;
+}
+#nav-search:focus { border-color: var(--verde); width: 250px; }
+#nav-search-results {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 260px;
+  background: var(--surface, #fff);
+  border: 1.5px solid var(--border, #ddd);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+  list-style: none;
+  padding: 0.4rem 0;
+  margin: 0;
+  z-index: 999;
+}
+#nav-search-results li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.92rem;
+  color: var(--text);
+  border-radius: 8px;
+  margin: 0 0.3rem;
+}
+#nav-search-results li:hover,
+#nav-search-results li.active { background: color-mix(in srgb, var(--verde) 12%, transparent); color: var(--verde); }
+
+.nav-cta {
+  background: var(--verde);
+  color: #fff !important;
+  padding: 0.58rem 1.25rem;
+  border-radius: 999px;
+  font-weight: 700;
+  box-shadow: 0 8px 18px rgba(31, 122, 82, 0.28);
+  transition: transform 0.14s ease, background 0.14s ease;
+}
+.nav-cta:hover { background: var(--verde-inchis); transform: translateY(-1px); }
+
+/* --- Footer --- */
+.site-footer {
+  margin-top: 4.5rem;
+  padding-block: 2.75rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+.site-footer .disclaimer {
+  background: var(--coral-soft);
+  border: 1px solid #ffcdc0;
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.2rem;
+  font-size: 0.85rem;
+}
+.footer-nav { margin-top: 1rem; }
+.footer-nav a { color: var(--text-soft); }
+
+/* --- Tipografie (serif display, ca în GoodFit) --- */
+h1, h2, h3 { font-family: var(--serif); text-shadow: 0 1px 8px rgba(253,248,242,0.9), 0 0px 20px rgba(253,248,242,0.7); }
+h1 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1.0;
+  margin-block: 1.1rem 0.6rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  font-variation-settings: "opsz" 144, "SOFT" 20, "WONK" 0;
+}
+h2 {
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  margin-top: 2.4rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 80, "SOFT" 20;
+}
+.lead {
+  font-size: 1.24rem;
+  color: var(--text-soft);
+  max-width: 62ch;
+  line-height: 1.55;
+}
+
+/* --- Grilă de carduri --- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.75rem;
+  margin-top: 1.75rem;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: visible;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); }
+.card a { color: inherit; text-decoration: none; display: block; }
+.card a > img,
+.card a > .card-img-ph { border-radius: var(--radius) var(--radius) 0 0; overflow: hidden; }
+.card-body { padding: 1.2rem 1.35rem 1.45rem; }
+.card h3 { margin: 0.4rem 0 0.5rem; font-size: 1.3rem; font-weight: 600; letter-spacing: -0.015em; font-variation-settings: "opsz" 50, "SOFT" 20; }
+.card-meta { font-size: 0.9rem; color: var(--text-soft); }
+
+/* Placeholder imagine — gradient viu cu temă per categorie */
+.card-img-ph {
+  --sprite-pos: 0% 0%; /* suprascris per nth-child mai jos */
+  aspect-ratio: 16 / 11;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.6rem;
+  position: relative;
+  overflow: hidden;
+  /* default fallback */
+  background: linear-gradient(135deg, #ffd9c2 0%, #ffb27a 100%);
+}
+
+/* Overlay cu puncte subtile pentru textură */
+.card-img-ph::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 1px);
+  background-size: 18px 18px;
+  pointer-events: none;
+}
+
+/*
+  Sprite 3×3 — poziții (col × row, 0-indexed):
+  (0,0)=balans  (1,0)=hula-hoop  (2,0)=push-up-minge
+  (0,1)=presa   (1,1)=fandare    (2,1)=biceps
+  (0,2)=plank   (1,2)=abdomene   (2,2)=genuflexiuni
+  background-size: 300% 300% → fiecare celulă = 100% din container
+  background-position: col*50% row*50%
+*/
+
+/* LOW-CARB → presa cu gantere (putere, energie) */
+.card[data-categorie="low-carb"] .card-img-ph {
+  background-image:
+    linear-gradient(135deg, rgba(192,57,43,0.72) 0%, rgba(243,156,18,0.72) 100%),
+    url('/decor/fitness-icons.avif');
+  background-size: cover, 300% 300%;
+  background-position: center, var(--sprite-pos);
+  background-repeat: no-repeat;
+}
+
+/* BOGATE ÎN PROTEINE → biceps curl (mușchi) */
+.card[data-categorie="bogate-in-proteine"] .card-img-ph {
+  background-image:
+    linear-gradient(135deg, rgba(183,65,14,0.72) 0%, rgba(244,185,66,0.72) 100%),
+    url('/decor/fitness-icons.avif');
+  background-size: cover, 300% 300%;
+  background-position: center, var(--sprite-pos);
+  background-repeat: no-repeat;
+}
+
+/* POST INTERMITENT → balans (echilibru, disciplină) */
+.card[data-categorie="post-intermitent"] .card-img-ph {
+  background-image:
+    linear-gradient(135deg, rgba(26,5,51,0.75) 0%, rgba(194,24,91,0.72) 100%),
+    url('/decor/fitness-icons.avif');
+  background-size: cover, 300% 300%;
+  background-position: center, var(--sprite-pos);
+  background-repeat: no-repeat;
+}
+
+/* PE PLANTE → hula hoop (mișcare, veselie) */
+.card[data-categorie="pe-plante"] .card-img-ph {
+  background-image:
+    linear-gradient(135deg, rgba(27,94,32,0.72) 0%, rgba(129,199,132,0.72) 100%),
+    url('/decor/fitness-icons.avif');
+  background-size: cover, 300% 300%;
+  background-position: center, var(--sprite-pos);
+  background-repeat: no-repeat;
+}
+
+/* ECHILIBRATE → fandare cu bara (mișcare echilibrată) */
+.card[data-categorie="echilibrate"] .card-img-ph {
+  background-image:
+    linear-gradient(135deg, rgba(0,96,100,0.72) 0%, rgba(77,208,225,0.72) 100%),
+    url('/decor/fitness-icons.avif');
+  background-size: cover, 300% 300%;
+  background-position: center, var(--sprite-pos);
+  background-repeat: no-repeat;
+}
+
+/* STRUCTURATE → genuflexiuni (structurat, progresiv) */
+.card[data-categorie="structurate"] .card-img-ph {
+  background-image:
+    linear-gradient(135deg, rgba(26,35,126,0.72) 0%, rgba(124,77,255,0.72) 100%),
+    url('/decor/fitness-icons.avif');
+  background-size: cover, 300% 300%;
+  background-position: center, var(--sprite-pos);
+  background-repeat: no-repeat;
+}
+.card-img-ph .bol {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.22);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease,
+    border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover .card-img-ph .bol {
+  filter: drop-shadow(0 10px 14px rgba(80, 50, 25, 0.25));
+  border-color: var(--coral);
+  box-shadow: 0 0 0 4px rgba(255, 107, 79, 0.14);
+}
+
+/* Rotație 9 poze fitness — niciun card adiacent nu are aceeași poză
+   Grid 3×3: (col%  row%) → (0/50/100 × 0/50/100)             */
+/* Culori chenar bol — alternează per card */
+.card:nth-child(6n+1) .card-img-ph .bol { border: 2px solid #1f7a52; }
+.card:nth-child(6n+2) .card-img-ph .bol { border: 2px solid #ff6b4f; }
+.card:nth-child(6n+3) .card-img-ph .bol { border: 2px solid #e0a800; }
+.card:nth-child(6n+4) .card-img-ph .bol { border: 2px solid #f4789e; }
+.card:nth-child(6n+5) .card-img-ph .bol { border: 2px solid #1f9e8f; }
+.card:nth-child(6n+6) .card-img-ph .bol { border: 2px solid #c66a45; }
+
+/* Hover: alternăm rotația stânga/dreapta per nth-child */
+.card:nth-child(even):hover .card-img-ph .bol { transform: scale(1.18) translateY(-7px) rotate(12deg);  }
+.card:nth-child(odd):hover  .card-img-ph .bol { transform: scale(1.18) translateY(-7px) rotate(-12deg); }
+
+.card:nth-child(9n+1) .card-img-ph { --sprite-pos: 0%   0%;   }  /* balans       */
+.card:nth-child(9n+2) .card-img-ph { --sprite-pos: 50%  0%;   }  /* hula hoop    */
+.card:nth-child(9n+3) .card-img-ph { --sprite-pos: 100% 0%;   }  /* push-up minge*/
+.card:nth-child(9n+4) .card-img-ph { --sprite-pos: 0%   50%;  }  /* presa sus    */
+.card:nth-child(9n+5) .card-img-ph { --sprite-pos: 50%  50%;  }  /* fandare      */
+.card:nth-child(9n+6) .card-img-ph { --sprite-pos: 100% 50%;  }  /* biceps curl  */
+.card:nth-child(9n+7) .card-img-ph { --sprite-pos: 0%   100%; }  /* plank        */
+.card:nth-child(9n+8) .card-img-ph { --sprite-pos: 50%  100%; }  /* abdomene     */
+.card:nth-child(9n+9) .card-img-ph { --sprite-pos: 100% 100%; }  /* genuflexiuni */
+
+/* --- Badge-uri / etichete --- */
+.badge {
+  display: inline-block;
+  background: #f5ecdd;
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+  padding: 0.22rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-right: 0.4rem;
+  margin-bottom: 0.3rem;
+}
+.badge-categorie { background: var(--verde-deschis); border-color: #c3ddcd; color: var(--verde-inchis); }
+
+/* Culoare caldă per categorie (badge) */
+.card[data-categorie="low-carb"] .badge-categorie { background: var(--mustar-soft); border-color: #f0d79a; color: #976b0e; }
+.card[data-categorie="bogate-in-proteine"] .badge-categorie { background: var(--coral-soft); border-color: #ffc4b3; color: #c0431f; }
+.card[data-categorie="post-intermitent"] .badge-categorie { background: var(--roz-soft); border-color: #ffc2d4; color: #c43768; }
+.card[data-categorie="pe-plante"] .badge-categorie { background: var(--verde-deschis); border-color: #c3ddcd; color: var(--verde-inchis); }
+.card[data-categorie="echilibrate"] .badge-categorie { background: #e0f0ea; border-color: #bbe0d1; color: #138066; }
+.card[data-categorie="structurate"] .badge-categorie { background: var(--mustar-soft); border-color: #f0d79a; color: #976b0e; }
+
+/* --- Filtre (pastile) --- */
+.filtru-grup-titlu { font-family: var(--serif); font-weight: 600; font-size: 1.1rem; margin-bottom: 0.4rem; margin-top: 1.4rem; letter-spacing: -0.01em; }
+.filtre { display: flex; flex-wrap: wrap; gap: 0.55rem; margin: 0.55rem 0 1rem; }
+.filtru-btn {
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 0.5rem 1.05rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+.filtru-btn:hover { transform: translateY(-1px); border-color: var(--coral); }
+.filtru-btn[aria-pressed="true"] { background: var(--text); border-color: var(--text); color: var(--bg); box-shadow: 0 6px 16px rgba(34, 28, 22, 0.22); }
+.rezultate-count { color: var(--text-soft); font-size: 0.92rem; margin-top: 1.5rem; font-weight: 600; }
+
+/* --- Breadcrumb --- */
+.breadcrumb { font-size: 0.85rem; color: var(--text-soft); margin-top: 1rem; }
+
+/* --- Pagina dietă --- */
+.dieta-hero .lead { margin-bottom: 0.5rem; }
+.doua-coloane {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; margin: 1.75rem 0;
+}
+@media (max-width: 700px) { .doua-coloane { grid-template-columns: 1fr; } }
+.lista-box {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 1.3rem 1.6rem; box-shadow: var(--shadow);
+}
+.lista-box.permise { border-top: 5px solid var(--verde); }
+.lista-box.evitate { border-top: 5px solid var(--coral); }
+.lista-box h2 { margin-top: 0; font-size: 1.3rem; }
+.lista-box ul { margin: 0.5rem 0 0; padding-left: 1.1rem; }
+.lista-box li { padding: 0.2rem 0; }
+
+.pro-contra { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; margin: 1.75rem 0; }
+@media (max-width: 700px) { .pro-contra { grid-template-columns: 1fr; } }
+
+.meniu-zi { margin: 1.75rem 0; }
+.meniu-zi .masa {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 0.85rem 1.15rem; margin-bottom: 0.65rem; box-shadow: var(--shadow);
+}
+.meniu-zi .masa strong { color: var(--verde-inchis); }
+
+.nota-contraindicatii {
+  background: var(--coral-soft); border: 1px solid #ffcdc0; border-radius: var(--radius);
+  padding: 1.15rem 1.4rem; margin: 1.75rem 0;
+}
+.nota-contraindicatii h2 { margin-top: 0; font-size: 1.25rem; color: var(--terra); }
+
+.prose { max-width: 68ch; }
+
+.stat-bloc { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.stat-bloc .stat {
+  border-radius: 14px;
+  padding: 0.6rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.stat-bloc .stat:nth-child(1) { background: #fef3c7; }
+.stat[data-dif] strong { text-transform: uppercase; letter-spacing: 0.04em; }
+.stat[data-dif="usoara"] strong { color: #16a34a; }
+.stat[data-dif="moderata"] strong { color: #2563eb; }
+.stat[data-dif="stricta"] strong { color: #dc2626; }
+
+.filtru-dif-usoara { color: #16a34a !important; border-color: #bbf7d0 !important; }
+.filtru-dif-usoara[aria-pressed="true"] { background: #dcfce7 !important; color: #15803d !important; }
+.filtru-dif-moderata { color: #2563eb !important; border-color: #bfdbfe !important; }
+.filtru-dif-moderata[aria-pressed="true"] { background: #dbeafe !important; color: #1d4ed8 !important; }
+.filtru-dif-stricta { color: #dc2626 !important; border-color: #fecaca !important; }
+.filtru-dif-stricta[aria-pressed="true"] { background: #fee2e2 !important; color: #b91c1c !important; }
+.stat-bloc .stat:nth-child(2) { background: #dbeafe; }
+.stat-bloc .stat:nth-child(3) { background: #d1fae5; }
+.stat strong { display: block; font-size: 1rem; font-weight: 700; color: var(--text); }
+.stat span { font-size: 0.75rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* --- FAQ --- */
+.faq { margin-top: 2.75rem; }
+.faq details {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 0.55rem 1.2rem; margin-bottom: 0.65rem; box-shadow: var(--shadow);
+}
+.faq summary { cursor: pointer; font-weight: 700; padding: 0.55rem 0; }
+.faq details[open] summary { color: var(--verde-inchis); }
+
+/* --- Calculatoare --- */
+.tool {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 1.9rem; margin: 1.75rem 0; box-shadow: var(--shadow);
+}
+.tool .camp { margin-bottom: 1.15rem; }
+.tool label { display: block; font-weight: 700; margin-bottom: 0.35rem; }
+.tool input[type="number"], .tool select {
+  width: 100%; max-width: 340px;
+  padding: 0.68rem 0.9rem; font: inherit;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm); background: #fffdf8;
+}
+.tool input[type="number"]:focus, .tool select:focus { outline: 2px solid var(--verde); border-color: var(--verde); }
+.tool .radios { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.tool .radios label {
+  display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600;
+  border: 1.5px solid var(--border); border-radius: 999px; padding: 0.5rem 1rem; cursor: pointer;
+}
+.btn {
+  background: var(--verde); color: #fff; border: none; border-radius: 999px;
+  padding: 0.8rem 1.9rem; font: inherit; font-weight: 700; cursor: pointer;
+  box-shadow: 0 10px 22px rgba(31, 122, 82, 0.3);
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+.btn:hover { background: var(--verde-inchis); transform: translateY(-2px); }
+.rezultat {
+  margin-top: 1.5rem; padding: 1.5rem 1.7rem;
+  background: var(--verde-deschis); border: 1px solid #c3ddcd; border-radius: var(--radius);
+}
+.rezultat.gol { display: none; }
+.rezultat .mare { font-family: var(--serif); font-size: 2.7rem; font-weight: 600; color: var(--verde-inchis); line-height: 1; letter-spacing: -0.02em; font-variation-settings: "opsz" 144, "SOFT" 20; }
+.rezultat .sub { color: var(--text-soft); font-size: 0.9rem; }
+.rezultat table { width: 100%; border-collapse: collapse; margin-top: 0.9rem; }
+.rezultat td { padding: 0.42rem 0; border-bottom: 1px dashed #c3ddcd; }
+.rezultat td:last-child { text-align: right; font-weight: 700; }
+
+/* Bară IMC (paletă caldă) */
+.imc-bara {
+  position: relative; height: 16px; border-radius: 999px; margin: 1rem 0 1.5rem;
+  background: linear-gradient(to right, #5aa0d8 0 18%, #1f7a52 18% 38%, #f0b429 38% 55%, #ff9a5a 55% 72%, #ff6b4f 72% 88%, #c0431f 88% 100%);
+}
+.imc-bara .ac {
+  position: absolute; top: -6px; width: 4px; height: 28px; background: var(--text); border-radius: 3px;
+  transform: translateX(-50%); box-shadow: 0 0 0 3px rgba(255, 250, 242, 0.9);
+}
+
+/* Carduri tool — blocuri de culoare caldă pline (reinterpretare GoodFit) */
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 1.35rem; margin-top: 1.75rem; }
+.tool-card {
+  display: block; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 1.5rem; color: inherit; box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.tool-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); text-decoration: none; }
+.tool-card .emoji {
+  font-size: 1.7rem; width: 3.2rem; height: 3.2rem; border-radius: 18px;
+  display: flex; align-items: center; justify-content: center; background: var(--coral-soft);
+  animation: float 6s ease-in-out infinite;
+}
+.tool-grid .tool-card:nth-child(2n) .emoji { animation-delay: -2s; }
+.tool-grid .tool-card:nth-child(3n) .emoji { animation-delay: -3.8s; }
+.tool-card h3 { margin: 0.8rem 0 0.35rem; font-weight: 600; font-size: 1.25rem; }
+.tool-card p { margin: 0; color: var(--text-soft); font-size: 0.9rem; }
+/* fiecare card: tentă caldă proprie pe fundal + bula emoji asortată */
+.tool-grid .tool-card:nth-child(6n+1) { background: var(--coral-soft); }
+.tool-grid .tool-card:nth-child(6n+1) .emoji { background: #ffd2c4; }
+.tool-grid .tool-card:nth-child(6n+2) { background: var(--mustar-soft); }
+.tool-grid .tool-card:nth-child(6n+2) .emoji { background: #f4dca2; }
+.tool-grid .tool-card:nth-child(6n+3) { background: var(--verde-deschis); }
+.tool-grid .tool-card:nth-child(6n+3) .emoji { background: #c8e6d4; }
+.tool-grid .tool-card:nth-child(6n+4) { background: var(--roz-soft); }
+.tool-grid .tool-card:nth-child(6n+4) .emoji { background: #ffcadb; }
+.tool-grid .tool-card:nth-child(6n+5) { background: #eef0e6; }
+.tool-grid .tool-card:nth-child(6n+5) .emoji { background: #dde3cb; }
+.tool-grid .tool-card:nth-child(6n+6) { background: var(--surface); }
+.tool-grid .tool-card:nth-child(6n+6) .emoji { background: var(--coral-soft); }
+
+/* Pagini de conținut simplu (legale, despre) */
+.pagina-text { max-width: 70ch; }
+.pagina-text h2 { font-size: 1.5rem; }
+
+/* Secțiunea de calculatoare = panou-bloc de culoare caldă (full-bleed editorial) */
+.sectiune-alte {
+  margin-top: 4rem;
+  background: var(--verde);
+  color: #fdf7ee;
+  border-radius: calc(var(--radius) + 8px);
+  padding: 2.5rem 2rem;
+  box-shadow: var(--shadow);
+}
+.sectiune-alte h2 { margin-top: 0; color: #fff; }
+.sectiune-alte > p { color: rgba(253, 247, 238, 0.86); max-width: 60ch; }
+.sectiune-alte .tool-card { background: rgba(255, 250, 242, 0.96); border-color: transparent; }
+.sectiune-alte .tool-grid .tool-card:nth-child(n) { background: rgba(255, 250, 242, 0.96); }
+.sectiune-alte .tool-card h3 { color: var(--text); }
+
+/* --- Imagini decorative fundal (fructe/legume) --- */
+.food-decor {
+  position: absolute;
+  opacity: 0.18;
+  pointer-events: none;
+  border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+  filter: saturate(1.1) blur(0.3px);
+  will-change: transform;
+}
+.fd1 { width: 320px; height: 320px; top: 5%;  left:  6%;  transform: rotate(10deg);  animation: drift-a 44s ease-in-out infinite; }
+.fd2 { width: 290px; height: 290px; top: 8%;  left: 60%;  transform: rotate(-9deg);  animation: drift-b 50s ease-in-out infinite; animation-delay: -6s; }
+.fd3 { width: 300px; height: 300px; top: 55%; left: 30%;  transform: rotate(14deg);  animation: drift-c 46s ease-in-out infinite; animation-delay: -14s; }
+
+/* --- Progress bar scroll indicator --- */
+.reading-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--verde), var(--coral), var(--piersica));
+  border-radius: 0 3px 3px 0;
+  transition: width 0.08s linear;
+  pointer-events: none;
+}
+
+/* --- Banner vedete --- */
+.vedete-banner {
+  background: linear-gradient(90deg, #fef3c7, #fde68a, #fbbf24, #fde68a, #fef3c7);
+  background-size: 200% auto;
+  animation: banner-shine 3s linear infinite;
+  text-align: center;
+  padding: 0.7rem 1rem;
+  font-family: var(--serif);
+  font-size: 1.18rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  font-variation-settings: "opsz" 40, "SOFT" 30;
+}
+.vedete-banner a {
+  color: #c0152a;
+  text-decoration: none;
+  text-shadow: 0 1px 8px rgba(251,191,36,0.5);
+}
+.vedete-banner a:hover {
+  text-decoration: underline;
+}
+@keyframes banner-shine {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* --- Filtre animate --- */
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.22s ease, scale 0.22s ease;
+}
+.card.card-out {
+  opacity: 0 !important;
+  scale: 0.94;
+  pointer-events: none;
+}
+
+/* --- Acordeon secțiuni dietă --- */
+.acordeon {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 1.75rem 0;
+}
+.acordeon summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+  user-select: none;
+  border-bottom: 1.5px solid var(--border);
+  margin-bottom: 0.2rem;
+}
+.acordeon summary::-webkit-details-marker { display: none; }
+.acordeon summary h2 {
+  margin: 0;
+  flex: 1;
+  font-size: 1.45rem;
+}
+.acordeon-icon {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: var(--verde-deschis);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--verde);
+  transition: transform 0.3s ease, background 0.25s ease, color 0.25s ease;
+  font-style: normal;
+}
+.acordeon[open] .acordeon-icon {
+  transform: rotate(45deg);
+  background: var(--verde);
+  color: #fff;
+}
+.acordeon-continut {
+  overflow: hidden;
+}
+.acordeon[open] .acordeon-continut > * {
+  animation: acordeon-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes acordeon-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ============================================================
+   INTRO ZBOR — imagini zboară din margini spre centru, apoi overlay se ridică
+   ============================================================ */
+#intro-zbor {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--bg);
+  pointer-events: all;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 1.1s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+#intro-zbor.pleaca {
+  transform: translateY(-100%);
+}
+
+/* Indicator "click pentru a continua" */
+.iz-click {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.iz-click::after {
+  content: '';
+  width: 1px;
+  height: 40px;
+  background: var(--text-soft);
+  animation: iz-linie 1.2s ease-in-out infinite;
+}
+
+@keyframes iz-linie {
+  0%, 100% { transform: scaleY(0); transform-origin: top; }
+  50%       { transform: scaleY(1); transform-origin: top; }
+}
+
+#intro-zbor.gata .iz-click {
+  opacity: 0.6;
+}
+
+/* Titlul central */
+.iz-titlu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  animation: iz-titlu-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+  z-index: 2;
+}
+
+.iz-logo {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 8vw, 5.5rem);
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.iz-logo em {
+  font-style: normal;
+  color: var(--verde);
+}
+
+.iz-sub {
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  color: var(--text-soft);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@keyframes iz-titlu-in {
+  from { opacity: 0; transform: translate(-50%, calc(-50% + 20px)); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* Imaginile zburătoare */
+.iz {
+  position: absolute;
+  object-fit: cover;
+  border-radius: 50% 42% 58% 44% / 54% 48% 52% 46%;
+  opacity: 0;
+  animation-duration: 1.4s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: forwards;
+}
+
+/* Poziții de aterizare + origine zbor per imagine */
+.iz1 { width: 200px; height: 200px; top:  6%; left:  5%; animation-name: iz-din-stanga-sus;  animation-delay: 0.2s;  transform: rotate(-12deg); }
+.iz2 { width: 220px; height: 220px; top:  4%; right: 6%; animation-name: iz-din-dreapta-sus; animation-delay: 0.35s; transform: rotate( 10deg); }
+.iz3 { width: 175px; height: 175px; top: 38%; left:  2%; animation-name: iz-din-stanga;      animation-delay: 0.5s;  transform: rotate(  8deg); }
+.iz4 { width: 175px; height: 175px; top: 38%; right: 2%; animation-name: iz-din-dreapta;     animation-delay: 0.5s;  transform: rotate(-10deg); }
+.iz5 { width: 210px; height: 210px; bottom: 5%; left: 8%; animation-name: iz-din-stanga-jos; animation-delay: 0.65s; transform: rotate( 14deg); }
+.iz6 { width: 190px; height: 190px; bottom: 5%; right:8%; animation-name: iz-din-dreapta-jos;animation-delay: 0.65s; transform: rotate(-16deg); }
+
+@keyframes iz-din-stanga-sus  { from { opacity:0; transform: translate(-140%, -140%) rotate(-30deg) scale(0.4); } to { opacity:1; transform: rotate(-12deg); } }
+@keyframes iz-din-dreapta-sus { from { opacity:0; transform: translate( 140%, -140%) rotate( 30deg) scale(0.4); } to { opacity:1; transform: rotate( 10deg); } }
+@keyframes iz-din-stanga      { from { opacity:0; transform: translate(-160%,    0%) rotate(-20deg) scale(0.4); } to { opacity:1; transform: rotate(  8deg); } }
+@keyframes iz-din-dreapta     { from { opacity:0; transform: translate( 160%,    0%) rotate( 20deg) scale(0.4); } to { opacity:1; transform: rotate(-10deg); } }
+@keyframes iz-din-stanga-jos  { from { opacity:0; transform: translate(-140%,  140%) rotate( 20deg) scale(0.4); } to { opacity:1; transform: rotate( 14deg); } }
+@keyframes iz-din-dreapta-jos { from { opacity:0; transform: translate( 140%,  140%) rotate(-25deg) scale(0.4); } to { opacity:1; transform: rotate(-16deg); } }
+
+/* & colorat în titluri */
+.amp-color { color: var(--verde); font-style: normal; }
+
+/* ============================================================
+   TRANZIȚIE PAGINI — 4 panouri din colțuri spre centru
+   ============================================================ */
+.tr-colt {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  width: 51vw;
+  height: 51vh;
+  background: var(--verde);
+  transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: transform;
+}
+
+/* Fiecare panou pleacă în direcția colțului său */
+.tr-colt.tc-tl { top: 0;    left:  0; transform: translate(-100%, -100%); }
+.tr-colt.tc-tr { top: 0;    right: 0; transform: translate( 100%, -100%); }
+.tr-colt.tc-bl { bottom: 0; left:  0; transform: translate(-100%,  100%); }
+.tr-colt.tc-br { bottom: 0; right: 0; transform: translate( 100%,  100%); }
+
+/* Stare "acoperit" — toate în centru */
+.tr-colt.intra { transform: translate(0, 0) !important; }
+
+/* Stare "plecat" — fiecare în direcția lui */
+.tr-colt.tc-tl.pleaca { transform: translate(-100%, -100%); }
+.tr-colt.tc-tr.pleaca { transform: translate( 100%, -100%); }
+.tr-colt.tc-bl.pleaca { transform: translate(-100%,  100%); }
+.tr-colt.tc-br.pleaca { transform: translate( 100%,  100%); }
+
+/* ============================================================
+   BORDER DRAWING — contur desenat la scroll (ca un drum)
+   ============================================================ */
+@keyframes deseneaza-chenar {
+  0%   { background-size: 0%   2px, 2px 0%,   0%   2px, 2px 0%;   }
+  25%  { background-size: 100% 2px, 2px 0%,   0%   2px, 2px 0%;   }
+  50%  { background-size: 100% 2px, 2px 100%, 0%   2px, 2px 0%;   }
+  75%  { background-size: 100% 2px, 2px 100%, 100% 2px, 2px 0%;   }
+  100% { background-size: 100% 2px, 2px 100%, 100% 2px, 2px 100%; }
+}
+
+.card,
+.tool-card,
+.lista-box,
+.faq details {
+  position: relative;
+}
+
+.card::after,
+.tool-card::after,
+.lista-box::after,
+.faq details::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 2;
+  --cc: var(--verde);
+  background-image:
+    linear-gradient(90deg,  var(--cc), var(--cc)),
+    linear-gradient(180deg, var(--cc), var(--cc)),
+    linear-gradient(270deg, var(--cc), var(--cc)),
+    linear-gradient(0deg,   var(--cc), var(--cc));
+  background-size:     0% 2px, 2px 0%,   0% 2px, 2px 0%;
+  background-position: left top, right top, right bottom, left bottom;
+  background-repeat: no-repeat;
+}
+
+/* culori diferite per card (rotație pe 6 culori) */
+.card:nth-child(6n+1)::after  { --cc: var(--verde);   }
+.card:nth-child(6n+2)::after  { --cc: var(--coral);   }
+.card:nth-child(6n+3)::after  { --cc: var(--mustar);  }
+.card:nth-child(6n+4)::after  { --cc: var(--roz);     }
+.card:nth-child(6n+5)::after  { --cc: var(--teal);    }
+.card:nth-child(6n+6)::after  { --cc: var(--terra);   }
+
+.tool-card:nth-child(3n+1)::after { --cc: var(--verde);  }
+.tool-card:nth-child(3n+2)::after { --cc: var(--coral);  }
+.tool-card:nth-child(3n+3)::after { --cc: var(--mustar); }
+
+.lista-box.permise::after { --cc: var(--verde); }
+.lista-box.evitate::after { --cc: var(--coral); }
+
+.faq details:nth-child(odd)::after  { --cc: var(--teal); }
+.faq details:nth-child(even)::after { --cc: var(--mustar); }
+
+.card.in::after,
+.tool-card.in::after,
+.lista-box.in::after,
+.faq details.in::after {
+  animation: deseneaza-chenar 2.2s linear forwards;
+}
+
+/* ============================================================
+   COMPUNERE PAGINĂ NOUĂ — elemente intră eșalonat
+   ============================================================ */
+@keyframes compune-in {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.compune main > * {
+  animation: compune-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.compune main > *:nth-child(1) { animation-delay: 0.05s; }
+.compune main > *:nth-child(2) { animation-delay: 0.13s; }
+.compune main > *:nth-child(3) { animation-delay: 0.21s; }
+.compune main > *:nth-child(4) { animation-delay: 0.29s; }
+.compune main > *:nth-child(5) { animation-delay: 0.37s; }
+.compune main > *:nth-child(6) { animation-delay: 0.44s; }
+.compune main > *:nth-child(7) { animation-delay: 0.50s; }
+.compune main > *:nth-child(8) { animation-delay: 0.56s; }
+
+@media (prefers-reduced-motion: reduce) {
+  #tr-overlay { display: none !important; }
+  .compune main > * { animation: none !important; }
+}
+
+/* --- Accesibilitate: oprește mișcarea pentru cine o preferă dezactivată --- */
+@media (prefers-reduced-motion: reduce) {
+  .blob { animation: none !important; }
+  .food-decor { animation: none !important; }
+  #intro-zbor { display: none !important; }
+  .tool-card .emoji { animation: none !important; }
+  .js .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  body { background-attachment: scroll; }
+}
+
+/* ============================================================
+   MODAL VÂRSTĂ
+   ============================================================ */
+.modal-varsta {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(10, 30, 20, 0.55);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+}
+.modal-varsta.mv-intra {
+  animation: mv-apare 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  pointer-events: auto;
+}
+.modal-varsta.mv-iese {
+  animation: mv-dispare 0.35s ease-in forwards;
+  pointer-events: none;
+}
+@keyframes mv-apare {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes mv-dispare {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.mv-card {
+  background: var(--bg-card, #fff);
+  border-radius: 24px;
+  padding: 2.5rem 2rem 2rem;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.1);
+  transform: translateY(0);
+  animation: mv-card-sus 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+@keyframes mv-card-sus {
+  from { transform: translateY(40px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.mv-intro {
+  font-size: 1.6rem;
+  margin: 0 0 0.4rem;
+  text-align: center;
+}
+.mv-titlu {
+  font-family: var(--font-titlu), serif;
+  font-size: clamp(1.25rem, 3vw, 1.7rem);
+  color: var(--verde-inchis);
+  text-align: center;
+  margin: 0 0 0.4rem;
+}
+.mv-sub {
+  text-align: center;
+  color: var(--text-muted, #666);
+  font-size: 0.95rem;
+  margin: 0 0 1.6rem;
+}
+
+.mv-optiuni {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.mv-btn {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0 0.75rem;
+  padding: 1rem 1.25rem;
+  border: 2px solid var(--verde-deschis);
+  border-radius: 16px;
+  background: var(--verde-deschis);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+.mv-btn:hover {
+  border-color: var(--verde);
+  background: #d4ece0;
+  transform: translateY(-2px);
+}
+.mv-btn:active { transform: translateY(0); }
+
+.mv-icon {
+  grid-row: 1 / 3;
+  font-size: 1.8rem;
+  text-align: center;
+}
+.mv-label {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--verde-inchis);
+  line-height: 1.2;
+}
+.mv-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted, #666);
+  line-height: 1.3;
+}
+
+.mv-skip {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.6rem;
+  background: none;
+  border: none;
+  color: var(--text-muted, #888);
+  font-size: 0.88rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+.mv-skip:hover { color: var(--verde); }
+
+/* ── Banner vârstă activă ──────────────────────────────────── */
+.banner-varsta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--verde-deschis);
+  border: 1.5px solid var(--verde);
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: var(--verde-inchis);
+  font-weight: 600;
+}
+.banner-schimba {
+  background: var(--verde);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.banner-schimba:hover { background: var(--verde-inchis); }
+
+/* ── Card recomandat ──────────────────────────────────────── */
+.card.card-recomandat .card-body::after {
+  content: var(--txt-recomandat, "✓ Recomandat");
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--verde);
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 480px) {
+  .mv-card {
+    padding: 2rem 1.25rem 1.5rem;
+    border-radius: 18px;
+  }
+  .mv-desc { display: none; }
+  .mv-btn { grid-template-rows: 1fr; }
+}
+

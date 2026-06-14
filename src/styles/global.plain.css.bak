@@ -1,0 +1,236 @@
+:root {
+  --verde: #2e7d57;
+  --verde-inchis: #1f5b3e;
+  --verde-deschis: #e7f4ed;
+  --crem: #f7faf8;
+  --text: #21302a;
+  --text-soft: #5d6f67;
+  --border: #dde9e2;
+  --max-w: 1080px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--crem);
+  color: var(--text);
+  line-height: 1.65;
+}
+
+.container {
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+a { color: var(--verde); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* --- Header / footer --- */
+.site-header {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.site-header nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 0.9rem;
+}
+.logo { font-weight: 700; font-size: 1.15rem; color: var(--verde-inchis); }
+.nav-links a { margin-left: 1.25rem; color: var(--text-soft); font-weight: 500; }
+
+.site-footer {
+  margin-top: 4rem;
+  padding-block: 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+.site-footer .disclaimer {
+  background: var(--verde-deschis);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  font-size: 0.85rem;
+}
+.footer-nav { margin-top: 1rem; }
+.footer-nav a { color: var(--text-soft); }
+
+/* --- Tipografie --- */
+h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.15; margin-block: 1rem 0.5rem; }
+h2 { font-size: 1.5rem; margin-top: 2rem; }
+.lead { font-size: 1.15rem; color: var(--text-soft); }
+
+/* --- Grilă de carduri --- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.card a { color: inherit; text-decoration: none; }
+.card-body { padding: 1rem; }
+.card h3 { margin: 0 0 0.4rem; font-size: 1.1rem; }
+.card-meta { font-size: 0.85rem; color: var(--text-soft); }
+.card-img-ph {
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(135deg, #d9efe3, #bfe3d0);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem;
+}
+
+/* --- Badge-uri / etichete --- */
+.badge {
+  display: inline-block;
+  background: var(--crem);
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  margin-right: 0.4rem;
+  margin-bottom: 0.3rem;
+}
+.badge-categorie { background: var(--verde-deschis); border-color: #bfe0cf; color: var(--verde-inchis); }
+
+/* --- Filtre --- */
+.filtru-grup-titlu { font-weight: 600; margin-bottom: 0.25rem; margin-top: 1rem; }
+.filtre { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.5rem 0 1rem; }
+.filtru-btn {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+}
+.filtru-btn[aria-pressed="true"] { background: var(--verde); border-color: var(--verde); color: #fff; }
+.rezultate-count { color: var(--text-soft); font-size: 0.9rem; margin-top: 1.5rem; }
+
+/* --- Breadcrumb --- */
+.breadcrumb { font-size: 0.85rem; color: var(--text-soft); margin-top: 1rem; }
+
+/* --- Pagina dietă --- */
+.dieta-hero .lead { margin-bottom: 0.5rem; }
+.doua-coloane {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;
+}
+@media (max-width: 700px) { .doua-coloane { grid-template-columns: 1fr; } }
+.lista-box {
+  background: #fff; border: 1px solid var(--border); border-radius: 12px;
+  padding: 1.1rem 1.4rem;
+}
+.lista-box.permise { border-left: 4px solid var(--verde); }
+.lista-box.evitate { border-left: 4px solid #ef4444; }
+.lista-box h2 { margin-top: 0; font-size: 1.2rem; }
+.lista-box ul { margin: 0.5rem 0 0; padding-left: 1.1rem; }
+.lista-box li { padding: 0.2rem 0; }
+
+.pro-contra { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+@media (max-width: 700px) { .pro-contra { grid-template-columns: 1fr; } }
+
+.meniu-zi { margin: 1.5rem 0; }
+.meniu-zi .masa {
+  background: #fff; border: 1px solid var(--border); border-radius: 10px;
+  padding: 0.75rem 1rem; margin-bottom: 0.6rem;
+}
+.meniu-zi .masa strong { color: var(--verde-inchis); }
+
+.nota-contraindicatii {
+  background: #fff4f2; border: 1px solid #f4ccc4; border-radius: 10px;
+  padding: 1rem 1.25rem; margin: 1.5rem 0;
+}
+.nota-contraindicatii h2 { margin-top: 0; font-size: 1.15rem; color: #b91c1c; }
+
+.prose { max-width: 68ch; }
+
+.stat-bloc { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+.stat strong { display: block; font-size: 1.1rem; }
+.stat span { font-size: 0.82rem; color: var(--text-soft); }
+
+/* --- FAQ --- */
+.faq { margin-top: 2.5rem; }
+.faq details {
+  background: #fff; border: 1px solid var(--border); border-radius: 10px;
+  padding: 0.5rem 1rem; margin-bottom: 0.6rem;
+}
+.faq summary { cursor: pointer; font-weight: 600; padding: 0.4rem 0; }
+.faq details[open] summary { color: var(--verde-inchis); }
+
+/* --- Calculatoare --- */
+.tool {
+  background: #fff; border: 1px solid var(--border); border-radius: 14px;
+  padding: 1.5rem; margin: 1.5rem 0;
+}
+.tool .camp { margin-bottom: 1rem; }
+.tool label { display: block; font-weight: 600; margin-bottom: 0.3rem; }
+.tool input[type="number"], .tool select {
+  width: 100%; max-width: 320px;
+  padding: 0.55rem 0.7rem; font: inherit;
+  border: 1px solid var(--border); border-radius: 8px; background: #fff;
+}
+.tool .radios { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.tool .radios label {
+  display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 500;
+  border: 1px solid var(--border); border-radius: 8px; padding: 0.45rem 0.8rem; cursor: pointer;
+}
+.btn {
+  background: var(--verde); color: #fff; border: none; border-radius: 8px;
+  padding: 0.65rem 1.4rem; font: inherit; font-weight: 600; cursor: pointer;
+}
+.btn:hover { background: var(--verde-inchis); }
+.rezultat {
+  margin-top: 1.5rem; padding: 1.25rem 1.5rem;
+  background: var(--verde-deschis); border: 1px solid #bfe0cf; border-radius: 12px;
+}
+.rezultat.gol { display: none; }
+.rezultat .mare { font-size: 2rem; font-weight: 800; color: var(--verde-inchis); line-height: 1.1; }
+.rezultat .sub { color: var(--text-soft); font-size: 0.9rem; }
+.rezultat table { width: 100%; border-collapse: collapse; margin-top: 0.75rem; }
+.rezultat td { padding: 0.35rem 0; border-bottom: 1px dashed #bfe0cf; }
+.rezultat td:last-child { text-align: right; font-weight: 600; }
+
+/* Bară IMC */
+.imc-bara {
+  position: relative; height: 14px; border-radius: 999px; margin: 1rem 0 1.5rem;
+  background: linear-gradient(to right, #3b82f6 0 18%, #16a34a 18% 38%, #f59e0b 38% 55%, #f97316 55% 72%, #ef4444 72% 88%, #b91c1c 88% 100%);
+}
+.imc-bara .ac {
+  position: absolute; top: -6px; width: 3px; height: 26px; background: #21302a; border-radius: 2px;
+  transform: translateX(-50%);
+}
+
+/* Carduri tool pe hub */
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+.tool-card {
+  display: block; background: #fff; border: 1px solid var(--border); border-radius: 12px;
+  padding: 1.25rem; color: inherit; transition: transform 0.15s, box-shadow 0.15s;
+}
+.tool-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); text-decoration: none; }
+.tool-card .emoji { font-size: 1.8rem; }
+.tool-card h3 { margin: 0.5rem 0 0.3rem; }
+.tool-card p { margin: 0; color: var(--text-soft); font-size: 0.9rem; }
+
+/* Pagini de conținut simplu (legale, despre) */
+.pagina-text { max-width: 70ch; }
+.pagina-text h2 { font-size: 1.3rem; }
+
+.sectiune-alte { margin-top: 3rem; }

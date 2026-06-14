@@ -1,0 +1,154 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import Base from "../../layouts/Base.astro";
+import DietaStructuredData from "../../components/DietaStructuredData.astro";
+import Faq from "../../components/Faq.astro";
+import { getCategorie, getCaracteristica } from "../../data/taxonomie";
+import { dificultateText } from "../../lib/format";
+
+export async function getStaticPaths() {
+  const diete = await getCollection("diete", ({ data }) => !data.draft);
+  return diete.map((dieta) => ({
+    params: { slug: dieta.id },
+    props: { dieta },
+  }));
+}
+
+const { dieta } = Astro.props;
+const d = dieta.data;
+const { Content } = await render(dieta);
+
+const categorie = getCategorie(d.categorie);
+const imagineUrl = d.imagine ? new URL(d.imagine.src, Astro.site).href : undefined;
+const url = new URL(`/dieta/${dieta.id}/`, Astro.site).href;
+---
+
+<Base titlu={d.titlu} descriere={d.descriere} imagine={d.imagine?.src} tipPagina="article" bodyClass="pg-dieta">
+  <DietaStructuredData
+    slot="head"
+    titlu={d.titlu}
+    descriere={d.descriere}
+    imagineUrl={imagineUrl}
+    autor={d.autor}
+    publicat={d.publicat}
+    actualizat={d.actualizat}
+    url={url}
+    cuvinteCheie={d.cuvinteCheie}
+  />
+
+  <nav class="breadcrumb">
+    <a href="/" data-i18n="bc.acasa">Acasă</a> ›
+    <a href={`/categorie/${d.categorie}/`}>{categorie?.nume}</a> ›
+    {d.titlu}
+  </nav>
+
+  <article class="dieta-hero">
+    <p>
+      <a href={`/categorie/${d.categorie}/`} class="badge badge-categorie" data-cat-sg={d.categorie}>{categorie?.numeSingular}</a>
+      {d.caracteristici.map((slug) => {
+        const c = getCaracteristica(slug);
+        return c && <a href={`/caracteristica/${slug}/`} class="badge">{c.nume}</a>;
+      })}
+    </p>
+    <h1>{d.titlu}</h1>
+
+    <div class="stat-bloc" style="margin:1.2rem 0 1.5rem;">
+      <div class="stat" data-dif={d.dificultate}><span data-i18n="dieta.stat.dif">dificultate</span><strong data-dif-val={d.dificultate}>{dificultateText(d.dificultate)}</strong></div>
+      {d.durataTipica && <div class="stat"><span data-i18n="dieta.stat.durata">durată tipică</span><strong>{d.durataTipica}</strong></div>}
+      <div class="stat"><span data-i18n="dieta.stat.tip">tip</span><strong>{categorie?.numeSingular}</strong></div>
+    </div>
+
+    <p class="lead">{d.principiu}</p>
+
+    {d.imagine && (
+      <Image src={d.imagine} alt={d.imagineAlt ?? d.titlu} widths={[400, 800, 1080]} loading="eager" />
+    )}
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <details class="acordeon" open>
+      <summary>
+        <em class="acordeon-icon">+</em>
+        <h2 data-i18n="dieta.mananci-eviti">Ce mănânci și ce eviți</h2>
+      </summary>
+      <div class="acordeon-continut">
+        <div class="doua-coloane">
+          <div class="lista-box permise">
+            <h3 data-i18n="dieta.mananci">✓ Ce mănânci</h3>
+            <ul>{d.alimentePermise.map((a) => <li>{a}</li>)}</ul>
+          </div>
+          {d.alimenteEvitate.length > 0 && (
+            <div class="lista-box evitate">
+              <h3 data-i18n="dieta.eviti">✕ Ce eviți</h3>
+              <ul>{d.alimenteEvitate.map((a) => <li>{a}</li>)}</ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </details>
+
+    {d.meniuExemplu.length > 0 && (
+      <details class="acordeon">
+        <summary>
+          <em class="acordeon-icon">+</em>
+          <h2 data-i18n="dieta.meniu">Meniu-exemplu pe o zi</h2>
+        </summary>
+        <div class="acordeon-continut">
+          <section class="meniu-zi">
+            {d.meniuExemplu.map((m) => (
+              <div class="masa"><strong>{m.masa}:</strong> {m.descriere}</div>
+            ))}
+          </section>
+        </div>
+      </details>
+    )}
+
+    {(d.avantaje.length > 0 || d.dezavantaje.length > 0) && (
+      <details class="acordeon" open>
+        <summary>
+          <em class="acordeon-icon">+</em>
+          <h2 data-i18n="dieta.avantaje-h2">Avantaje și dezavantaje</h2>
+        </summary>
+        <div class="acordeon-continut">
+          <div class="pro-contra">
+            {d.avantaje.length > 0 && (
+              <div class="lista-box permise">
+                <h3 data-i18n="dieta.avantaje">Avantaje</h3>
+                <ul>{d.avantaje.map((a) => <li>{a}</li>)}</ul>
+              </div>
+            )}
+            {d.dezavantaje.length > 0 && (
+              <div class="lista-box evitate">
+                <h3 data-i18n="dieta.dezavantaje">Dezavantaje</h3>
+                <ul>{d.dezavantaje.map((a) => <li>{a}</li>)}</ul>
+              </div>
+            )}
+          </div>
+        </div>
+      </details>
+    )}
+
+    {d.contraindicatii.length > 0 && (
+      <details class="acordeon" open>
+        <summary>
+          <em class="acordeon-icon">+</em>
+          <h2 data-i18n="dieta.contra-h2">⚠️ Cui nu i se recomandă</h2>
+        </summary>
+        <div class="acordeon-continut">
+          <section class="nota-contraindicatii">
+            <ul>{d.contraindicatii.map((c) => <li>{c}</li>)}</ul>
+            <p><small>
+              Listă orientativă. Înainte de a începe orice dietă, mai ales dacă ai o afecțiune,
+              consultă un medic sau un nutriționist.
+            </small></p>
+          </section>
+        </div>
+      </details>
+    )}
+
+    <Faq intrebari={d.faq} />
+  </article>
+</Base>

@@ -1,0 +1,90 @@
+---
+import Base from "../layouts/Base.astro";
+import Faq from "../components/Faq.astro";
+
+const faq = [
+  {
+    intrebare: "Câtă apă trebuie să beau pe zi?",
+    raspuns:
+      "O estimare uzuală este de aproximativ 30–35 ml de apă per kilogram de greutate corporală, plus un supliment când faci sport sau e cald. Pentru o persoană de 70 kg, asta înseamnă în jur de 2,5 litri pe zi.",
+  },
+  {
+    intrebare: "Apa ajută la slăbit?",
+    raspuns:
+      "Apa nu arde grăsime direct, dar nu are calorii, dă o senzație de sațietate și, băută înainte de mese, poate reduce cantitatea de mâncare. Înlocuirea băuturilor îndulcite cu apă reduce semnificativ aportul caloric.",
+  },
+  {
+    intrebare: "Cafeaua și ceaiul contează?",
+    raspuns:
+      "Da, lichidele din ceai, cafea și alimente contribuie la hidratare. Totuși, apa simplă rămâne cea mai bună alegere, fără zahăr și fără calorii.",
+  },
+];
+---
+
+<Base
+  titlu="Calculator apă — câtă apă să bei pe zi"
+  descriere="Calculator gratuit pentru aportul de apă: află de câtă apă ai nevoie pe zi în funcție de greutate și de minutele de mișcare. Rezultat în litri și pahare."
+>
+  <nav class="breadcrumb"><a href="/" data-i18n="bc.acasa">Acasă</a> › <a href="/calculatoare/" data-i18n="bc.calc">Calculatoare</a> › <span data-i18n="apa.bc">Calculator apă</span></nav>
+  <h1 data-i18n="apa.h1">Calculator aport de apă</h1>
+  <p class="lead" data-i18n="apa.lead">
+    Estimează de câtă apă ai nevoie zilnic, în funcție de greutatea ta și de cât te miști. Datele
+    rămân în browserul tău.
+  </p>
+
+  <form class="tool" id="apa-form">
+    <div class="camp">
+      <label for="greutate" data-i18n="apa.greutate">Greutate (kg)</label>
+      <input type="number" id="greutate" min="30" max="300" step="0.1" value="70" required />
+    </div>
+    <div class="camp">
+      <label for="sport" data-i18n="apa.sport">Minute de mișcare pe zi</label>
+      <input type="number" id="sport" min="0" max="300" step="5" value="30" />
+    </div>
+    <button class="btn" type="submit" data-i18n="apa.btn">Calculează</button>
+
+    <div class="rezultat gol" id="rezultat" role="status" aria-live="polite">
+      <div><span class="mare" id="litri-val">—</span> <span class="sub" data-i18n="apa.litri-sub">litri pe zi</span></div>
+      <table>
+        <tr><td data-i18n="apa.pahare">Pahare (250 ml)</td><td id="pahare-val">—</td></tr>
+        <tr><td data-i18n="apa.ml">Mililitri</td><td id="ml-val">—</td></tr>
+      </table>
+      <p class="sub" style="margin-top:0.75rem;" data-i18n="apa.nota">
+        Estimare orientativă. Necesarul crește pe căldură, la febră sau la efort intens. Ascultă-ți
+        și senzația de sete.
+      </p>
+    </div>
+  </form>
+
+  <div class="prose">
+    <h2 data-i18n="apa.h2">Cum funcționează</h2>
+    <p data-i18n-html="apa.p-html">
+      Calculatorul pornește de la aproximativ <strong>35 ml de apă per kilogram</strong> de
+      greutate corporală și adaugă un supliment pentru minutele de mișcare. Rezultatul este o
+      țintă orientativă — necesarul real depinde de temperatură, transpirație și starea de sănătate.
+    </p>
+  </div>
+
+  <Faq intrebari={faq} />
+</Base>
+
+<script>
+  import { aportApa, rotunjit } from "../lib/calc";
+
+  const form = document.getElementById("apa-form") as HTMLFormElement;
+  const rezultat = document.getElementById("rezultat")!;
+  const set = (id: string, v: string) => (document.getElementById(id)!.textContent = v);
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const kg = +(document.getElementById("greutate") as HTMLInputElement).value;
+    const sport = +(document.getElementById("sport") as HTMLInputElement).value || 0;
+    if (!kg) return;
+
+    const ml = aportApa(kg, sport);
+    set("litri-val", String(rotunjit(ml / 1000, 1)).replace(".", ","));
+    set("pahare-val", `${rotunjit(ml / 250)} pahare`);
+    set("ml-val", `${rotunjit(ml)} ml`);
+    rezultat.classList.remove("gol");
+  });
+</script>

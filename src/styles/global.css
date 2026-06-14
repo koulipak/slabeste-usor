@@ -1,0 +1,7 @@
+/* ============================================================
+   TEMĂ ACTIVĂ — schimbă o singură linie ca să comuți designul.
+   Variante disponibile în ./themes/:
+     - uno.css      → varianta 1 (light, colourful, fun — uno.app)
+     - goodfit.css  → varianta 2 (editorial cald — goodfit, reinterpretat)
+   ============================================================ */
+@import "./themes/palais.css";

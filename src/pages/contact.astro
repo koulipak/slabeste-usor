@@ -1,0 +1,27 @@
+---
+import Base from "../layouts/Base.astro";
+
+// TODO: înlocuiește cu adresa reală de e-mail înainte de lansare.
+const email = "contact@slabeste-usor.ro";
+---
+
+<Base
+  titlu="Contact"
+  descriere="Contactează echipa Slăbește Ușor pentru sugestii, corecturi sau colaborări."
+>
+  <nav class="breadcrumb"><a href="/">Acasă</a> › Contact</nav>
+  <h1>Contact</h1>
+  <div class="pagina-text prose">
+    <p>
+      Ai o întrebare, o sugestie sau ai găsit o greșeală? Ne poți scrie oricând — răspundem cât
+      putem de repede.
+    </p>
+    <p>
+      E-mail: <a href={`mailto:${email}`}>{email}</a>
+    </p>
+    <p>
+      Pentru corecturi de conținut, te rugăm să incluzi linkul paginii și ce anume crezi că ar
+      trebui corectat.
+    </p>
+  </div>
+</Base>

@@ -1,0 +1,32 @@
+---
+// Afișează un bloc de întrebări frecvente ȘI generează JSON-LD FAQPage.
+// FAQPage e foarte valoros pentru „featured snippets" în Google.
+interface Props {
+  intrebari: { intrebare: string; raspuns: string }[];
+  titlu?: string;
+}
+const { intrebari, titlu = "Întrebări frecvente" } = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: intrebari.map((q) => ({
+    "@type": "Question",
+    name: q.intrebare,
+    acceptedAnswer: { "@type": "Answer", text: q.raspuns },
+  })),
+};
+---
+
+{intrebari.length > 0 && (
+  <section class="faq">
+    <h2>{titlu}</h2>
+    {intrebari.map((q) => (
+      <details>
+        <summary>{q.intrebare}</summary>
+        <p>{q.raspuns}</p>
+      </details>
+    ))}
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </section>
+)}

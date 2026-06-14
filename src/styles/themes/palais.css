@@ -1,0 +1,1226 @@
+/* ============================================================
+   Temă „Pa'lais" — inspirată de palais.bio
+   ADN vizual: crem cald, navy profund, galben bold, forme
+   organice, tipografie condensată display (Bebas Neue) +
+   script pentru subtitluri (Fraunces italic), verde botanic.
+   ============================================================ */
+
+/* Font display condensat — Bebas Neue (Google Fonts) */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+/* Font handwritten */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+
+:root {
+  /* ── Paleta Pa'lais ───────────────────────────────── */
+  --navy:         #1c3461;
+  --navy-inchis:  #112244;
+  --navy-soft:    #e8edf5;
+
+  --galben:       #f5c227;
+  --galben-inchis:#c49000;
+  --galben-soft:  #fef8e0;
+
+  --verde:        #3a7d44;        /* verde botanic, secundar */
+  --verde-inchis: #2a5c32;
+  --verde-deschis:#e6f2e8;
+
+  --coral:        #e8614a;        /* accent cald pt avertizări */
+  --coral-soft:   #fdeae6;
+
+  /* aliasuri moștenite */
+  --albastru:     var(--navy);
+  --portocaliu:   var(--coral);
+  --mustar:       var(--galben);
+  --mustar-soft:  var(--galben-soft);
+  --roz:          #d4607a;
+  --roz-soft:     #fbe8ed;
+  --teal:         #2a8080;
+  --piersica:     #f0a070;
+  --terra:        #b05030;
+  --lime:         #b0d8a0;
+
+  /* ── Neutre — crem ivoire cald ───────────────────── */
+  --bg:           #f7f2e8;
+  --surface:      #ffffff;
+  --text:         #12100c;
+  --text-soft:    #4a4038;
+  --border:       #e8dfd0;
+
+  --max-w: 1140px;
+  --radius: 24px;
+  --radius-sm: 14px;
+  --shadow: 0 8px 28px rgba(28, 52, 97, 0.09);
+  --shadow-hover: 0 18px 48px rgba(28, 52, 97, 0.18);
+
+  --serif: "Fraunces Variable", "Fraunces", Georgia, serif;
+  --display: "Bebas Neue", "Impact", "Arial Narrow", sans-serif;
+
+  font-family: "Nunito Variable", "Nunito", -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  /* fără background-image gradient — crem pur, ca Pa'lais */
+}
+
+/* ── Blob-uri organice (stil Pa'lais — forme pline, nu cerc blur) ── */
+.bg-decor {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Blob-urile devin forme organice Pa'lais: galben mare + navy subtil */
+.blob {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Blob galben mare — dreapta sus (exact ca Pa'lais) */
+.b1 {
+  width: 520px;
+  height: 620px;
+  background: var(--galben);
+  opacity: 0.22;
+  top: -80px;
+  right: -60px;
+  border-radius: 44% 56% 68% 32% / 52% 40% 60% 48%;
+  animation: palais-drift-a 50s ease-in-out infinite;
+}
+
+/* Blob verde botanic — stânga jos */
+.b2 {
+  width: 360px;
+  height: 360px;
+  background: var(--verde);
+  opacity: 0.10;
+  bottom: 10%;
+  left: -60px;
+  border-radius: 60% 40% 50% 50% / 48% 60% 40% 52%;
+  animation: palais-drift-b 55s ease-in-out infinite;
+}
+
+/* Blob navy subtil — centru */
+.b3 {
+  width: 300px;
+  height: 300px;
+  background: var(--navy);
+  opacity: 0.05;
+  top: 45%;
+  left: 38%;
+  border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%;
+  animation: palais-drift-c 60s ease-in-out infinite;
+}
+
+/* Restul blob-urilor — ascuns (Pa'lais e minimalist) */
+.b4, .b5 { display: none; }
+
+/* Imaginile food-decor — mai subtile */
+.food-decor {
+  position: absolute;
+  opacity: 0.09;
+  pointer-events: none;
+  border-radius: 42% 58% 52% 48% / 50% 48% 52% 50%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+  filter: saturate(0.7) blur(0.5px);
+  will-change: transform;
+}
+.fd1 { width: 260px; height: 260px; top: 8%;  left: 4%;  transform: rotate(-8deg);  animation: palais-drift-a 46s ease-in-out infinite; }
+.fd2 { width: 220px; height: 220px; top: 6%;  left: 55%; transform: rotate(6deg);   animation: palais-drift-b 52s ease-in-out infinite; animation-delay: -8s; }
+.fd3 { width: 230px; height: 230px; top: 60%; left: 28%; transform: rotate(12deg);  animation: palais-drift-c 48s ease-in-out infinite; animation-delay: -16s; }
+
+@keyframes palais-drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(20px, 18px) scale(1.03); }
+}
+@keyframes palais-drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(-22px, 14px) scale(1.04); }
+}
+@keyframes palais-drift-c {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(16px, -20px) scale(1.03); }
+}
+
+/* ── Reveal-on-scroll ──────────────────────────────────────────── */
+.js .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.js .reveal.in { opacity: 1; transform: none; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+.container {
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: 1.35rem;
+}
+
+a { color: var(--navy-inchis); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* ── Header — alb pur, nav curat, CTA dark ca Pa'lais ──────────── */
+.site-header {
+  background: #fff7ed;
+  border-bottom: 1.5px solid #f5dfc0;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.site-header nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 0.9rem;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  gap: 0.3rem;
+}
+
+@keyframes logo-spin-3d {
+  0%   { transform: perspective(300px) rotateY(0deg); }
+  50%  { transform: perspective(300px) rotateY(-180deg); }
+  100% { transform: perspective(300px) rotateY(-360deg); }
+}
+.nav-links { display: flex; align-items: center; gap: 1.4rem; }
+.nav-links a { color: var(--text-soft); font-weight: 700; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.07em; }
+.nav-links a:hover { color: var(--navy); text-decoration: none; }
+.nav-cta-special {
+  color: var(--verde) !important;
+  border: 1.5px solid var(--verde);
+  border-radius: 20px;
+  padding: 0.25rem 0.75rem;
+}
+.nav-cta-special:hover { background: var(--verde); color: #fff !important; }
+
+/* ── Nav search ─────────────────────────────── */
+.nav-search-wrap { position: relative; }
+#nav-search {
+  width: 180px;
+  padding: 0.38rem 0.85rem;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.86rem;
+  outline: none;
+  transition: border-color 0.2s, width 0.25s;
+}
+#nav-search:focus { border-color: var(--navy); width: 240px; }
+#nav-search-results {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 260px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+  list-style: none;
+  padding: 0.4rem 0;
+  margin: 0;
+  z-index: 999;
+}
+#nav-search-results li { padding: 0.5rem 1rem; cursor: pointer; font-size: 0.92rem; border-radius: 8px; margin: 0 0.3rem; }
+#nav-search-results li:hover,
+#nav-search-results li.active { background: var(--galben-soft); color: var(--navy); }
+
+/* CTA nav — dark navy, ca butonul "STORE LOCATOR" de la Pa'lais */
+.nav-cta {
+  background: var(--navy) !important;
+  color: #fff !important;
+  padding: 0.52rem 1.1rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.14s ease, transform 0.12s ease;
+  box-shadow: none;
+}
+.nav-cta:hover {
+  background: var(--navy-inchis) !important;
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+/* Progress bar */
+.reading-progress {
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--navy), var(--galben));
+  border-radius: 0 3px 3px 0;
+  transition: width 0.08s linear;
+  pointer-events: none;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+.site-footer {
+  margin-top: 5rem;
+  padding-block: 2.5rem;
+  border-top: 1.5px solid var(--border);
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+.site-footer .disclaimer {
+  background: var(--galben-soft);
+  border: 1px solid #f0d890;
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.2rem;
+  font-size: 0.84rem;
+}
+.footer-nav { margin-top: 1rem; }
+.footer-nav a { color: var(--text-soft); }
+
+/* ── Tipografie ─────────────────────────────────────────────────── */
+/* H1 — display condensat mare, ca Pa'lais headline */
+h1 {
+  font-family: var(--display);
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  line-height: 1.0;
+  margin-block: 1rem 0.5rem;
+  font-weight: 400;   /* Bebas Neue are un singur weight */
+  letter-spacing: 0.03em;
+  color: var(--navy);
+  text-shadow: none;
+  text-transform: uppercase;
+}
+/* H2 — serif italic, ca subtitlul script de la Pa'lais */
+h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin-top: 2.2rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  color: var(--navy);
+  text-shadow: none;
+  font-variation-settings: "opsz" 80, "SOFT" 50, "WONK" 0;
+}
+h3 {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text);
+  text-shadow: none;
+  font-variation-settings: "opsz" 40, "SOFT" 20;
+}
+.lead {
+  font-size: 1.18rem;
+  color: var(--text-soft);
+  max-width: 60ch;
+  line-height: 1.6;
+}
+
+/* ── Grilă de carduri ────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.6rem;
+  margin-top: 1.75rem;
+}
+.card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: visible;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card { cursor: default; }
+.card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+.card a { color: inherit; text-decoration: none; display: block; }
+.card a > img,
+.card a > .card-img-ph { border-radius: var(--radius) var(--radius) 0 0; overflow: hidden; }
+.card-body { padding: 1.15rem 1.35rem 1.4rem; }
+.card h3 { margin: 0.35rem 0 0.45rem; font-size: 1.2rem; font-weight: 700; color: var(--navy); font-style: normal; letter-spacing: -0.01em; font-variation-settings: "opsz" 50, "SOFT" 20; }
+.card-meta { font-size: 0.88rem; color: var(--text-soft); }
+
+/* ── Placeholder imagine ─────────────────────────────────────────── */
+.card-img-ph {
+  --sprite-pos: 0% 0%;
+  aspect-ratio: 16 / 11;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.4rem;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--galben-soft) 0%, #f0e4b0 100%);
+}
+.card-img-ph::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(28,52,97,0.06) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+/* Sprite positions */
+.card:nth-child(9n+1) .card-img-ph { --sprite-pos: 0%   0%;   }
+.card:nth-child(9n+2) .card-img-ph { --sprite-pos: 50%  0%;   }
+.card:nth-child(9n+3) .card-img-ph { --sprite-pos: 100% 0%;   }
+.card:nth-child(9n+4) .card-img-ph { --sprite-pos: 0%   50%;  }
+.card:nth-child(9n+5) .card-img-ph { --sprite-pos: 50%  50%;  }
+.card:nth-child(9n+6) .card-img-ph { --sprite-pos: 100% 50%;  }
+.card:nth-child(9n+7) .card-img-ph { --sprite-pos: 0%   100%; }
+.card:nth-child(9n+8) .card-img-ph { --sprite-pos: 50%  100%; }
+.card:nth-child(9n+9) .card-img-ph { --sprite-pos: 100% 100%; }
+
+/* Gradient + sprite mutat în ::after ca să poată fi animat independent */
+.card-img-ph::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  will-change: transform;
+  transform-origin: center 90%;
+}
+.card[data-categorie="low-carb"] .card-img-ph::after {
+  background-image: linear-gradient(135deg, rgba(28,52,97,0.75) 0%, rgba(245,194,39,0.70) 100%),
+    url('/decor/fitness-icons.avif');
+  background-size: cover, 300% 300%;
+  background-position: center, var(--sprite-pos);
+  background-repeat: no-repeat;
+}
+.card[data-categorie="bogate-in-proteine"] .card-img-ph::after {
+  background-image: linear-gradient(135deg, rgba(28,52,97,0.80) 0%, rgba(58,125,68,0.70) 100%),
+    url('/decor/fitness-icons.avif');
+  background-size: cover, 300% 300%;
+  background-position: center, var(--sprite-pos);
+  background-repeat: no-repeat;
+}
+.card[data-categorie="post-intermitent"] .card-img-ph::after {
+  background-image: linear-gradient(135deg, rgba(17,34,68,0.85) 0%, rgba(42,128,128,0.70) 100%),
+    url('/decor/fitness-icons.avif');
+  background-size: cover, 300% 300%;
+  background-position: center, var(--sprite-pos);
+  background-repeat: no-repeat;
+}
+.card[data-categorie="pe-plante"] .card-img-ph::after {
+  background-image: linear-gradient(135deg, rgba(58,125,68,0.80) 0%, rgba(176,216,160,0.80) 100%),
+    url('/decor/fitness-icons.avif');
+  background-size: cover, 300% 300%;
+  background-position: center, var(--sprite-pos);
+  background-repeat: no-repeat;
+}
+.card[data-categorie="echilibrate"] .card-img-ph::after {
+  background-image: linear-gradient(135deg, rgba(28,52,97,0.70) 0%, rgba(176,216,160,0.75) 100%),
+    url('/decor/fitness-icons.avif');
+  background-size: cover, 300% 300%;
+  background-position: center, var(--sprite-pos);
+  background-repeat: no-repeat;
+}
+.card[data-categorie="structurate"] .card-img-ph::after {
+  background-image: linear-gradient(135deg, rgba(245,194,39,0.80) 0%, rgba(232,97,74,0.70) 100%),
+    url('/decor/fitness-icons.avif');
+  background-size: cover, 300% 300%;
+  background-position: center, var(--sprite-pos);
+  background-repeat: no-repeat;
+}
+
+/* Bol emoji */
+.card-img-ph .bol {
+  position: absolute; top: 0.6rem; left: 0.6rem;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.9rem; width: 50px; height: 50px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.14);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+  border: 2px solid rgba(255,255,255,0.5);
+  z-index: 2;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+.card:hover .card-img-ph .bol {
+  box-shadow: 0 0 0 4px rgba(245,194,39,0.35);
+  border-color: var(--galben);
+}
+.card:nth-child(even):hover  .card-img-ph .bol { transform: scale(1.16) translateY(-6px) rotate(10deg); }
+.card:nth-child(odd):hover   .card-img-ph .bol { transform: scale(1.16) translateY(-6px) rotate(-10deg); }
+
+/* ── Animații fitness (9 variante pentru cele 9 poziții de sprite) ──
+   Mișcări expresive: anticipație, squash & stretch, mișcare pe mai
+   multe axe și follow-through. Toate pe transform → compozitate GPU. */
+
+/* 1 — Alergare: pas dinamic cu aplecare înainte și înălțare alternantă */
+@keyframes fit-run {
+  0%   { transform: translateX(-3px) translateY(0)     rotate(-1deg)  scaleY(1);    }
+  15%  { transform: translateX(2px)  translateY(-10px) rotate(3.5deg) scaleY(1.05); }
+  30%  { transform: translateX(5px)  translateY(-1px)  rotate(2deg)   scaleY(0.97); }
+  50%  { transform: translateX(-4px) translateY(-9px)  rotate(-3deg)  scaleY(1.04); }
+  70%  { transform: translateX(4px)  translateY(0)     rotate(2deg)   scaleY(0.97); }
+  85%  { transform: translateX(-2px) translateY(-8px)  rotate(-2deg)  scaleY(1.03); }
+  100% { transform: translateX(-3px) translateY(0)     rotate(-1deg)  scaleY(1);    }
+}
+/* 2 — Săritură: ghemuire de avânt → lansare → plutire → aterizare cu squash */
+@keyframes fit-jump {
+  0%   { transform: translateY(0)     scaleY(1)    scaleX(1);    }
+  12%  { transform: translateY(7px)   scaleY(0.84) scaleX(1.13); }
+  30%  { transform: translateY(-26px) scaleY(1.14) scaleX(0.88); }
+  44%  { transform: translateY(-30px) scaleY(1.06) scaleX(0.95); }
+  60%  { transform: translateY(-7px)  scaleY(1)    scaleX(1);    }
+  73%  { transform: translateY(5px)   scaleY(0.86) scaleX(1.12); }
+  88%  { transform: translateY(-4px)  scaleY(1.04) scaleX(0.97); }
+  100% { transform: translateY(0)     scaleY(1)    scaleX(1);    }
+}
+/* 3 — Yoga / întindere: legănare grațioasă cu respirație */
+@keyframes fit-yoga {
+  0%, 100% { transform: rotate(0deg)    translateY(0)    scale(1);     }
+  25%       { transform: rotate(-4.5deg) translateY(-3px) scale(1.015); }
+  50%       { transform: rotate(0.5deg)  translateY(-6px) scale(1.035); }
+  75%       { transform: rotate(4.5deg)  translateY(-2px) scale(1.015); }
+}
+/* 4 — Ciclism: pedalare — corp pe orbită circulară continuă */
+@keyframes fit-cycle {
+  0%   { transform: rotate(0deg)   translateY(0)    translateX(0);    }
+  25%  { transform: rotate(-3deg)  translateY(-7px) translateX(-5px); }
+  50%  { transform: rotate(0deg)   translateY(-10px) translateX(0);   }
+  75%  { transform: rotate(3deg)   translateY(-7px) translateX(5px);  }
+  100% { transform: rotate(0deg)   translateY(0)    translateX(0);    }
+}
+/* 5 — Ridicat greutăți: încărcare → împingere cu efort (tremur) → lock → coborâre */
+@keyframes fit-lift {
+  0%   { transform: translateY(0)     scaleY(1);                 }
+  15%  { transform: translateY(7px)   scaleY(0.92);              }
+  35%  { transform: translateY(-13px) scaleY(1.07);              }
+  46%  { transform: translateY(-11px) scaleY(1.05) rotate(-1.2deg); }
+  56%  { transform: translateY(-14px) scaleY(1.06) rotate(1.2deg);  }
+  70%  { transform: translateY(-12px) scaleY(1.05);              }
+  88%  { transform: translateY(3px)   scaleY(0.97);              }
+  100% { transform: translateY(0)     scaleY(1);                 }
+}
+/* 6 — Flotări / planșă: coborâre controlată din articulația de jos → împingere */
+@keyframes fit-pushup {
+  0%, 100% { transform: translateY(0)    rotate(0deg)    scaleX(1);    }
+  30%       { transform: translateY(11px) rotate(-1.8deg) scaleX(1.05); }
+  50%       { transform: translateY(9px)  rotate(0deg)    scaleX(1.03); }
+  78%       { transform: translateY(-7px) rotate(1.8deg)  scaleX(0.97); }
+}
+/* 7 — Jumping jacks: strângere → explozie în afară și în sus → aterizare */
+@keyframes fit-jacks {
+  0%, 100% { transform: scale(1)                  translateY(0);     }
+  20%       { transform: scaleX(0.9)  scaleY(1.07) translateY(-4px);  }
+  45%       { transform: scaleX(1.18) scaleY(0.88) translateY(-14px); }
+  60%       { transform: scaleX(1.1)  scaleY(0.94) translateY(-9px);  }
+  80%       { transform: scaleX(0.94) scaleY(1.05) translateY(4px);   }
+}
+/* 8 — Meditație / respirație: inspir–expir ultra-lent cu plutire */
+@keyframes fit-meditate {
+  0%, 100% { transform: scale(1)     translateY(0)    rotate(0deg);     }
+  35%       { transform: scale(1.035) translateY(-4px) rotate(-0.7deg); }
+  50%       { transform: scale(1.055) translateY(-7px) rotate(0deg);    }
+  65%       { transform: scale(1.035) translateY(-4px) rotate(0.7deg);  }
+}
+/* 9 — Stretching / balans: legănare amplă stânga-dreapta cu răsucire */
+@keyframes fit-rock {
+  0%, 100% { transform: translateX(0)    rotate(0deg)    skewX(0deg);    }
+  25%       { transform: translateX(-9px) rotate(-3.5deg) skewX(2deg);   }
+  50%       { transform: translateX(0)    rotate(0deg)    skewX(0deg);    }
+  75%       { transform: translateX(8px)  rotate(2.8deg)  skewX(-1.6deg); }
+}
+
+/* Reacția fundalului: grila de puncte pulsează în ritmul mișcării */
+@keyframes fit-backdrop {
+  0%, 100% { opacity: 1;    transform: scale(1);    }
+  50%       { opacity: 0.5; transform: scale(1.07); }
+}
+.card:hover .card-img-ph::before { animation: fit-backdrop 2.4s ease-in-out infinite; }
+
+/* Asociere animație ↔ poziție sprite (+ pivot credibil pentru fiecare) */
+.card:nth-child(9n+1):hover .card-img-ph::after { transform-origin: center 90%;  animation: fit-run      0.5s  cubic-bezier(0.4,0,0.5,1)   infinite; }
+.card:nth-child(9n+2):hover .card-img-ph::after { transform-origin: center 92%;  animation: fit-jump     0.95s cubic-bezier(0.3,0,0.4,1)   infinite; }
+.card:nth-child(9n+3):hover .card-img-ph::after { transform-origin: center 80%;  animation: fit-yoga     2.4s  ease-in-out                 infinite; }
+.card:nth-child(9n+4):hover .card-img-ph::after { transform-origin: center 85%;  animation: fit-cycle    0.7s  linear                       infinite; }
+.card:nth-child(9n+5):hover .card-img-ph::after { transform-origin: center 100%; animation: fit-lift     1.1s  cubic-bezier(0.45,0,0.3,1)   infinite; }
+.card:nth-child(9n+6):hover .card-img-ph::after { transform-origin: center 100%; animation: fit-pushup   0.85s ease-in-out                 infinite; }
+.card:nth-child(9n+7):hover .card-img-ph::after { transform-origin: center 90%;  animation: fit-jacks    0.7s  cubic-bezier(0.35,0,0.4,1)   infinite; }
+.card:nth-child(9n+8):hover .card-img-ph::after { transform-origin: center 95%;  animation: fit-meditate 3.2s  ease-in-out                 infinite; }
+.card:nth-child(9n+9):hover .card-img-ph::after { transform-origin: center 95%;  animation: fit-rock     1.3s  ease-in-out                 infinite; }
+
+/* Accesibilitate: oprește toate mișcările dacă utilizatorul preferă mișcare redusă */
+@media (prefers-reduced-motion: reduce) {
+  .card:hover .card-img-ph::after,
+  .card:hover .card-img-ph::before { animation: none !important; }
+}
+
+/* ── Badge-uri ──────────────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  background: var(--galben-soft);
+  border: 1px solid #e8d880;
+  color: #7a6010;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-right: 0.35rem;
+  margin-bottom: 0.3rem;
+}
+.badge-categorie { background: var(--navy-soft); border-color: #c0cce0; color: var(--navy); }
+.card[data-categorie="low-carb"] .badge-categorie         { background: var(--galben-soft); border-color: #e8d880; color: #7a6010; }
+.card[data-categorie="bogate-in-proteine"] .badge-categorie{ background: var(--verde-deschis); border-color: #b8d8c0; color: var(--verde-inchis); }
+.card[data-categorie="post-intermitent"] .badge-categorie  { background: #e8edf5; border-color: #c0cce0; color: var(--navy); }
+.card[data-categorie="pe-plante"] .badge-categorie         { background: var(--verde-deschis); border-color: #b8d8c0; color: var(--verde-inchis); }
+.card[data-categorie="echilibrate"] .badge-categorie       { background: #e0f0f0; border-color: #a8d8d8; color: #1a6060; }
+.card[data-categorie="structurate"] .badge-categorie       { background: var(--coral-soft); border-color: #f0c0b0; color: #8a2010; }
+
+/* ── Filtre (pastile) ────────────────────────────────────────────── */
+.filtru-grup-titlu { font-family: var(--display); font-weight: 400; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--navy); margin-bottom: 0.4rem; margin-top: 1.4rem; }
+.filtre { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.5rem 0 1rem; }
+.filtru-btn {
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 0.46rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+.filtru-btn:hover { transform: translateY(-1px); border-color: var(--galben); background: var(--galben-soft); }
+.filtru-btn[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; box-shadow: 0 6px 16px rgba(28,52,97,0.25); }
+.rezultate-count { color: var(--text-soft); font-size: 0.9rem; margin-top: 1.4rem; font-weight: 600; }
+
+/* ── Breadcrumb ──────────────────────────────────────────────────── */
+.breadcrumb { font-size: 0.84rem; color: var(--text-soft); margin-top: 1rem; }
+
+/* ── Pagina dietă ────────────────────────────────────────────────── */
+.dieta-hero .lead { margin-bottom: 0.5rem; }
+.doua-coloane { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; margin: 1.6rem 0; }
+@media (max-width: 700px) { .doua-coloane { grid-template-columns: 1fr; } }
+.lista-box {
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius);
+  padding: 1.3rem 1.6rem; box-shadow: var(--shadow);
+}
+.lista-box.permise { border-top: 4px solid var(--verde); }
+.lista-box.evitate  { border-top: 4px solid var(--coral); }
+.lista-box h2 { margin-top: 0; font-size: 1.2rem; font-style: normal; }
+.lista-box ul { margin: 0.5rem 0 0; padding-left: 1.1rem; }
+.lista-box li { padding: 0.2rem 0; }
+
+.pro-contra { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; margin: 1.6rem 0; }
+@media (max-width: 700px) { .pro-contra { grid-template-columns: 1fr; } }
+
+.meniu-zi { margin: 1.6rem 0; }
+.meniu-zi .masa {
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: 0.85rem 1.15rem; margin-bottom: 0.6rem; box-shadow: var(--shadow);
+}
+.meniu-zi .masa strong { color: var(--navy); }
+
+.nota-contraindicatii {
+  background: var(--coral-soft); border: 1px solid #f0c0b0; border-radius: var(--radius);
+  padding: 1.1rem 1.4rem; margin: 1.6rem 0;
+}
+.nota-contraindicatii h2 { margin-top: 0; font-size: 1.2rem; color: var(--terra); font-style: normal; }
+
+.prose { max-width: 68ch; }
+
+.stat-bloc { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.stat-bloc .stat { border-radius: 12px; padding: 0.6rem 1.1rem; display: flex; flex-direction: column; gap: 0.1rem; }
+.stat-bloc .stat:nth-child(1) { background: var(--galben-soft); }
+.stat-bloc .stat:nth-child(2) { background: var(--navy-soft); }
+.stat-bloc .stat:nth-child(3) { background: var(--verde-deschis); }
+.stat strong { display: block; font-size: 1rem; font-weight: 700; color: var(--text); }
+.stat span   { font-size: 0.74rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; }
+.stat[data-dif="usoara"]  strong { color: #16a34a; }
+.stat[data-dif="moderata"] strong { color: var(--navy); }
+.stat[data-dif="stricta"]  strong { color: #dc2626; }
+
+.filtru-dif-usoara   { color: #16a34a !important; border-color: #bbf7d0 !important; }
+.filtru-dif-usoara[aria-pressed="true"]   { background: #dcfce7 !important; color: #15803d !important; }
+.filtru-dif-moderata { color: var(--navy) !important; border-color: var(--navy-soft) !important; }
+.filtru-dif-moderata[aria-pressed="true"] { background: var(--navy-soft) !important; color: var(--navy-inchis) !important; }
+.filtru-dif-stricta  { color: #dc2626 !important; border-color: #fecaca !important; }
+.filtru-dif-stricta[aria-pressed="true"]  { background: #fee2e2 !important; color: #b91c1c !important; }
+
+/* ── FAQ ─────────────────────────────────────────────────────────── */
+.faq { margin-top: 2.5rem; }
+.faq details {
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: 0.5rem 1.2rem; margin-bottom: 0.6rem; box-shadow: var(--shadow);
+}
+.faq summary { cursor: pointer; font-weight: 700; padding: 0.5rem 0; }
+.faq details[open] summary { color: var(--navy); }
+
+/* ── Calculatoare ────────────────────────────────────────────────── */
+.tool {
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius);
+  padding: 1.9rem; margin: 1.6rem 0; box-shadow: var(--shadow);
+}
+.tool .camp { margin-bottom: 1.1rem; }
+.tool label { display: block; font-weight: 700; margin-bottom: 0.35rem; }
+.tool input[type="number"], .tool select {
+  width: 100%; max-width: 340px;
+  padding: 0.65rem 0.9rem; font: inherit;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm); background: var(--bg);
+}
+.tool input[type="number"]:focus, .tool select:focus { outline: 2px solid var(--navy); border-color: var(--navy); }
+.tool .radios { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.tool .radios label {
+  display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600;
+  border: 1.5px solid var(--border); border-radius: 999px; padding: 0.46rem 1rem; cursor: pointer;
+}
+.btn {
+  background: var(--navy); color: #fff; border: none; border-radius: 8px;
+  padding: 0.78rem 2rem; font: inherit; font-weight: 700;
+  font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.06em;
+  cursor: pointer; box-shadow: 0 8px 20px rgba(28,52,97,0.28);
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+.btn:hover { background: var(--navy-inchis); transform: translateY(-2px); }
+.rezultat {
+  margin-top: 1.4rem; padding: 1.4rem 1.6rem;
+  background: var(--galben-soft); border: 1px solid #e8d880; border-radius: var(--radius);
+}
+.rezultat.gol { display: none; }
+.rezultat .mare { font-family: var(--display); font-size: 3rem; font-weight: 400; color: var(--navy); line-height: 1; letter-spacing: 0.03em; }
+.rezultat .sub { color: var(--text-soft); font-size: 0.9rem; }
+.rezultat table { width: 100%; border-collapse: collapse; margin-top: 0.9rem; }
+.rezultat td { padding: 0.42rem 0; border-bottom: 1px dashed #e0d070; }
+.rezultat td:last-child { text-align: right; font-weight: 700; }
+
+/* Bara IMC — paleta Pa'lais */
+.imc-bara {
+  position: relative; height: 14px; border-radius: 999px; margin: 1rem 0 1.5rem;
+  background: linear-gradient(to right, #80b0d8 0 18%, #3a7d44 18% 38%, #f5c227 38% 55%, #f0a070 55% 72%, #e8614a 72% 88%, #b05030 88% 100%);
+}
+.imc-bara .ac {
+  position: absolute; top: -6px; width: 4px; height: 26px; background: var(--navy); border-radius: 3px;
+  transform: translateX(-50%); box-shadow: 0 0 0 3px rgba(247,242,232,0.9);
+}
+
+/* ── Tool cards ──────────────────────────────────────────────────── */
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 1.3rem; margin-top: 1.6rem; }
+.tool-card {
+  display: block; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius);
+  padding: 1.4rem; color: inherit; box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.tool-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); text-decoration: none; }
+.tool-card .emoji {
+  font-size: 1.65rem; width: 3rem; height: 3rem; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center; background: var(--galben-soft);
+  animation: float 6s ease-in-out infinite;
+}
+.tool-grid .tool-card:nth-child(2n) .emoji { animation-delay: -2s; }
+.tool-grid .tool-card:nth-child(3n) .emoji { animation-delay: -3.8s; }
+.tool-card h3 { margin: 0.75rem 0 0.3rem; font-weight: 700; font-size: 1.15rem; color: var(--navy); font-style: normal; }
+.tool-card p  { margin: 0; color: var(--text-soft); font-size: 0.88rem; }
+
+/* Culori per card tool — paleta Pa'lais */
+.tool-grid .tool-card:nth-child(6n+1) { background: var(--galben-soft); }
+.tool-grid .tool-card:nth-child(6n+1) .emoji { background: #f0d870; }
+.tool-grid .tool-card:nth-child(6n+2) { background: var(--verde-deschis); }
+.tool-grid .tool-card:nth-child(6n+2) .emoji { background: #b8d8c0; }
+.tool-grid .tool-card:nth-child(6n+3) { background: var(--navy-soft); }
+.tool-grid .tool-card:nth-child(6n+3) .emoji { background: #c0cce0; }
+.tool-grid .tool-card:nth-child(6n+4) { background: var(--coral-soft); }
+.tool-grid .tool-card:nth-child(6n+4) .emoji { background: #f0c0b0; }
+.tool-grid .tool-card:nth-child(6n+5) { background: #eef2f0; }
+.tool-grid .tool-card:nth-child(6n+5) .emoji { background: #d0e0d8; }
+.tool-grid .tool-card:nth-child(6n+6) { background: var(--surface); }
+.tool-grid .tool-card:nth-child(6n+6) .emoji { background: var(--galben-soft); }
+
+/* ── Pagini conținut text ────────────────────────────────────────── */
+.pagina-text { max-width: 70ch; }
+.pagina-text h2 { font-size: 1.5rem; }
+
+/* ── Secțiunea calculatoare (full-bleed) ─────────────────────────── */
+.sectiune-alte {
+  margin-top: 4rem;
+  background: var(--navy);
+  color: #f7f2e8;
+  border-radius: calc(var(--radius) + 6px);
+  padding: 2.5rem 2rem;
+  box-shadow: var(--shadow);
+}
+.sectiune-alte h2 { margin-top: 0; color: #fff; font-style: normal; font-family: var(--display); font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: 0.04em; font-variation-settings: normal; }
+.sectiune-alte > p { color: rgba(247,242,232,0.80); max-width: 60ch; }
+.sectiune-alte .tool-grid .tool-card:nth-child(n) { background: rgba(255,250,242,0.96); border-color: transparent; }
+.sectiune-alte .tool-card h3 { color: var(--navy); }
+
+/* ── Banner vedete ────────────────────────────────────────────────── */
+.vedete-banner {
+  background: var(--galben);
+  background-size: 200% auto;
+  text-align: center;
+  padding: 0.65rem 1rem;
+  font-family: var(--display);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.vedete-banner a {
+  color: var(--navy);
+  text-decoration: none;
+}
+.vedete-banner a:hover { text-decoration: underline; }
+
+/* ── Filtre animate ────────────────────────────────────────────────── */
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.22s ease, scale 0.22s ease;
+}
+.card.card-out {
+  opacity: 0 !important;
+  scale: 0.94;
+  pointer-events: none;
+}
+
+/* ── Acordeon ──────────────────────────────────────────────────────── */
+.acordeon { border: none; background: none; padding: 0; margin: 1.6rem 0; }
+.acordeon summary {
+  cursor: pointer; list-style: none;
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.4rem 0; user-select: none;
+  border-bottom: 1.5px solid var(--border); margin-bottom: 0.2rem;
+}
+.acordeon summary::-webkit-details-marker { display: none; }
+.acordeon summary h2 { margin: 0; flex: 1; font-size: 1.4rem; font-style: italic; }
+.acordeon-icon {
+  flex-shrink: 0; width: 2rem; height: 2rem; border-radius: 999px;
+  background: var(--galben-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; font-weight: 700; color: var(--navy);
+  transition: transform 0.3s ease, background 0.25s ease, color 0.25s ease;
+  font-style: normal;
+}
+.acordeon[open] .acordeon-icon { transform: rotate(45deg); background: var(--navy); color: #fff; }
+.acordeon-continut { overflow: hidden; }
+.acordeon[open] .acordeon-continut > * { animation: acordeon-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes acordeon-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+
+/* ── Intro zbor ────────────────────────────────────────────────────── */
+#intro-zbor {
+  position: fixed; inset: 0; z-index: 10000;
+  background: linear-gradient(115deg,
+    #6b93c4 0%,
+    #a8c4e0 28%,
+    #ddeaf5 45%,
+    #f7f2e8 52%,
+    #ede5d0 75%,
+    #d8ccb0 100%
+  );
+  pointer-events: all; cursor: pointer; overflow: hidden;
+  transition: transform 1.1s cubic-bezier(0.76, 0, 0.24, 1);
+  perspective: 900px;
+}
+#intro-zbor.pleaca { transform: translateY(-100%); }
+
+/* Piramida 3D rotativă în intro */
+.iz-piramida-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 800px;
+  pointer-events: none;
+  z-index: 1;
+}
+.iz-piramida {
+  width: min(92vw, 70vh);
+  height: min(75vw, 58vh);
+  object-fit: contain;
+  opacity: 0.22;
+  border-radius: 12px;
+  border: 3px solid rgba(28, 52, 97, 0.35);
+  box-shadow: 0 0 0 6px rgba(245, 194, 39, 0.18), 0 20px 50px rgba(28,52,97,0.20);
+  animation: piramida-3d 14s linear infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes piramida-3d {
+  0%   { transform: rotateY(0deg)   rotateX(8deg); }
+  25%  { transform: rotateY(90deg)  rotateX(4deg) scaleX(0.05); }
+  50%  { transform: rotateY(180deg) rotateX(8deg); }
+  75%  { transform: rotateY(270deg) rotateX(4deg) scaleX(0.05); }
+  100% { transform: rotateY(360deg) rotateX(8deg); }
+}
+
+.iz-click {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  font-size: 0.82rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-soft); opacity: 0; transition: opacity 0.6s ease;
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; pointer-events: none;
+}
+.iz-click::after {
+  content: ''; width: 1px; height: 40px; background: var(--text-soft);
+  animation: iz-linie 1.2s ease-in-out infinite;
+}
+@keyframes iz-linie { 0%, 100% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } }
+#intro-zbor.gata .iz-click { opacity: 0.6; }
+
+.iz-titlu {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%); text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  animation: iz-titlu-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both; z-index: 2;
+}
+.iz-logo {
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 8vw, 5.5rem);
+  font-weight: 400; color: var(--navy);
+  letter-spacing: 0.06em; line-height: 1; text-transform: uppercase;
+  word-spacing: 0;
+}
+.iz-logo em { font-style: normal; color: var(--galben); }
+.iz-om, .logo-om {
+  display: inline-block;
+  height: 0.82em;
+  width: auto;
+  vertical-align: -0.08em;
+  color: #e8180c;
+  overflow: visible;
+  margin-right: -0.05em;
+}
+.iz-om {
+  margin-left: -0.08em;
+}
+.logo-om {
+  margin-left: -0.18em;
+}
+.iz-sub {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(2rem, 5.5vw, 3.6rem);
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 0.01em;
+  text-transform: none;
+  margin-top: 1.8rem;
+  line-height: 1.1;
+}
+@keyframes iz-titlu-in { from { opacity: 0; transform: translate(-50%, calc(-50% + 20px)); } to { opacity: 1; transform: translate(-50%, -50%); } }
+
+.iz-lang-btn {
+  position: absolute;
+  top: clamp(32px, 6vw, 56px);
+  right: clamp(32px, 6vw, 60px);
+  z-index: 3;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  animation: iz-badge-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+}
+.iz-lang-btn:hover { transform: scale(1.08); }
+.iz-badge-colt {
+  width: clamp(60px, 9vw, 100px);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
+}
+.iz-lang-flag {
+  width: clamp(22px, 3.5vw, 32px);
+  height: auto;
+  border-radius: 3px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+  display: block;
+}
+@keyframes iz-badge-in {
+  from { opacity: 0; transform: scale(0.7) rotate(-10deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+.iz-logo-img {
+  width: 180px;
+  height: auto;
+  margin-top: 1.2rem;
+  opacity: 0;
+  animation: iz-titlu-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.7s both;
+}
+
+.iz {
+  position: absolute; object-fit: cover;
+  border-radius: 50% 42% 58% 44% / 54% 48% 52% 46%;
+  opacity: 0; animation-duration: 1.4s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); animation-fill-mode: forwards;
+}
+.iz1 { width: 200px; height: 200px; top:  6%; left:  5%; animation-name: iz-din-stanga-sus;  animation-delay: 0.2s;  transform: rotate(-12deg); }
+.iz2 { width: 220px; height: 220px; top:  4%; right: 6%; animation-name: iz-din-dreapta-sus; animation-delay: 0.35s; transform: rotate(10deg); }
+.iz3 { width: 175px; height: 175px; top: 38%; left:  2%; animation-name: iz-din-stanga;      animation-delay: 0.5s;  transform: rotate(8deg); }
+.iz4 { width: 175px; height: 175px; top: 38%; right: 2%; animation-name: iz-din-dreapta;     animation-delay: 0.5s;  transform: rotate(-10deg); }
+.iz5 { width: 210px; height: 210px; bottom: 5%; left: 8%; animation-name: iz-din-stanga-jos; animation-delay: 0.65s; transform: rotate(14deg); }
+.iz6 { width: 190px; height: 190px; bottom: 5%; right:8%; animation-name: iz-din-dreapta-jos;animation-delay: 0.65s; transform: rotate(-16deg); }
+
+@keyframes iz-din-stanga-sus  { from { opacity:0; transform: translate(-140%,-140%) rotate(-30deg) scale(0.4); } to { opacity:1; transform: rotate(-12deg); } }
+@keyframes iz-din-dreapta-sus { from { opacity:0; transform: translate( 140%,-140%) rotate( 30deg) scale(0.4); } to { opacity:1; transform: rotate( 10deg); } }
+@keyframes iz-din-stanga      { from { opacity:0; transform: translate(-160%,   0%) rotate(-20deg) scale(0.4); } to { opacity:1; transform: rotate(  8deg); } }
+@keyframes iz-din-dreapta     { from { opacity:0; transform: translate( 160%,   0%) rotate( 20deg) scale(0.4); } to { opacity:1; transform: rotate(-10deg); } }
+@keyframes iz-din-stanga-jos  { from { opacity:0; transform: translate(-140%, 140%) rotate( 20deg) scale(0.4); } to { opacity:1; transform: rotate( 14deg); } }
+@keyframes iz-din-dreapta-jos { from { opacity:0; transform: translate( 140%, 140%) rotate(-25deg) scale(0.4); } to { opacity:1; transform: rotate(-16deg); } }
+
+/* ── & colorat în titluri ─────────────────────────────────────────── */
+.amp-color { color: var(--galben); font-style: normal; }
+
+/* ── Tranziție pagini — panouri din colțuri ───────────────────────── */
+.tr-colt {
+  position: fixed; z-index: 9999; pointer-events: none;
+  width: 51vw; height: 51vh; background: var(--navy);
+  transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1); will-change: transform;
+}
+.tr-colt.tc-tl { top: 0;    left:  0; transform: translate(-100%, -100%); }
+.tr-colt.tc-tr { top: 0;    right: 0; transform: translate( 100%, -100%); }
+.tr-colt.tc-bl { bottom: 0; left:  0; transform: translate(-100%,  100%); }
+.tr-colt.tc-br { bottom: 0; right: 0; transform: translate( 100%,  100%); }
+.tr-colt.intra { transform: translate(0, 0) !important; }
+.tr-colt.tc-tl.pleaca { transform: translate(-100%, -100%); }
+.tr-colt.tc-tr.pleaca { transform: translate( 100%, -100%); }
+.tr-colt.tc-bl.pleaca { transform: translate(-100%,  100%); }
+.tr-colt.tc-br.pleaca { transform: translate( 100%,  100%); }
+
+
+/* ── Border drawing la scroll ─────────────────────────────────────── */
+@keyframes deseneaza-chenar {
+  0%   { background-size: 0%   2px, 2px 0%,   0%   2px, 2px 0%;   }
+  25%  { background-size: 100% 2px, 2px 0%,   0%   2px, 2px 0%;   }
+  50%  { background-size: 100% 2px, 2px 100%, 0%   2px, 2px 0%;   }
+  75%  { background-size: 100% 2px, 2px 100%, 100% 2px, 2px 0%;   }
+  100% { background-size: 100% 2px, 2px 100%, 100% 2px, 2px 100%; }
+}
+.card, .tool-card, .lista-box, .faq details, .vedeta-card, .mag-card { position: relative; }
+.card::after, .tool-card::after, .lista-box::after, .faq details::after, .vedeta-card::after, .mag-card::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  border-radius: inherit; z-index: 2; --cc: var(--navy);
+  background-image: linear-gradient(90deg,var(--cc),var(--cc)), linear-gradient(180deg,var(--cc),var(--cc)), linear-gradient(270deg,var(--cc),var(--cc)), linear-gradient(0deg,var(--cc),var(--cc));
+  background-size: 0% 2px, 2px 0%, 0% 2px, 2px 0%;
+  background-position: left top, right top, right bottom, left bottom;
+  background-repeat: no-repeat;
+}
+.card:nth-child(6n+1)::after { --cc: var(--navy);  }
+.card:nth-child(6n+2)::after { --cc: var(--galben); }
+.card:nth-child(6n+3)::after { --cc: var(--verde);  }
+.card:nth-child(6n+4)::after { --cc: var(--coral);  }
+.card:nth-child(6n+5)::after { --cc: var(--teal);   }
+.card:nth-child(6n+6)::after { --cc: var(--navy);   }
+.tool-card:nth-child(3n+1)::after { --cc: var(--navy);   }
+.tool-card:nth-child(3n+2)::after { --cc: var(--galben); }
+.tool-card:nth-child(3n+3)::after { --cc: var(--verde);  }
+.lista-box.permise::after { --cc: var(--verde); }
+.lista-box.evitate::after { --cc: var(--coral); }
+.faq details:nth-child(odd)::after  { --cc: var(--navy);   }
+.faq details:nth-child(even)::after { --cc: var(--galben); }
+.card.in::after, .tool-card.in::after, .lista-box.in::after, .faq details.in::after, .vedeta-card.in::after, .mag-card.in::after {
+  animation: deseneaza-chenar 2.2s linear forwards;
+}
+.mag-card:nth-child(6n+1)::after { --cc: var(--navy);   }
+.mag-card:nth-child(6n+2)::after { --cc: var(--galben); }
+.mag-card:nth-child(6n+3)::after { --cc: var(--verde);  }
+.mag-card:nth-child(6n+4)::after { --cc: var(--coral);  }
+.mag-card:nth-child(6n+5)::after { --cc: var(--teal);   }
+.mag-card:nth-child(6n+6)::after { --cc: var(--navy);   }
+.vedeta-card:nth-child(6n+1)::after { --cc: var(--navy);   }
+.vedeta-card:nth-child(6n+2)::after { --cc: var(--galben); }
+.vedeta-card:nth-child(6n+3)::after { --cc: var(--verde);  }
+.vedeta-card:nth-child(6n+4)::after { --cc: var(--coral);  }
+.vedeta-card:nth-child(6n+5)::after { --cc: var(--teal);   }
+.vedeta-card:nth-child(6n+6)::after { --cc: var(--navy);   }
+
+/* ── Compunere pagină nouă ────────────────────────────────────────── */
+@keyframes compune-in { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.compune main > * { animation: compune-in 0.6s cubic-bezier(0.22,1,0.36,1) both; }
+.compune main > *:nth-child(1) { animation-delay: 0.05s; }
+.compune main > *:nth-child(2) { animation-delay: 0.13s; }
+.compune main > *:nth-child(3) { animation-delay: 0.21s; }
+.compune main > *:nth-child(4) { animation-delay: 0.29s; }
+.compune main > *:nth-child(5) { animation-delay: 0.37s; }
+.compune main > *:nth-child(6) { animation-delay: 0.44s; }
+.compune main > *:nth-child(7) { animation-delay: 0.50s; }
+.compune main > *:nth-child(8) { animation-delay: 0.56s; }
+
+/* ── Modal vârstă ──────────────────────────────────────────────────── */
+.modal-varsta {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center; padding: 1rem;
+  background: rgba(17, 34, 68, 0.60);
+  backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none;
+}
+.modal-varsta.mv-intra { animation: mv-apare 0.45s cubic-bezier(0.22,1,0.36,1) forwards; pointer-events: auto; }
+.modal-varsta.mv-iese  { animation: mv-dispare 0.35s ease-in forwards; pointer-events: none; }
+@keyframes mv-apare   { from { opacity:0; } to { opacity:1; } }
+@keyframes mv-dispare { from { opacity:1; } to { opacity:0; } }
+.mv-card {
+  background: #fff; border-radius: 20px; padding: 2.5rem 2rem 2rem;
+  max-width: 520px; width: 100%;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.20), 0 4px 16px rgba(0,0,0,0.08);
+  animation: mv-card-sus 0.5s cubic-bezier(0.22,1,0.36,1) 0.05s both;
+}
+@keyframes mv-card-sus { from { transform: translateY(40px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+.mv-intro  { font-size: 1.6rem; margin: 0 0 0.4rem; text-align: center; }
+.mv-titlu  { font-family: var(--display); font-size: clamp(1.4rem,3vw,2rem); color: var(--navy); text-align: center; margin: 0 0 0.4rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.mv-sub    { text-align: center; color: var(--text-soft); font-size: 0.94rem; margin: 0 0 1.6rem; }
+.mv-optiuni { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
+.mv-btn {
+  display: grid; grid-template-columns: 2.5rem 1fr; grid-template-rows: auto auto;
+  align-items: center; gap: 0 0.75rem; padding: 1rem 1.25rem;
+  border: 2px solid var(--galben-soft); border-radius: 14px;
+  background: var(--galben-soft); cursor: pointer; text-align: left;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+.mv-btn:hover { border-color: var(--galben); background: #f0d870; transform: translateY(-2px); }
+.mv-icon  { grid-row: 1/3; font-size: 1.8rem; text-align: center; }
+.mv-label { font-weight: 700; font-size: 1rem; color: var(--navy); line-height: 1.2; }
+.mv-desc  { font-size: 0.82rem; color: var(--text-soft); line-height: 1.3; }
+.mv-skip  { width: 100%; margin-top: 0.5rem; padding: 0.6rem; background: none; border: none; color: var(--text-soft); font-size: 0.88rem; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; }
+.mv-skip:hover { color: var(--navy); }
+
+/* Banner vârstă activă */
+.banner-varsta {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  background: var(--navy-soft); border: 1.5px solid var(--navy); border-radius: 10px;
+  padding: 0.6rem 1rem; margin-bottom: 1rem; font-size: 0.9rem;
+  color: var(--navy); font-weight: 600;
+}
+.banner-schimba {
+  background: var(--navy); color: #fff; border: none; border-radius: 7px;
+  padding: 0.32rem 0.85rem; font-size: 0.82rem; cursor: pointer; white-space: nowrap; transition: background 0.2s;
+}
+.banner-schimba:hover { background: var(--navy-inchis); }
+
+/* Card recomandat */
+.card.card-recomandat .card-body::after {
+  content: var(--txt-recomandat, "✓ Recomandat");
+  display: inline-block; margin-top: 0.5rem;
+  font-size: 0.75rem; font-weight: 700; color: var(--verde); letter-spacing: 0.03em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FUNDALURI IMAGINI PER PAGINĂ
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Homepage — alimente_ro.jpg */
+body.pg-home {
+  background-image:
+    linear-gradient(to right, rgba(247,242,232,0.96) 25%, rgba(247,242,232,0.78) 55%, rgba(247,242,232,0.74) 100%),
+    url('/decor/alimente_ro.jpg');
+  background-size: auto, 60%;
+  background-position: top, right 4% top;
+  background-attachment: scroll, fixed;
+  background-repeat: no-repeat, no-repeat;
+}
+
+/* Calculatoare — alimente3_ro.jpg */
+body.pg-calculatoare {
+  background-image:
+    linear-gradient(to bottom, rgba(247,242,232,0.78) 0%, rgba(247,242,232,0.74) 100%),
+    url('/decor/alimente3_ro.jpg');
+  background-size: auto, 55%;
+  background-position: top, right 5% top;
+  background-attachment: scroll, fixed;
+  background-repeat: no-repeat, no-repeat;
+}
+
+/* Pagina fiecărei diete — alimente2_ro.jpg */
+body.pg-dieta {
+  background-image:
+    linear-gradient(to bottom, rgba(247,242,232,0.78) 0%, rgba(247,242,232,0.74) 100%),
+    url('/decor/alimente2_ro.jpg');
+  background-size: auto, 55%;
+  background-position: top, right 5% top;
+  background-attachment: scroll, fixed;
+  background-repeat: no-repeat, no-repeat;
+}
+
+/* Despre — nutritionist */
+body.pg-despre {
+  background-image:
+    linear-gradient(to bottom, rgba(247,242,232,0.93) 0%, rgba(247,242,232,0.90) 100%),
+    url('/decor/nutritionist.png');
+  background-size: auto, 55%;
+  background-position: top, right 5% top;
+  background-attachment: scroll, fixed;
+  background-repeat: no-repeat, no-repeat;
+}
+
+/* Vedete — inima-alimente */
+body.pg-vedete {
+  background-image:
+    linear-gradient(to bottom, rgba(247,242,232,0.78) 0%, rgba(247,242,232,0.74) 100%),
+    url('/decor/inima-alimente.png');
+  background-size: auto, 55%;
+  background-position: top, right 5% top;
+  background-attachment: scroll, fixed;
+  background-repeat: no-repeat, no-repeat;
+}
+
+/* Pe paginile cu fundal imagine, bg-decor-ul si food-decor-ul se ascund */
+body.pg-home .bg-decor,
+body.pg-calculatoare .bg-decor,
+body.pg-vedete .bg-decor,
+body.pg-despre .bg-decor,
+body.pg-dieta .bg-decor { display: none; }
+
+/* Carduri si suprafete mai opace pe paginile cu fundal */
+body.pg-home .card,
+body.pg-home .tool-card,
+body.pg-calculatoare .card,
+body.pg-calculatoare .tool-card,
+body.pg-dieta .card,
+body.pg-dieta .tool-card,
+body.pg-dieta .lista-box,
+body.pg-dieta .tool,
+body.pg-dieta .faq details,
+body.pg-dieta .meniu-zi .masa {
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(2px);
+}
+
+/* Titluri mai puternice pe fundal imagine */
+body.pg-home h1, body.pg-home h2,
+body.pg-calculatoare h1, body.pg-calculatoare h2,
+body.pg-vedete h1, body.pg-vedete h2,
+body.pg-despre h1, body.pg-despre h2,
+body.pg-dieta h1, body.pg-dieta h2 {
+  text-shadow: 0 1px 12px rgba(247,242,232,0.95), 0 0 30px rgba(247,242,232,0.8);
+}
+
+/* ── Accessibility: reduced motion ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  #intro-zbor, #tr-overlay { display: none !important; }
+  .compune main > * { animation: none !important; }
+  .blob { animation: none !important; }
+  .food-decor { animation: none !important; }
+  .tool-card .emoji { animation: none !important; }
+  .js .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+@media (max-width: 480px) {
+  .mv-card { padding: 2rem 1.25rem 1.5rem; border-radius: 16px; }
+  .mv-desc { display: none; }
+  .mv-btn { grid-template-rows: 1fr; }
+}

@@ -1,0 +1,102 @@
+---
+import Base from "../layouts/Base.astro";
+import Faq from "../components/Faq.astro";
+import { CATEGORII_IMC } from "../lib/calc";
+
+const faq = [
+  {
+    intrebare: "Cum se calculează IMC-ul?",
+    raspuns:
+      "Indicele de masă corporală se calculează împărțind greutatea (în kilograme) la pătratul înălțimii (în metri): IMC = kg / (înălțime × înălțime). De exemplu, 80 kg și 1,75 m → 80 / (1,75 × 1,75) = 26,1.",
+  },
+  {
+    intrebare: "Care este IMC-ul normal?",
+    raspuns:
+      "Conform OMS, un IMC între 18,5 și 24,9 este considerat greutate normală. Sub 18,5 înseamnă subponderal, 25–29,9 supraponderal, iar 30 sau peste indică obezitate.",
+  },
+  {
+    intrebare: "Este IMC-ul de încredere?",
+    raspuns:
+      "IMC-ul este un indicator orientativ pentru populație, dar nu face diferența între masa musculară și grăsime. Un sportiv musculos poate avea IMC mare fără exces de grăsime. Pentru o evaluare completă, ține cont și de circumferința taliei și de procentul de grăsime corporală.",
+  },
+];
+---
+
+<Base
+  titlu="Calculator IMC — indicele de masă corporală"
+  descriere="Calculator IMC gratuit: află indicele tău de masă corporală și categoria (subponderal, normal, supraponderal, obezitate) după pragurile OMS. Rezultat instant."
+>
+  <nav class="breadcrumb"><a href="/" data-i18n="bc.acasa">Acasă</a> › <a href="/calculatoare/" data-i18n="bc.calc">Calculatoare</a> › <span data-i18n="imc.bc">Calculator IMC</span></nav>
+  <h1 data-i18n="imc.h1">Calculator IMC (indice de masă corporală)</h1>
+  <p class="lead" data-i18n="imc.lead">
+    Calculează-ți indicele de masă corporală și vezi în ce categorie te încadrezi, după
+    pragurile Organizației Mondiale a Sănătății. Datele rămân în browserul tău.
+  </p>
+
+  <form class="tool" id="imc-form">
+    <div class="camp">
+      <label for="inaltime" data-i18n="imc.inaltime">Înălțime (cm)</label>
+      <input type="number" id="inaltime" min="120" max="230" value="175" required />
+    </div>
+    <div class="camp">
+      <label for="greutate" data-i18n="imc.greutate">Greutate (kg)</label>
+      <input type="number" id="greutate" min="30" max="300" step="0.1" value="80" required />
+    </div>
+    <button class="btn" type="submit" data-i18n="imc.btn">Calculează</button>
+
+    <div class="rezultat gol" id="rezultat" role="status" aria-live="polite">
+      <div><span class="mare" id="imc-val">—</span> <span class="sub">IMC — <strong id="imc-cat">—</strong></span></div>
+      <div class="imc-bara"><div class="ac" id="imc-ac" style="left:0%"></div></div>
+      <table>
+        <tr><td data-i18n="imc.subponderal">Subponderal</td><td>&lt; 18,5</td></tr>
+        <tr><td data-i18n="imc.normal">Greutate normală</td><td>18,5 – 24,9</td></tr>
+        <tr><td data-i18n="imc.supraponderal">Supraponderal</td><td>25 – 29,9</td></tr>
+        <tr><td data-i18n="imc.obezitate">Obezitate</td><td>≥ 30</td></tr>
+      </table>
+      <p class="sub" id="interval-sanatos" style="margin-top:0.75rem;"></p>
+    </div>
+  </form>
+
+  <div class="prose">
+    <h2 data-i18n="imc.h2">Categoriile IMC (OMS)</h2>
+    <ul>
+      {CATEGORII_IMC.map((c) => (
+        <li><strong>{c.eticheta}</strong>{c.min !== -Infinity && <> — de la {String(c.min).replace(".", ",")}</>}</li>
+      ))}
+    </ul>
+  </div>
+
+  <Faq intrebari={faq} />
+</Base>
+
+<script>
+  import { imc, categorieImc, intervalGreutateSanatoasa, rotunjit } from "../lib/calc";
+
+  const form = document.getElementById("imc-form") as HTMLFormElement;
+  const rezultat = document.getElementById("rezultat")!;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const cm = +(document.getElementById("inaltime") as HTMLInputElement).value;
+    const kg = +(document.getElementById("greutate") as HTMLInputElement).value;
+    if (!cm || !kg) return;
+
+    const val = imc(kg, cm);
+    const cat = categorieImc(val);
+    const { min, max } = intervalGreutateSanatoasa(cm);
+
+    document.getElementById("imc-val")!.textContent = String(rotunjit(val, 1)).replace(".", ",");
+    const catEl = document.getElementById("imc-cat")!;
+    catEl.textContent = cat.eticheta;
+    catEl.style.color = cat.culoare;
+
+    // Poziția acului pe bară: mapăm IMC 15..40 pe 0..100%.
+    const proc = Math.max(0, Math.min(100, ((val - 15) / (40 - 15)) * 100));
+    (document.getElementById("imc-ac") as HTMLElement).style.left = `${proc}%`;
+
+    document.getElementById("interval-sanatos")!.textContent =
+      `Pentru înălțimea ta, intervalul de greutate sănătoasă (IMC 18,5–24,9) este aproximativ ${rotunjit(min)}–${rotunjit(max)} kg.`;
+
+    rezultat.classList.remove("gol");
+  });
+</script>

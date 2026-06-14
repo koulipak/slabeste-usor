@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" role="img" aria-hidden="true">
+  <!-- Fundal navy rotunjit -->
+  <rect width="44" height="44" rx="11" fill="#1c3461"/>
+  <!-- Accent galben colt dreapta-sus -->
+  <path d="M44,0 L44,18 L26,0 Z" fill="#f5c227"/>
+  <!-- Contur rosu subtire -->
+  <rect x="1.2" y="1.2" width="41.6" height="41.6" rx="10" fill="none" stroke="#e8180c" stroke-width="0.7"/>
+
+  <!-- Figurina alergand spre dreapta (alb) -->
+  <!-- Cap -->
+  <circle cx="30" cy="9" r="4" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Trunchi inclinat inainte -->
+  <line x1="29" y1="13" x2="23" y2="24" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Brat stang inainte -->
+  <line x1="27" y1="17" x2="35" y2="21" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+  <!-- Brat drept inapoi -->
+  <line x1="27" y1="17" x2="18" y2="14" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+  <!-- Picior stang inainte (indoit) -->
+  <polyline points="23,24 30,33 34,38" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Picior drept inapoi (indoit) -->
+  <polyline points="23,24 16,30 12,36" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

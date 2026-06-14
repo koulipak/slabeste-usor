@@ -1,0 +1,35 @@
+---
+import Base from "../layouts/Base.astro";
+
+const tools = [
+  { href: "/calculator-calorii/",       emoji: "🔥", keyTitlu: "calc.calorii.titlu", keyDesc: "calc.calorii.desc", titlu: "Calculator calorii (TDEE)",    desc: "Câte calorii arzi pe zi și de câte ai nevoie ca să slăbești, menții sau crești în greutate." },
+  { href: "/calculator-imc/",           emoji: "⚖️", keyTitlu: "calc.imc.titlu",     keyDesc: "calc.imc.desc",     titlu: "Calculator IMC",               desc: "Indicele de masă corporală și categoria în care te încadrezi, după pragurile OMS." },
+  { href: "/greutate-ideala/",          emoji: "🎯", keyTitlu: "calc.ideal.titlu",   keyDesc: "calc.ideal.desc",   titlu: "Greutate ideală",              desc: "Intervalul de greutate sănătoasă pentru înălțimea ta, plus formulele clasice." },
+  { href: "/calculator-macronutrienti/",emoji: "🥑", keyTitlu: "calc.macro.titlu",   keyDesc: "calc.macro.desc",   titlu: "Calculator macronutrienți",    desc: "Împarte caloriile pe proteine, carbohidrați și grăsimi, în funcție de profil." },
+  { href: "/calculator-apa/",           emoji: "💧", keyTitlu: "calc.apa.titlu",     keyDesc: "calc.apa.desc",     titlu: "Calculator apă",               desc: "Câtă apă să bei pe zi, în funcție de greutate și de cât te miști." },
+  { href: "/calculator-calorii-arse/",  emoji: "🏃", keyTitlu: "calc.arse.titlu",    keyDesc: "calc.arse.desc",    titlu: "Calorii arse",                 desc: "Câte calorii arzi la mers, alergare, ciclism, înot și alte activități." },
+];
+---
+
+<Base
+  titlu="Calculatoare gratuite pentru slăbit — calorii, IMC, greutate ideală"
+  descriere="Unelte gratuite pentru slăbit: calculator de calorii (TDEE), calculator IMC și greutate ideală. Fără cont, fără date trimise — totul în browserul tău."
+  bodyClass="pg-calculatoare"
+>
+  <nav class="breadcrumb"><a href="/" data-i18n="bc.acasa">Acasă</a> › <span data-i18n="bc.calc">Calculatoare</span></nav>
+  <h1 data-i18n="calc.page.h1">Calculatoare de slăbit gratuite</h1>
+  <p class="lead" data-i18n="calc.page.lead">
+    Unelte simple și rapide pentru obiectivele tale de greutate. Nu cer cont și nu trimit nimic —
+    totul se calculează direct în browserul tău.
+  </p>
+
+  <div class="tool-grid">
+    {tools.map((t) => (
+      <a class="tool-card" href={t.href}>
+        <div class="emoji">{t.emoji}</div>
+        <h3 data-i18n={t.keyTitlu}>{t.titlu}</h3>
+        <p data-i18n={t.keyDesc}>{t.desc}</p>
+      </a>
+    ))}
+  </div>
+</Base>

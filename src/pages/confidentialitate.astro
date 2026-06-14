@@ -1,0 +1,59 @@
+---
+import Base from "../layouts/Base.astro";
+
+// TODO: completează cu datele reale (nume operator, e-mail) înainte de lansare,
+// și actualizează secțiunea de reclame când integrezi efectiv AdSense.
+const email = "contact@slabeste-usor.ro";
+const actualizat = "7 iunie 2026";
+---
+
+<Base
+  titlu="Politica de confidențialitate"
+  descriere="Politica de confidențialitate a site-ului Slăbește Ușor: ce date colectăm, cookie-uri și reclame."
+>
+  <nav class="breadcrumb"><a href="/">Acasă</a> › Confidențialitate</nav>
+  <h1>Politica de confidențialitate</h1>
+  <div class="pagina-text prose">
+    <p><em>Ultima actualizare: {actualizat}.</em></p>
+
+    <h2>Cine suntem</h2>
+    <p>
+      Acest site este o resursă informativă despre diete și unelte de calcul. Ne poți contacta la
+      <a href={`mailto:${email}`}>{email}</a>.
+    </p>
+
+    <h2>Ce date colectăm</h2>
+    <p>
+      Nu îți cerem cont și nu colectăm date personale prin formulare. Valorile pe care le introduci
+      în calculatoare (greutate, înălțime, vârstă) sunt procesate <strong>exclusiv în browserul
+      tău</strong> și nu sunt trimise sau stocate de noi.
+    </p>
+
+    <h2>Cookie-uri și statistici</h2>
+    <p>
+      Putem folosi instrumente de analiză a traficului (de exemplu pentru a vedea câți vizitatori
+      avem și ce pagini sunt populare). Acestea pot seta cookie-uri în scop statistic.
+    </p>
+
+    <h2>Reclame</h2>
+    <p>
+      Site-ul poate afișa reclame prin rețele de publicitate terțe (de exemplu Google AdSense).
+      Acești furnizori pot folosi cookie-uri pentru a afișa anunțuri relevante. Poți gestiona
+      preferințele pentru anunțurile personalizate Google din pagina
+      <a href="https://www.google.com/settings/ads" rel="noopener" target="_blank">Setări anunțuri Google</a>.
+    </p>
+
+    <h2>Drepturile tale</h2>
+    <p>
+      Conform GDPR, ai dreptul de acces, rectificare și ștergere a datelor cu caracter personal.
+      Întrucât nu colectăm astfel de date prin site, ne poți contacta oricând la adresa de mai sus
+      pentru orice întrebare legată de confidențialitate.
+    </p>
+
+    <h2>Modificări</h2>
+    <p>
+      Putem actualiza această politică. Versiunea curentă este întotdeauna disponibilă pe această
+      pagină, cu data ultimei actualizări.
+    </p>
+  </div>
+</Base>

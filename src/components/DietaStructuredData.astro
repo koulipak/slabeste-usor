@@ -1,0 +1,32 @@
+---
+// Generează JSON-LD schema.org/Article pentru pagina de dietă.
+// Nu există un tip „Diet" standard în schema.org, așa că folosim Article — corect
+// pentru conținut informativ-editorial. FAQ-ul are propriul JSON-LD (vezi Faq.astro).
+interface Props {
+  titlu: string;
+  descriere: string;
+  imagineUrl?: string;
+  autor: string;
+  publicat: Date;
+  actualizat?: Date;
+  url: string;
+  cuvinteCheie: string[];
+}
+const p = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: p.titlu,
+  description: p.descriere,
+  ...(p.imagineUrl ? { image: [p.imagineUrl] } : {}),
+  author: { "@type": "Organization", name: p.autor },
+  publisher: { "@type": "Organization", name: "Slăbește Ușor" },
+  datePublished: p.publicat.toISOString().slice(0, 10),
+  ...(p.actualizat ? { dateModified: p.actualizat.toISOString().slice(0, 10) } : {}),
+  mainEntityOfPage: { "@type": "WebPage", "@id": p.url },
+  ...(p.cuvinteCheie.length ? { keywords: p.cuvinteCheie.join(", ") } : {}),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
