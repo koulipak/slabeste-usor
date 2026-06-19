@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import BreadcrumbSchema from "../../components/BreadcrumbSchema.astro";
 
 export async function getStaticPaths() {
   const articole = await getCollection("articole");
@@ -40,6 +41,14 @@ const jsonLd = JSON.stringify({
 
 <Base titlu={d.titlu} descriere={d.descriere} tipPagina="article">
   <script type="application/ld+json" set:html={jsonLd} slot="head" />
+  <BreadcrumbSchema
+    slot="head"
+    items={[
+      { nume: "Acasă", url: "/" },
+      { nume: "Articole", url: "/articole/" },
+      { nume: d.titlu, url: `/articole/${articol.id}/` },
+    ]}
+  />
 
   <nav class="breadcrumb">
     <a href="/">Acasă</a> ›

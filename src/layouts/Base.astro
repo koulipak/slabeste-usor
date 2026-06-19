@@ -29,7 +29,9 @@ const {
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const imagineUrl = imagine ? new URL(imagine, Astro.site).href : undefined;
-const titluComplet = `${titlu} | Diete&Calculatoare slabit`;
+// og:image default — pagini fără imagine proprie (articole, calculatoare, legale, home)
+const ogImageUrl = imagineUrl ?? new URL("/og-default.jpg", Astro.site).href;
+const titluComplet = `${titlu} | Slăbește Ușor`;
 const ogLocale = lang === "en" ? "en_US" : "ro_RO";
 const esteHome = Astro.url.pathname === "/";
 
@@ -107,12 +109,13 @@ const foodDecor = Array.from({ length: SHOW }, (_, i) => FOOD_ALL[(pathHash + i)
     <meta property="og:description" content={descriere} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={ogLocale} />
-    {imagineUrl && <meta property="og:image" content={imagineUrl} />}
+    <meta property="og:image" content={ogImageUrl} />
 
     <!-- Twitter -->
-    <meta name="twitter:card" content={imagine ? "summary_large_image" : "summary"} />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={titluComplet} />
     <meta name="twitter:description" content={descriere} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <slot name="head" />
     <script is:inline src="/lang.js"></script>

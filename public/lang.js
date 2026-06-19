@@ -15,7 +15,7 @@
       'intro.sub':        'biblioteca ta de diete',
       'intro.click':      '▸ click pentru a continua',
       /* ── Homepage ────────────────────────────────── */
-      'home.h1':          'Diete',
+      'home.h1':          'Diete de slăbit',
       'home.lead':        'Compară dietele de slăbit fără să fii împins spre una anume. Vezi cum funcționează fiecare, ce mănânci și ce eviți, avantaje și dezavantaje — apoi decide singur ce ți se potrivește. Și calculează-ți gratuit caloriile, IMC-ul și greutatea ideală.',
       'home.filtru-tip':  'Tip de dietă',
       'home.filtru-car':  'Caracteristici',
@@ -358,7 +358,7 @@
       'intro.sub':        'your diet library',
       'intro.click':      '▸ click to continue',
       /* ── Homepage ────────────────────────────────── */
-      'home.h1':          'Diets',
+      'home.h1':          'Weight loss diets',
       'home.lead':        'Compare weight loss diets without being pushed toward any particular one. See how each works, what you eat and avoid, pros and cons — then decide for yourself what suits you. And calculate your calories, BMI and ideal weight for free.',
       'home.filtru-tip':  'Diet type',
       'home.filtru-car':  'Characteristics',

@@ -1,0 +1,21 @@
+---
+// Emite JSON-LD BreadcrumbList (rich result în Google).
+// Breadcrumb-urile vizuale rămân separate — astea sunt doar pentru motoarele de căutare.
+interface Props {
+  items: { nume: string; url: string }[];
+}
+const { items } = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: items.map((it, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: it.nume,
+    item: new URL(it.url, Astro.site).href,
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

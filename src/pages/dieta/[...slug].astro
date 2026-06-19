@@ -3,6 +3,7 @@ import { getCollection, render } from "astro:content";
 import { Image } from "astro:assets";
 import Base from "../../layouts/Base.astro";
 import DietaStructuredData from "../../components/DietaStructuredData.astro";
+import BreadcrumbSchema from "../../components/BreadcrumbSchema.astro";
 import Faq from "../../components/Faq.astro";
 import { getCategorie, getCaracteristica } from "../../data/taxonomie";
 import { dificultateText } from "../../lib/format";
@@ -60,6 +61,14 @@ const alternates = [
     actualizat={d.actualizat}
     url={url}
     cuvinteCheie={d.cuvinteCheie}
+  />
+  <BreadcrumbSchema
+    slot="head"
+    items={[
+      { nume: "Acasă", url: "/" },
+      { nume: categorie?.nume ?? "Diete", url: `/categorie/${d.categorie}/` },
+      { nume: d.titlu, url: `/dieta/${dieta.id}/` },
+    ]}
   />
 
   <nav class="breadcrumb">

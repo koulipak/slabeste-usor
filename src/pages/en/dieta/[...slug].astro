@@ -3,6 +3,7 @@ import { getCollection, render } from "astro:content";
 import { Image } from "astro:assets";
 import Base from "../../../layouts/Base.astro";
 import DietaStructuredData from "../../../components/DietaStructuredData.astro";
+import BreadcrumbSchema from "../../../components/BreadcrumbSchema.astro";
 import Faq from "../../../components/Faq.astro";
 import { getCategorie, getCaracteristica } from "../../../data/taxonomie";
 
@@ -61,10 +62,17 @@ const catEn = catNames[d.categorie] ?? { name: d.categorie, singular: d.categori
     url={url}
     cuvinteCheie={d.cuvinteCheie}
   />
+  <BreadcrumbSchema
+    slot="head"
+    items={[
+      { nume: "Home", url: "/" },
+      { nume: d.titlu, url: `/en/dieta/${dieta.id}/` },
+    ]}
+  />
 
   <nav class="breadcrumb">
     <a href="/">Home</a> ›
-    <a href={`/en/categorie/${d.categorie}/`}>{catEn.name}</a> ›
+    <span class="breadcrumb-cat">{catEn.name}</span> ›
     {d.titlu}
   </nav>
 
