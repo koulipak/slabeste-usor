@@ -7,6 +7,22 @@ import Faq from "../../components/Faq.astro";
 import { getCategorie, getCaracteristica } from "../../data/taxonomie";
 import { dificultateText } from "../../lib/format";
 
+// Mapare slug dietă → slug articol asociat
+const ARTICOLE_DIETE: Record<string, { slug: string; titlu: string }> = {
+  "post-intermitent-16-8": {
+    slug: "post-intermitent-16-8-ghid",
+    titlu: "Post intermitent 16/8: ghid complet pentru începători",
+  },
+  "dieta-keto": {
+    slug: "dieta-keto-meniu-7-zile",
+    titlu: "Dieta keto: meniu pe 7 zile și ce să mănânci ca să intri în cetoză",
+  },
+  "deficit-caloric": {
+    slug: "cate-calorii-ca-sa-slabesti",
+    titlu: "Câte calorii trebuie să mănânci ca să slăbești",
+  },
+};
+
 export async function getStaticPaths() {
   const diete = await getCollection("diete", ({ data }) => !data.draft);
   return diete.map((dieta) => ({
@@ -22,6 +38,7 @@ const { Content } = await render(dieta);
 const categorie = getCategorie(d.categorie);
 const imagineUrl = d.imagine ? new URL(d.imagine.src, Astro.site).href : undefined;
 const url = new URL(`/dieta/${dieta.id}/`, Astro.site).href;
+const articolAsociat = ARTICOLE_DIETE[dieta.id];
 ---
 
 <Base titlu={d.titlu} descriere={d.descriere} imagine={d.imagine?.src} tipPagina="article" bodyClass="pg-dieta">
@@ -150,5 +167,42 @@ const url = new URL(`/dieta/${dieta.id}/`, Astro.site).href;
     )}
 
     <Faq intrebari={d.faq} />
+
+    {articolAsociat && (
+      <div class="articol-asociat">
+        <span class="articol-asociat-label">📖 Citește și</span>
+        <a href={`/articole/${articolAsociat.slug}/`} class="articol-asociat-link">
+          {articolAsociat.titlu} →
+        </a>
+      </div>
+    )}
   </article>
 </Base>
+
+<style>
+  .articol-asociat {
+    margin-top: 2rem;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .articol-asociat-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+  .articol-asociat-link {
+    font-weight: 600;
+    color: var(--navy, var(--text));
+    font-size: 0.95rem;
+  }
+  .articol-asociat-link:hover { color: var(--verde); }
+</style>

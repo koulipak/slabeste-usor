@@ -1,0 +1,79 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+
+export async function getStaticPaths() {
+  const articole = await getCollection("articole");
+  return articole.map((articol) => ({
+    params: { slug: articol.id },
+    props: { articol },
+  }));
+}
+
+const { articol } = Astro.props;
+const d = articol.data;
+const { Content } = await render(articol);
+const url = new URL(`/articole/${articol.id}/`, Astro.site).href;
+
+const dateFormatata = d.publicat.toLocaleDateString("ro-RO", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: d.titlu,
+  description: d.descriere,
+  author: { "@type": "Organization", name: d.autor },
+  datePublished: d.publicat.toISOString(),
+  dateModified: (d.actualizat ?? d.publicat).toISOString(),
+  url,
+  publisher: {
+    "@type": "Organization",
+    name: "Slăbește Ușor",
+    url: "https://www.slabeste-usor.ro",
+  },
+});
+---
+
+<Base titlu={d.titlu} descriere={d.descriere} tipPagina="article">
+  <script type="application/ld+json" set:html={jsonLd} slot="head" />
+
+  <nav class="breadcrumb">
+    <a href="/">Acasă</a> ›
+    <a href="/articole/">Articole</a> ›
+    {d.titlu}
+  </nav>
+
+  <article class="articol-page prose">
+    <header class="articol-header">
+      <h1>{d.titlu}</h1>
+      <p class="articol-meta">
+        <span>{d.autor}</span> · <time datetime={d.publicat.toISOString()}>{dateFormatata}</time>
+      </p>
+    </header>
+
+    <Content />
+  </article>
+</Base>
+
+<style>
+  .articol-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1.5px solid var(--border);
+  }
+  .articol-header h1 {
+    margin-bottom: 0.5rem;
+  }
+  .articol-meta {
+    color: var(--text-soft);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  .articol-page {
+    max-width: 720px;
+  }
+</style>

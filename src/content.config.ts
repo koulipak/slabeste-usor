@@ -57,4 +57,17 @@ const dieteEn = defineCollection({
   schema: dietSchema,
 });
 
-export const collections = { diete, dieteEn };
+const articole = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/articole" }),
+  schema: ({ image }) =>
+    z.object({
+      titlu: z.string(),
+      descriere: z.string().max(170),
+      publicat: z.coerce.date(),
+      actualizat: z.coerce.date().optional(),
+      autor: z.string().default("Slăbește Ușor"),
+      imagine: image().optional(),
+    }),
+});
+
+export const collections = { diete, dieteEn, articole };
