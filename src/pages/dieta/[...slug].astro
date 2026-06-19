@@ -39,9 +39,17 @@ const categorie = getCategorie(d.categorie);
 const imagineUrl = d.imagine ? new URL(d.imagine.src, Astro.site).href : undefined;
 const url = new URL(`/dieta/${dieta.id}/`, Astro.site).href;
 const articolAsociat = ARTICOLE_DIETE[dieta.id];
+
+const roHref = new URL(`/dieta/${dieta.id}/`, Astro.site).href;
+const enHref = new URL(`/en/dieta/${dieta.id}/`, Astro.site).href;
+const alternates = [
+  { hreflang: "ro", href: roHref },
+  { hreflang: "en", href: enHref },
+  { hreflang: "x-default", href: roHref },
+];
 ---
 
-<Base titlu={d.titlu} descriere={d.descriere} imagine={d.imagine?.src} tipPagina="article" bodyClass="pg-dieta">
+<Base titlu={d.titlu} descriere={d.descriere} imagine={d.imagine?.src} tipPagina="article" bodyClass="pg-dieta" lang="ro" alternates={alternates}>
   <DietaStructuredData
     slot="head"
     titlu={d.titlu}

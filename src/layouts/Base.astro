@@ -14,12 +14,56 @@ interface Props {
   imagine?: string;
   tipPagina?: "website" | "article";
   bodyClass?: string;
+  lang?: "ro" | "en";
+  alternates?: { hreflang: string; href: string }[];
 }
 
-const { titlu, descriere, imagine, tipPagina = "website", bodyClass = "" } = Astro.props;
+const {
+  titlu,
+  descriere,
+  imagine,
+  tipPagina = "website",
+  bodyClass = "",
+  lang = "ro",
+  alternates = [],
+} = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const imagineUrl = imagine ? new URL(imagine, Astro.site).href : undefined;
 const titluComplet = `${titlu} | Diete&Calculatoare slabit`;
+const ogLocale = lang === "en" ? "en_US" : "ro_RO";
+const esteHome = Astro.url.pathname === "/";
+
+// Organization + WebSite schema — doar pe homepage (sitelinks search box + entitate brand)
+const siteSchema = esteHome
+  ? {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.slabeste-usor.ro/#organization",
+          name: "Slăbește Ușor",
+          url: "https://www.slabeste-usor.ro/",
+          logo: "https://www.slabeste-usor.ro/logo.svg",
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.slabeste-usor.ro/#website",
+          name: "Slăbește Ușor",
+          url: "https://www.slabeste-usor.ro/",
+          inLanguage: "ro-RO",
+          publisher: { "@id": "https://www.slabeste-usor.ro/#organization" },
+          potentialAction: {
+            "@type": "SearchAction",
+            target: {
+              "@type": "EntryPoint",
+              urlTemplate: "https://www.slabeste-usor.ro/?q={search_term_string}",
+            },
+            "query-input": "required name=search_term_string",
+          },
+        },
+      ],
+    }
+  : null;
 const anul = new Date().getFullYear();
 
 const FOOD_ALL = [
@@ -38,7 +82,7 @@ const foodDecor = Array.from({ length: SHOW }, (_, i) => FOOD_ALL[(pathHash + i)
 ---
 
 <!doctype html>
-<html lang="ro">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -48,12 +92,21 @@ const foodDecor = Array.from({ length: SHOW }, (_, i) => FOOD_ALL[(pathHash + i)
     <meta name="description" content={descriere} />
     <link rel="canonical" href={canonical} />
 
+    <!-- hreflang — versiuni alternative pe limbă -->
+    {alternates.map((a) => (
+      <link rel="alternate" hreflang={a.hreflang} href={a.href} />
+    ))}
+
+    {siteSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(siteSchema)} is:inline />
+    )}
+
     <!-- OpenGraph (Facebook, WhatsApp, etc.) -->
     <meta property="og:type" content={tipPagina} />
     <meta property="og:title" content={titluComplet} />
     <meta property="og:description" content={descriere} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content="ro_RO" />
+    <meta property="og:locale" content={ogLocale} />
     {imagineUrl && <meta property="og:image" content={imagineUrl} />}
 
     <!-- Twitter -->
