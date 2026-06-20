@@ -26,6 +26,21 @@ de autoritățile de reglementare și de medic.
 Denumirile pe care le aude lumea — Ozempic, Mounjaro, Wegovy și altele — sunt **mărci comerciale**.
 Ele se prescriu și se folosesc **doar sub supraveghere medicală**.
 
+## De ce se vorbește atât de mult despre ele
+
+În mare parte, atenția publică e un **fenomen pornit peste ocean**, în SUA, și mai ales în
+Hollywood, de unde s-a propagat apoi în toată lumea. Discuția a explodat în momentul în care
+mai multe personalități cunoscute au **vorbit deschis** despre faptul că au recurs la astfel de
+medicamente — printre ele:
+
+- **Oprah Winfrey**, care a declarat public că folosește un medicament pentru slăbit „ca pe un instrument";
+- **Elon Musk**, care a menționat el însuși pe rețelele sociale postul și un astfel de medicament;
+- **Whoopi Goldberg**, care a povestit într-o emisiune că a apelat la un asemenea tratament.
+
+Le menționăm strict ca **exemple ale discuției publice** — nu evaluăm și nu confirmăm rezultatele,
+iar ce a funcționat (sau nu) pentru o persoană publică nu spune nimic despre ce e potrivit pentru
+altcineva. Fiecare caz e diferit, iar decizia rămâne, din nou, una **medicală și individuală**.
+
 ## De ce nu dăm detalii despre doze sau administrare
 
 În mod intenționat, acest articol **nu** include doze, scheme de administrare sau modalități de
