@@ -1,108 +1,120 @@
 # Plan articole blog — slabeste-usor.ro
 
-Calendar de conținut: **3 articole pe săptămână**, 15 articole în 5 săptămâni.
-Bifează pe măsură ce le publici. Ordinea săptămânilor e pe prioritate (impact SEO + ușurință).
+Calendar de conținut: **3 articole pe săptămână**.
+Ordinea e dată de **cererea reală** din Google Trends RO (martie–iunie 2026), nu doar de intuiție.
+Bifează pe măsură ce publici.
 
-Pentru fiecare articol: titlu, slug, cuvânt-cheie țintă, unghi și ce linkuri interne să conțină
-(linkurile interne către diete + calculatoare = SEO bun + ține utilizatorul pe site).
+Pentru fiecare: titlu, slug, cuvânt-cheie țintă, unghi și linkuri interne (spre diete + calculatoare = SEO + retenție).
+
+> **Legendă YMYL:** articolele marcate 🟡 ating subiecte sensibile (produse, suplimente, „pastile").
+> Se scriu **neutru și factual**, fără a promova sau promite rezultate, cu disclaimer medical —
+> exact ca articolul despre medicamente. Așa prindem căutările fără risc la Google/AdSense.
 
 ---
 
-## Săptămâna 1 — căutări frecvente, ușor de scris, multe linkuri interne
+## ✅ Deja publicate
+- [x] Post intermitent 16/8: ghid complet — `/articole/post-intermitent-16-8-ghid/`
+- [x] Dieta keto: meniu pe 7 zile — `/articole/dieta-keto-meniu-7-zile/`
+- [x] Câte calorii ca să slăbești — `/articole/cate-calorii-ca-sa-slabesti/`
+- [x] Medicamente injectabile (Ozempic/Mounjaro/Wegovy) — `/articole/medicamente-injectabile-slabit/`
+
+---
+
+## Săptămâna 1 — trendurile #1 din date (vedete + ceaiuri + evergreen)
+
+- [ ] **Cum a slăbit Andra: ce dietă a urmat și ce a schimbat**
+  - slug: `/cum-a-slabit-andra`
+  - cuvânt-cheie: „cum a slabit andra" — **BREAKOUT +850%**, concurență mică
+  - unghi: factual, pe baza declarațiilor publice; schimbări de stil de viață, fără senzaționalism
+  - linkuri interne: /vedete-care-au-slabit/, /calculator-calorii/
+
+- [ ] 🟡 **Ceaiuri de slăbit: ce spun studiile și ce să nu aștepți**
+  - slug: `/ceaiuri-de-slabit`
+  - cuvânt-cheie: „ceai de slabit" / „ceai pentru slabit" — **volum foarte mare**
+  - unghi: neutru — hidratare, efect diuretic ≠ slăbit real, fără promisiuni; disclaimer
+  - linkuri interne: /calculator-apa/, /articole/mituri-despre-slabit/
 
 - [ ] **De ce nu slăbesc deși mănânc puțin? 7 cauze reale**
   - slug: `/de-ce-nu-slabesc`
   - cuvânt-cheie: „de ce nu slabesc"
-  - unghi: cauze reale (metabolism, apă, masă musculară, subestimarea porțiilor, somn, hormoni)
+  - unghi: metabolism, apă, masă musculară, porții subestimate, somn, hormoni
   - linkuri interne: /calculator-calorii/, /articole/cate-calorii-ca-sa-slabesti/
+
+---
+
+## Săptămâna 2 — vedete + suplimente naturale trending
+
+- [ ] **Cum a slăbit Gabriela Cristea: dieta și obiceiurile**
+  - slug: `/cum-a-slabit-gabriela-cristea`
+  - cuvânt-cheie: „cum a slabit gabriela cristea" / „gabriela cristea a slabit" — în creștere
+  - unghi: factual, pe baza declarațiilor publice
+  - linkuri interne: /vedete-care-au-slabit/, /articole/cum-a-slabit-andra/
+
+- [ ] 🟡 **Berberina și glucomannan pentru slăbit: ce spune știința**
+  - slug: `/berberina-glucomannan-slabit`
+  - cuvinte-cheie: „berberina" (+80%), „glucomannan" (+100%)
+  - unghi: neutru — ce sunt, ce sugerează studiile, de ce nu înlocuiesc dieta; disclaimer
+  - linkuri interne: /dieta/deficit-caloric/, /articole/medicamente-injectabile-slabit/
 
 - [ ] **Câte kg poți slăbi într-o lună, în mod sănătos**
   - slug: `/cate-kg-slabesti-intr-o-luna`
   - cuvânt-cheie: „cate kg slabesti intr-o luna"
-  - unghi: 0.5–1 kg/săptămână, de ce nu mai mult, prima săptămână e apă
+  - unghi: 0.5–1 kg/săptămână, prima săptămână e apă, de ce nu mai mult
   - linkuri interne: /calculator-calorii/, /dieta/deficit-caloric/
+
+---
+
+## Săptămâna 3 — produse „de slăbit" (neutru) + rețete + mituri
+
+- [ ] 🟡 **Pastile și produse „naturale" de slăbit: ce trebuie să știi înainte**
+  - slug: `/pastile-produse-slabit-ce-sa-stii`
+  - cuvinte-cheie: „pastile de slabit", „produse naturiste pentru slabit", „plante pentru slabit" — volum mare + rising
+  - unghi: neutru-prudent — nu există soluție-minune, ce promit vs ce e dovedit, atenție la reclame; disclaimer ferm
+  - linkuri interne: /articole/medicamente-injectabile-slabit/, /disclaimer-medical/
+
+- [ ] **Supa de varză pentru slăbit: cum funcționează și rețeta**
+  - slug: `/supa-de-varza-pentru-slabit`
+  - cuvânt-cheie: „supa de varza pentru slabit" — **+750%**
+  - unghi: rețetă + explicație onestă (deficit pe termen scurt, nu sustenabil)
+  - linkuri interne: /dieta/dieta-supa-de-varza/, /articole/cate-calorii-ca-sa-slabesti/
 
 - [ ] **5 mituri despre slăbit în care încă mai crede toată lumea**
   - slug: `/mituri-despre-slabit`
   - cuvânt-cheie: „mituri despre slabit"
-  - unghi: carbohidrații de seară, „arzătoare de grăsime", detox, mese dese, transpirația
-  - linkuri interne: /dieta/detox/, /articole/cate-calorii-ca-sa-slabesti/
+  - unghi: carbohidrații de seară, „arzătoare de grăsime", detox, transpirația
+  - linkuri interne: /dieta/detox/, /articole/ceaiuri-de-slabit/
 
 ---
 
-## Săptămâna 2 — comparații (oamenii compară înainte să aleagă)
+## Săptămâna 4 — rețete + comparații + practic
+
+- [ ] **Rețete de slăbit: idei simple și sățioase sub 500 de calorii**
+  - slug: `/retete-de-slabit`
+  - cuvinte-cheie: „reteta de slabit", „retete de slabit"
+  - unghi: 5–7 rețete concrete cu valori aproximative
+  - linkuri interne: /alimente-sanatoase/, /calculator-calorii/
 
 - [ ] **Keto vs Paleo: care e diferența și care slăbește mai repede**
   - slug: `/keto-vs-paleo`
   - cuvânt-cheie: „keto vs paleo"
-  - unghi: tabel comparativ, ce mănânci pe fiecare, pentru cine
+  - unghi: tabel comparativ, ce mănânci, pentru cine
   - linkuri interne: /dieta/dieta-keto/, /dieta/dieta-paleo/
-
-- [ ] **Post intermitent sau deficit caloric: ce funcționează mai bine**
-  - slug: `/post-intermitent-vs-deficit-caloric`
-  - cuvânt-cheie: „post intermitent vs deficit caloric"
-  - unghi: ambele duc la deficit; care e mai ușor de ținut
-  - linkuri interne: /dieta/post-intermitent-16-8/, /dieta/deficit-caloric/, /articole/post-intermitent-16-8-ghid/
-
-- [ ] **Cum calculezi deficitul caloric corect, pas cu pas**
-  - slug: `/cum-calculezi-deficitul-caloric`
-  - cuvânt-cheie: „cum calculezi deficitul caloric"
-  - unghi: BMR → TDEE → minus 300–500 cal; exemplu concret
-  - linkuri interne: /calculator-calorii/, /articole/cate-calorii-ca-sa-slabesti/
-
----
-
-## Săptămâna 3 — ghiduri practice (conținut „cum se face")
 
 - [ ] **Ce să mănânci seara când ești la dietă**
   - slug: `/ce-mananci-seara-la-dieta`
   - cuvânt-cheie: „ce mananci seara la dieta"
-  - unghi: opțiuni sățioase cu puține calorii, mit despre carbohidrații de seară
+  - unghi: opțiuni sățioase cu puține calorii, mitul carbohidraților de seară
   - linkuri interne: /articole/mituri-despre-slabit/, /calculator-calorii/
-
-- [ ] **Meniu de slăbit pe o săptămână cu 1500 de calorii**
-  - slug: `/meniu-1500-calorii`
-  - cuvânt-cheie: „meniu 1500 calorii"
-  - unghi: meniu concret 7 zile, mic dejun/prânz/cină
-  - linkuri interne: /calculator-calorii/, /dieta/dieta-mediteraneana/
-
-- [ ] **Lista alimentelor cu puține calorii care te satură**
-  - slug: `/alimente-putine-calorii`
-  - cuvânt-cheie: „alimente putine calorii"
-  - unghi: densitate calorică mică, fibre, proteine slabe, apă
-  - linkuri interne: /alimente-sanatoase/, /dieta/dieta-volumetrics/
 
 ---
 
-## Săptămâna 4 — comparație + întrebări + mit
-
-- [ ] **Dieta mediteraneană vs keto: care e mai sănătoasă pe termen lung**
-  - slug: `/mediteraneana-vs-keto`
-  - cuvânt-cheie: „mediteraneana vs keto"
-  - unghi: sustenabilitate, sănătate cardiovasculară vs slăbit rapid
-  - linkuri interne: /dieta/dieta-mediteraneana/, /dieta/dieta-keto/
-
-- [ ] **Cât de repede intri în cetoză și cum îți dai seama**
-  - slug: `/cat-dureaza-cetoza`
-  - cuvânt-cheie: „cat dureaza pana intri in cetoza"
-  - unghi: 2–4 zile, semne, gripa keto
-  - linkuri interne: /dieta/dieta-keto/, /articole/dieta-keto-meniu-7-zile/
+## Săptămâna 5 — long-tail cu concurență mică
 
 - [ ] **Efectul yo-yo: de ce recâștigi kilogramele și cum eviți**
   - slug: `/efectul-yo-yo`
   - cuvânt-cheie: „efectul yo-yo"
-  - unghi: diete prea restrictive, pierdere de masă musculară, schimbări sustenabile
+  - unghi: diete prea restrictive, masă musculară, schimbări sustenabile
   - linkuri interne: /articole/cate-calorii-ca-sa-slabesti/, /dieta/deficit-caloric/
-
----
-
-## Săptămâna 5 — long-tail specifice (concurență mică)
-
-- [ ] **Cum slăbești fără să ții dietă: 10 schimbări mici**
-  - slug: `/cum-slabesti-fara-dieta`
-  - cuvânt-cheie: „cum slabesti fara dieta"
-  - unghi: obiceiuri (porții, somn, mers, apă) fără dietă strictă
-  - linkuri interne: /calculator-apa/, /articole/de-ce-nu-slabesc/
 
 - [ ] **Cum slăbești burta după 40 de ani**
   - slug: `/cum-slabesti-burta-dupa-40`
@@ -110,15 +122,26 @@ Pentru fiecare articol: titlu, slug, cuvânt-cheie țintă, unghi și ce linkuri
   - unghi: metabolism, hormoni, proteine + mișcare; fără promisiuni „burtă plată"
   - linkuri interne: /calculator-calorii/, /dieta/dieta-mediteraneana/
 
-- [ ] **Slăbit rapid pentru un eveniment: ce e realist în 2 săptămâni**
-  - slug: `/slabit-rapid-2-saptamani`
-  - cuvânt-cheie: „slabit rapid 2 saptamani"
-  - unghi: ce e realist (apă, balonare), ce nu; fără diete periculoase
-  - linkuri interne: /calculator-calorii/, /articole/cate-kg-slabesti-intr-o-luna/
+- [ ] **Post intermitent sau deficit caloric: ce funcționează mai bine**
+  - slug: `/post-intermitent-vs-deficit-caloric`
+  - cuvânt-cheie: „post intermitent vs deficit caloric"
+  - unghi: ambele duc la deficit; care e mai ușor de ținut
+  - linkuri interne: /dieta/post-intermitent-16-8/, /dieta/deficit-caloric/
+
+---
+
+## Rezervă (idei bune pentru mai târziu)
+- Injecții/medicamente — *acoperit deja* prin articolul neutru existent; nu mai insista.
+- Mediteraneană vs keto — `/mediteraneana-vs-keto`
+- Cum calculezi deficitul caloric pas cu pas — `/cum-calculezi-deficitul-caloric`
+- Lista alimentelor cu puține calorii care te satură — `/alimente-putine-calorii`
+- Meniu de slăbit cu 1500 de calorii — `/meniu-1500-calorii`
+- Cum slăbești fără să ții dietă: 10 schimbări mici — `/cum-slabesti-fara-dieta`
 
 ---
 
 ## Cum lucrăm
-În fiecare săptămână îmi spui „scrie articolele din săptămâna X" și le scriu + le încarc
-(fișiere `.md` în `src/content/articole/`, build, commit, push). După publicare:
-retrimite sitemap-ul în Search Console o dată.
+În fiecare săptămână îmi spui „scrie articolele din săptămâna X" → le scriu în stil neutru/factual,
+le pun în `src/content/articole/`, build + commit + push. După publicare: retrimite sitemap-ul o dată.
+
+**Sursă priorități:** Google Trends RO, top + rising searches, mart–iun 2026.
