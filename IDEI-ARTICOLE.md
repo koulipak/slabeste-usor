@@ -20,25 +20,11 @@ Pentru fiecare: titlu, slug, cuvânt-cheie țintă, unghi și linkuri interne (s
 
 ---
 
-## Săptămâna 1 — trendurile #1 din date (vedete + ceaiuri + evergreen)
+## Săptămâna 1 — trendurile #1 din date (vedete + ceaiuri + evergreen) ✅ PUBLICAT
 
-- [ ] **Cum a slăbit Andra: ce dietă a urmat și ce a schimbat**
-  - slug: `/cum-a-slabit-andra`
-  - cuvânt-cheie: „cum a slabit andra" — **BREAKOUT +850%**, concurență mică
-  - unghi: factual, pe baza declarațiilor publice; schimbări de stil de viață, fără senzaționalism
-  - linkuri interne: /vedete-care-au-slabit/, /calculator-calorii/
-
-- [ ] 🟡 **Ceaiuri de slăbit: ce spun studiile și ce să nu aștepți**
-  - slug: `/ceaiuri-de-slabit`
-  - cuvânt-cheie: „ceai de slabit" / „ceai pentru slabit" — **volum foarte mare**
-  - unghi: neutru — hidratare, efect diuretic ≠ slăbit real, fără promisiuni; disclaimer
-  - linkuri interne: /calculator-apa/, /articole/mituri-despre-slabit/
-
-- [ ] **De ce nu slăbesc deși mănânc puțin? 7 cauze reale**
-  - slug: `/de-ce-nu-slabesc`
-  - cuvânt-cheie: „de ce nu slabesc"
-  - unghi: metabolism, apă, masă musculară, porții subestimate, somn, hormoni
-  - linkuri interne: /calculator-calorii/, /articole/cate-calorii-ca-sa-slabesti/
+- [x] **Cum a slăbit Andra Măruță 10 kilograme** — `/articole/cum-a-slabit-andra/`
+- [x] 🟡 **Ceaiuri de slăbit: ce spun studiile** — `/articole/ceaiuri-de-slabit/`
+- [x] **De ce nu slăbesc deși mănânc puțin? 7 cauze reale** — `/articole/de-ce-nu-slabesc/`
 
 ---
 
