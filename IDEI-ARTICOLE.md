@@ -28,25 +28,14 @@ Pentru fiecare: titlu, slug, cuvânt-cheie țintă, unghi și linkuri interne (s
 
 ---
 
-## Săptămâna 2 — vedete + suplimente naturale trending
+## Săptămâna 2 — vedete + suplimente naturale trending ✅ PUBLICAT
 
-- [ ] **Cum a slăbit Gabriela Cristea: dieta și obiceiurile**
-  - slug: `/cum-a-slabit-gabriela-cristea`
-  - cuvânt-cheie: „cum a slabit gabriela cristea" / „gabriela cristea a slabit" — în creștere
-  - unghi: factual, pe baza declarațiilor publice
-  - linkuri interne: /vedete-care-au-slabit/, /articole/cum-a-slabit-andra/
+- [x] **Cum a slăbit Gabriela Cristea 25 kg** — `/articole/cum-a-slabit-gabriela-cristea/` (1066 cuv.)
+- [x] 🟡 **Berberina și glucomannan: ce spune știința** — `/articole/berberina-glucomannan-slabit/` (1086 cuv.)
+- [x] **Câte kg poți slăbi într-o lună, realist** — `/articole/cate-kg-slabesti-intr-o-luna/` (1060 cuv.)
 
-- [ ] 🟡 **Berberina și glucomannan pentru slăbit: ce spune știința**
-  - slug: `/berberina-glucomannan-slabit`
-  - cuvinte-cheie: „berberina" (+80%), „glucomannan" (+100%)
-  - unghi: neutru — ce sunt, ce sugerează studiile, de ce nu înlocuiesc dieta; disclaimer
-  - linkuri interne: /dieta/deficit-caloric/, /articole/medicamente-injectabile-slabit/
-
-- [ ] **Câte kg poți slăbi într-o lună, în mod sănătos**
-  - slug: `/cate-kg-slabesti-intr-o-luna`
-  - cuvânt-cheie: „cate kg slabesti intr-o luna"
-  - unghi: 0.5–1 kg/săptămână, prima săptămână e apă, de ce nu mai mult
-  - linkuri interne: /calculator-calorii/, /dieta/deficit-caloric/
+> Scrise la standardul nou (skill `articol-slabeste-usor`): 1000+ cuvinte, cifre concrete,
+> alimente românești, mit demontat, FAQ, voce umană, disclaimer.
 
 ---
 
