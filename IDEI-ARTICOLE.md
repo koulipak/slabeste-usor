@@ -39,47 +39,19 @@ Pentru fiecare: titlu, slug, cuvânt-cheie țintă, unghi și linkuri interne (s
 
 ---
 
-## Săptămâna 3 — produse „de slăbit" (neutru) + rețete + mituri
+## Săptămâna 3 — produse „de slăbit" (neutru) + rețete + mituri ✅ PUBLICAT
 
-- [ ] 🟡 **Pastile și produse „naturale" de slăbit: ce trebuie să știi înainte**
-  - slug: `/pastile-produse-slabit-ce-sa-stii`
-  - cuvinte-cheie: „pastile de slabit", „produse naturiste pentru slabit", „plante pentru slabit" — volum mare + rising
-  - unghi: neutru-prudent — nu există soluție-minune, ce promit vs ce e dovedit, atenție la reclame; disclaimer ferm
-  - linkuri interne: /articole/medicamente-injectabile-slabit/, /disclaimer-medical/
-
-- [ ] **Supa de varză pentru slăbit: cum funcționează și rețeta**
-  - slug: `/supa-de-varza-pentru-slabit`
-  - cuvânt-cheie: „supa de varza pentru slabit" — **+750%**
-  - unghi: rețetă + explicație onestă (deficit pe termen scurt, nu sustenabil)
-  - linkuri interne: /dieta/dieta-supa-de-varza/, /articole/cate-calorii-ca-sa-slabesti/
-
-- [ ] **5 mituri despre slăbit în care încă mai crede toată lumea**
-  - slug: `/mituri-despre-slabit`
-  - cuvânt-cheie: „mituri despre slabit"
-  - unghi: carbohidrații de seară, „arzătoare de grăsime", detox, transpirația
-  - linkuri interne: /dieta/detox/, /articole/ceaiuri-de-slabit/
+- [x] 🟡 **Pastile și produse „naturale" de slăbit** — `/articole/pastile-produse-slabit-ce-sa-stii/` (1046 cuv.)
+- [x] **Supa de varză pentru slăbit: cum funcționează și rețeta** — `/articole/supa-de-varza-pentru-slabit/` (1037 cuv.)
+- [x] **7 mituri despre slăbit** — `/articole/mituri-despre-slabit/` (1027 cuv.)
 
 ---
 
-## Săptămâna 4 — rețete + comparații + practic
+## Săptămâna 4 — rețete + comparații + practic ✅ PUBLICAT
 
-- [ ] **Rețete de slăbit: idei simple și sățioase sub 500 de calorii**
-  - slug: `/retete-de-slabit`
-  - cuvinte-cheie: „reteta de slabit", „retete de slabit"
-  - unghi: 5–7 rețete concrete cu valori aproximative
-  - linkuri interne: /alimente-sanatoase/, /calculator-calorii/
-
-- [ ] **Keto vs Paleo: care e diferența și care slăbește mai repede**
-  - slug: `/keto-vs-paleo`
-  - cuvânt-cheie: „keto vs paleo"
-  - unghi: tabel comparativ, ce mănânci, pentru cine
-  - linkuri interne: /dieta/dieta-keto/, /dieta/dieta-paleo/
-
-- [ ] **Ce să mănânci seara când ești la dietă**
-  - slug: `/ce-mananci-seara-la-dieta`
-  - cuvânt-cheie: „ce mananci seara la dieta"
-  - unghi: opțiuni sățioase cu puține calorii, mitul carbohidraților de seară
-  - linkuri interne: /articole/mituri-despre-slabit/, /calculator-calorii/
+- [x] **Rețete de slăbit: 7 idei sub 400 de calorii** — `/articole/retete-de-slabit/` (1036 cuv.)
+- [x] **Keto vs Paleo** — `/articole/keto-vs-paleo/` (1045 cuv.)
+- [x] **Ce să mănânci seara când ești la dietă** — `/articole/ce-mananci-seara-la-dieta/` (996 cuv.)
 
 ---
 
