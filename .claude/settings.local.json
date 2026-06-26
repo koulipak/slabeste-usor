@@ -43,7 +43,19 @@
       "Bash(awk -F'\"' '{line=$0; desc=$2; if\\(length\\(desc\\)>170\\) print length\\(desc\\), line}')",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/)",
       "Bash(curl -s -o /tmp/en52b.html -w \"%{http_code}\" http://localhost:4321/en/dieta/post-5-2/)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(git config *)",
+      "Bash(git commit *)",
+      "Bash(git remote *)",
+      "Bash(git branch *)",
+      "Bash(git push *)",
+      "WebFetch(domain:slabeste-usor.vercel.app)",
+      "Bash(git add *)",
+      "Bash(node -e ' *)",
+      "mcp__fdadce5c-e1d0-471f-bbe4-ffc5d4f9b45b__models_explore",
+      "mcp__fdadce5c-e1d0-471f-bbe4-ffc5d4f9b45b__job_display",
+      "mcp__fdadce5c-e1d0-471f-bbe4-ffc5d4f9b45b__generate_image",
+      "Bash(awk 'n>=2{print} /^---$/{n++}' src/content/articole/de-ce-nu-slabesc.md)"
     ]
   }
 }

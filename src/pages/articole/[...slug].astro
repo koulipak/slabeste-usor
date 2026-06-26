@@ -15,6 +15,7 @@ const { articol } = Astro.props;
 const d = articol.data;
 const { Content } = await render(articol);
 const url = new URL(`/articole/${articol.id}/`, Astro.site).href;
+const heroImg = `/articole/img/${articol.id}.jpg`;
 
 const dateFormatata = d.publicat.toLocaleDateString("ro-RO", {
   year: "numeric",
@@ -39,7 +40,7 @@ const jsonLd = JSON.stringify({
 });
 ---
 
-<Base titlu={d.titlu} descriere={d.descriere} tipPagina="article">
+<Base titlu={d.titlu} descriere={d.descriere} tipPagina="article" imagine={heroImg}>
   <script type="application/ld+json" set:html={jsonLd} slot="head" />
   <BreadcrumbSchema
     slot="head"
@@ -57,6 +58,7 @@ const jsonLd = JSON.stringify({
   </nav>
 
   <article class="articol-page prose">
+    <img class="articol-hero" src={heroImg} alt={d.titlu} width="1200" height="630" loading="eager" />
     <header class="articol-header">
       <h1>{d.titlu}</h1>
       <p class="articol-meta">
@@ -69,6 +71,15 @@ const jsonLd = JSON.stringify({
 </Base>
 
 <style>
+  .articol-hero {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1200 / 630;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
   .articol-header {
     margin-bottom: 2rem;
     padding-bottom: 1.25rem;

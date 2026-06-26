@@ -22,9 +22,12 @@ const articole = (await getCollection("articole")).sort(
     {articole.map((a) => (
       <li class="articol-card">
         <a href={`/articole/${a.id}/`} class="articol-card-link">
-          <h2 class="articol-card-titlu">{a.data.titlu}</h2>
-          <p class="articol-card-desc">{a.data.descriere}</p>
-          <span class="articol-card-cta">Citește →</span>
+          <img class="articol-card-img" src={`/articole/img/${a.id}.jpg`} alt={a.data.titlu} width="1200" height="630" loading="lazy" />
+          <div class="articol-card-text">
+            <h2 class="articol-card-titlu">{a.data.titlu}</h2>
+            <p class="articol-card-desc">{a.data.descriere}</p>
+            <span class="articol-card-cta">Citește →</span>
+          </div>
         </a>
       </li>
     ))}
@@ -51,16 +54,30 @@ const articole = (await getCollection("articole")).sort(
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     transition: transform 0.18s ease, box-shadow 0.18s ease;
+    overflow: hidden;
   }
   .articol-card:hover {
     transform: translateY(-3px);
     box-shadow: var(--shadow-hover);
   }
   .articol-card-link {
-    display: block;
-    padding: 1.5rem 1.75rem;
+    display: flex;
     text-decoration: none;
     color: inherit;
+  }
+  .articol-card-img {
+    width: 240px;
+    flex-shrink: 0;
+    aspect-ratio: 1200 / 630;
+    object-fit: cover;
+    display: block;
+  }
+  .articol-card-text {
+    padding: 1.5rem 1.75rem;
+  }
+  @media (max-width: 600px) {
+    .articol-card-link { flex-direction: column; }
+    .articol-card-img { width: 100%; }
   }
   .articol-card-titlu {
     font-size: 1.15rem;
