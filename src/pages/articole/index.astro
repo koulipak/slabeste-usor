@@ -12,11 +12,11 @@ const articole = (await getCollection("articole")).sort(
   descriere="Ghiduri practice despre diete, calculul caloriilor și slăbitul sănătos. Informații clare, fără promisiuni false."
 >
   <nav class="breadcrumb">
-    <a href="/">Acasă</a> › Articole
+    <a href="/" data-i18n="bc.acasa">Acasă</a> › <span data-i18n="art.bc">Articole</span>
   </nav>
 
-  <h1>Articole</h1>
-  <p class="articole-intro">Ghiduri practice despre diete, deficit caloric și slăbit sănătos.</p>
+  <h1 data-i18n="art.h1">Articole</h1>
+  <p class="articole-intro" data-i18n="art.intro">Ghiduri practice despre diete, deficit caloric și slăbit sănătos.</p>
 
   <ul class="articole-lista">
     {articole.map((a) => (
@@ -26,7 +26,7 @@ const articole = (await getCollection("articole")).sort(
           <div class="articol-card-text">
             <h2 class="articol-card-titlu">{a.data.titlu}</h2>
             <p class="articol-card-desc">{a.data.descriere}</p>
-            <span class="articol-card-cta">Citește →</span>
+            <span class="articol-card-cta" data-i18n="art.citeste">Citește →</span>
           </div>
         </a>
       </li>

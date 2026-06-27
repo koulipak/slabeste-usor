@@ -7,10 +7,16 @@
       /* ── Nav ─────────────────────────────────────── */
       'nav.diete':        'Diete',
       'nav.calculatoare': 'Calculatoare',
+      'nav.articole':     'Articole',
       'nav.vedete':       'Vedete',
       'nav.alimente':     'Alimente Sănătoase',
       'nav.despre':       'Despre',
       'nav.search':       'Caută dietă...',
+      /* ── Pagina articole ─────────────────────────── */
+      'art.bc':           'Articole',
+      'art.h1':           'Articole',
+      'art.intro':        'Ghiduri practice despre diete, deficit caloric și slăbit sănătos.',
+      'art.citeste':      'Citește →',
       /* ── Intro ───────────────────────────────────── */
       'intro.sub':        'biblioteca ta de diete',
       'intro.click':      '▸ click pentru a continua',
@@ -344,10 +350,16 @@
       /* ── Nav ─────────────────────────────────────── */
       'nav.diete':        'Diets',
       'nav.calculatoare': 'Calculators',
+      'nav.articole':     'Articles',
       'nav.vedete':       'Celebrities',
       'nav.alimente':     'Healthy Foods',
       'nav.despre':       'About',
       'nav.search':       'Search diet...',
+      /* ── Articles page ───────────────────────────── */
+      'art.bc':           'Articles',
+      'art.h1':           'Articles',
+      'art.intro':        'Practical guides about diets, calorie deficit and healthy weight loss.',
+      'art.citeste':      'Read →',
       /* ── Intro ───────────────────────────────────── */
       'intro.sub':        'your diet library',
       'intro.click':      '▸ click to continue',
