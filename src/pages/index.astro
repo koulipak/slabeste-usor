@@ -9,6 +9,11 @@ import { dificultateText } from "../lib/format";
 const diete = (await getCollection("diete", ({ data }) => !data.draft)).sort((a, b) =>
   a.data.titlu.localeCompare(b.data.titlu, "ro")
 );
+
+// Articole pentru widget-ul de recomandare (colț dreapta-jos)
+const articoleReco = (await getCollection("articole"))
+  .sort((a, b) => b.data.publicat.getTime() - a.data.publicat.getTime())
+  .map((a) => ({ slug: a.id, titlu: a.data.titlu, img: `/articole/img/${a.id}.jpg` }));
 ---
 
 <Base
@@ -121,6 +126,19 @@ const diete = (await getCollection("diete", ({ data }) => !data.draft)).sort((a,
 
   <p id="gol" hidden data-i18n="gol.text">Nicio dietă nu corespunde filtrelor selectate.</p>
 
+  <!-- ── Widget recomandare articol (colț dreapta-jos) ──────────── -->
+  <script id="reco-data" type="application/json" set:html={JSON.stringify(articoleReco)} />
+  <aside id="reco-pop" class="reco-pop" hidden>
+    <button class="reco-x" id="reco-x" aria-label="Închide recomandarea" title="Închide">×</button>
+    <a class="reco-link" id="reco-link" href="#">
+      <img class="reco-img" id="reco-img" src="" alt="" width="300" height="158" loading="lazy" />
+      <div class="reco-body">
+        <span class="reco-eticheta" id="reco-eticheta">📖 Recomandat pentru tine</span>
+        <span class="reco-titlu" id="reco-titlu"></span>
+      </div>
+    </a>
+  </aside>
+
 </Base>
 
 <script>
@@ -210,7 +228,81 @@ const diete = (await getCollection("diete", ({ data }) => !data.draft)).sort((a,
   function inchideModal() {
     modal.classList.add("mv-iese");
     modal.addEventListener("animationend", () => modal.remove(), { once: true });
+    porneșteReco();
   }
+
+  // ── Widget recomandare articol (colț dreapta-jos) ────────────────
+  let recoTimer: number | undefined;
+  let recoPornit = false;
+  let recoUltim = -1;
+
+  function afiseazaReco() {
+    const popEl = document.getElementById("reco-pop");
+    const dataEl = document.getElementById("reco-data");
+    if (!popEl || !dataEl) return;
+    let lista: { slug: string; titlu: string; img: string }[] = [];
+    try { lista = JSON.parse(dataEl.textContent || "[]"); } catch (e) { return; }
+    if (!lista.length) return;
+
+    // alege un articol aleatoriu, diferit de cel curent
+    let i = Math.floor(Math.random() * lista.length);
+    if (lista.length > 1) { while (i === recoUltim) i = Math.floor(Math.random() * lista.length); }
+    recoUltim = i;
+    const art = lista[i];
+
+    const link = document.getElementById("reco-link") as HTMLAnchorElement;
+    const img = document.getElementById("reco-img") as HTMLImageElement;
+    const titlu = document.getElementById("reco-titlu");
+    const eticheta = document.getElementById("reco-eticheta");
+    const lang = (window as any).siteI18n?.getLang?.() ?? "ro";
+    if (eticheta) eticheta.textContent = lang === "en" ? "📖 Recommended for you" : "📖 Recomandat pentru tine";
+    if (link) link.href = "/articole/" + art.slug + "/";
+    if (img) { img.src = art.img; img.alt = art.titlu; }
+    if (titlu) titlu.textContent = art.titlu;
+
+    // re-trigger animație de schimbare
+    popEl.classList.remove("reco-swap");
+    void popEl.offsetWidth;
+    popEl.classList.add("reco-swap");
+  }
+
+  function porneșteReco() {
+    if (recoPornit) return;
+    if (sessionStorage.getItem("reco-inchis") === "1") return;
+    const popEl = document.getElementById("reco-pop");
+    if (!popEl) return;
+    recoPornit = true;
+    // apare la ~1.5s după ce dispare modalul
+    setTimeout(() => {
+      if (sessionStorage.getItem("reco-inchis") === "1") return;
+      afiseazaReco();
+      popEl.hidden = false;
+      requestAnimationFrame(() => popEl.classList.add("reco-vizibil"));
+      // rotește recomandarea la fiecare 9 secunde
+      recoTimer = window.setInterval(afiseazaReco, 9000);
+    }, 1500);
+  }
+
+  // X — închide widget-ul pe sesiunea curentă
+  document.getElementById("reco-x")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const popEl = document.getElementById("reco-pop");
+    if (recoTimer) clearInterval(recoTimer);
+    sessionStorage.setItem("reco-inchis", "1");
+    if (popEl) {
+      popEl.classList.remove("reco-vizibil");
+      setTimeout(() => { popEl.hidden = true; }, 300);
+    }
+  });
+
+  // pauză la rotație cât timp utilizatorul stă cu mouse-ul pe widget
+  const recoPopHover = document.getElementById("reco-pop");
+  recoPopHover?.addEventListener("mouseenter", () => { if (recoTimer) clearInterval(recoTimer); });
+  recoPopHover?.addEventListener("mouseleave", () => {
+    if (sessionStorage.getItem("reco-inchis") === "1") return;
+    recoTimer = window.setInterval(afiseazaReco, 9000);
+  });
 
   // Butoane din modal
   modal.querySelectorAll<HTMLButtonElement>(".mv-btn").forEach((btn) => {
@@ -244,6 +336,7 @@ const diete = (await getCollection("diete", ({ data }) => !data.draft)).sort((a,
     if (varstaStocata !== "*") {
       aplicaVarsta(varstaStocata);
     }
+    porneșteReco();
   } else {
     // Prima vizită: așteptăm să dispară intro-ul, apoi afișăm modalul
     const zbor = document.getElementById("intro-zbor");
@@ -262,3 +355,92 @@ const diete = (await getCollection("diete", ({ data }) => !data.draft)).sort((a,
     }
   }
 </script>
+
+<style>
+  .reco-pop {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    width: 300px;
+    max-width: calc(100vw - 2rem);
+    background: var(--surface, #fff);
+    border: 1.5px solid var(--border, #e5e7eb);
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+    z-index: 60;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .reco-pop.reco-vizibil {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .reco-x {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 26px;
+    height: 26px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease;
+  }
+  .reco-x:hover { background: rgba(0, 0, 0, 0.7); }
+  .reco-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .reco-img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    display: block;
+  }
+  .reco-body {
+    padding: 0.7rem 0.9rem 0.85rem;
+  }
+  .reco-eticheta {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--verde, #16a34a);
+    margin-bottom: 0.25rem;
+  }
+  .reco-titlu {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--navy, var(--text, #1f2937));
+  }
+  /* animație scurtă la schimbarea recomandării */
+  .reco-pop.reco-swap .reco-img,
+  .reco-pop.reco-swap .reco-body {
+    animation: reco-fade 0.45s ease;
+  }
+  @keyframes reco-fade {
+    0% { opacity: 0.25; }
+    100% { opacity: 1; }
+  }
+  @media (max-width: 480px) {
+    .reco-pop { right: 0.75rem; bottom: 0.75rem; width: 260px; }
+    .reco-img { height: 110px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reco-pop, .reco-pop.reco-swap .reco-img, .reco-pop.reco-swap .reco-body { transition: none; animation: none; }
+  }
+</style>
