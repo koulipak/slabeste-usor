@@ -70,4 +70,17 @@ const articole = defineCollection({
     }),
 });
 
-export const collections = { diete, dieteEn, articole };
+const articoleEn = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/articole-en" }),
+  schema: ({ image }) =>
+    z.object({
+      titlu: z.string(),
+      descriere: z.string().max(170),
+      publicat: z.coerce.date(),
+      actualizat: z.coerce.date().optional(),
+      autor: z.string().default("Slăbește Ușor"),
+      imagine: image().optional(),
+    }),
+});
+
+export const collections = { diete, dieteEn, articole, articoleEn };

@@ -1,0 +1,107 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../../layouts/Base.astro";
+import BreadcrumbSchema from "../../../components/BreadcrumbSchema.astro";
+
+export async function getStaticPaths() {
+  const articole = await getCollection("articoleEn");
+  return articole.map((articol) => ({
+    params: { slug: articol.id },
+    props: { articol },
+  }));
+}
+
+const { articol } = Astro.props;
+const d = articol.data;
+const { Content } = await render(articol);
+const url = new URL(`/en/articole/${articol.id}/`, Astro.site).href;
+const heroImg = `/articole/img/${articol.id}.jpg`;
+
+const dateFormatata = d.publicat.toLocaleDateString("en-GB", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const roHref = new URL(`/articole/${articol.id}/`, Astro.site).href;
+const enHref = new URL(`/en/articole/${articol.id}/`, Astro.site).href;
+const alternates = [
+  { hreflang: "ro", href: roHref },
+  { hreflang: "en", href: enHref },
+  { hreflang: "x-default", href: roHref },
+];
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: d.titlu,
+  description: d.descriere,
+  author: { "@type": "Organization", name: d.autor },
+  datePublished: d.publicat.toISOString(),
+  dateModified: (d.actualizat ?? d.publicat).toISOString(),
+  url,
+  publisher: {
+    "@type": "Organization",
+    name: "Slăbește Ușor",
+    url: "https://www.slabeste-usor.ro",
+  },
+});
+---
+
+<Base titlu={d.titlu} descriere={d.descriere} tipPagina="article" imagine={heroImg} lang="en" alternates={alternates}>
+  <script type="application/ld+json" set:html={jsonLd} slot="head" />
+  <BreadcrumbSchema
+    slot="head"
+    items={[
+      { nume: "Home", url: "/en/" },
+      { nume: "Articles", url: "/en/articole/" },
+      { nume: d.titlu, url: `/en/articole/${articol.id}/` },
+    ]}
+  />
+
+  <nav class="breadcrumb">
+    <a href="/en/">Home</a> ›
+    <a href="/en/articole/">Articles</a> ›
+    {d.titlu}
+  </nav>
+
+  <article class="articol-page prose">
+    <img class="articol-hero" src={heroImg} alt={d.titlu} width="1200" height="630" loading="eager" />
+    <header class="articol-header">
+      <h1>{d.titlu}</h1>
+      <p class="articol-meta">
+        <span>{d.autor}</span> · <time datetime={d.publicat.toISOString()}>{dateFormatata}</time>
+      </p>
+    </header>
+
+    <Content />
+  </article>
+</Base>
+
+<style>
+  .articol-hero {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1200 / 630;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .articol-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1.5px solid var(--border);
+  }
+  .articol-header h1 {
+    margin-bottom: 0.5rem;
+  }
+  .articol-meta {
+    color: var(--text-soft);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  .articol-page {
+    max-width: 720px;
+  }
+</style>
