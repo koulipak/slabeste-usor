@@ -315,12 +315,20 @@ const foodDecor = Array.from({ length: SHOW }, (_, i) => FOOD_ALL[(pathHash + i)
               var p = window.location.pathname;
               var roMatch = p.match(/^\/dieta\/([^/]+)\//);
               var enMatch = p.match(/^\/en\/dieta\/([^/]+)\//);
+              var roArtMatch = p.match(/^\/articole\/(.*)/);
+              var enArtMatch = p.match(/^\/en\/articole\/(.*)/);
               if (roMatch) {
                 try { localStorage.setItem('site-lang', 'en'); } catch (err) {}
                 window.location.href = '/en/dieta/' + roMatch[1] + '/';
               } else if (enMatch) {
                 try { localStorage.setItem('site-lang', 'ro'); } catch (err) {}
                 window.location.href = '/dieta/' + enMatch[1] + '/';
+              } else if (roArtMatch) {
+                try { localStorage.setItem('site-lang', 'en'); } catch (err) {}
+                window.location.href = '/en/articole/' + roArtMatch[1];
+              } else if (enArtMatch) {
+                try { localStorage.setItem('site-lang', 'ro'); } catch (err) {}
+                window.location.href = '/articole/' + enArtMatch[1];
               } else if (window.siteI18n) {
                 window.siteI18n.toggle();
               }

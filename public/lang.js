@@ -847,6 +847,14 @@
       location.replace(path.slice(3) + location.search + location.hash);
       return;
     }
+    if (stored === 'en' && /^\/articole\//.test(path)) {
+      location.replace('/en' + path + location.search + location.hash);
+      return;
+    }
+    if (stored === 'ro' && /^\/en\/articole\//.test(path)) {
+      location.replace(path.slice(3) + location.search + location.hash);
+      return;
+    }
 
     var lang = getLang();
     apply(lang);
