@@ -300,14 +300,20 @@ const foodDecor = Array.from({ length: SHOW }, (_, i) => FOOD_ALL[(pathHash + i)
             zbor.classList.add('pleaca');
             document.body.style.overflow = '';
             sessionStorage.setItem('intro-vazut', '1');
-            zbor.addEventListener('transitionend', (e) => {
-              if (e.target !== zbor) return;
+            let zborRemoved = false;
+            const removeZbor = () => {
+              if (zborRemoved) return;
+              zborRemoved = true;
               zbor.remove();
-              // Dacă nu suntem pe homepage, mergem acolo ca să apară modalul de vârstă
               if (window.location.pathname !== '/') {
                 window.location.href = '/';
               }
-            }, { once: true });
+            };
+            zbor.addEventListener('transitionend', (e) => {
+              if (e.target === zbor) removeZbor();
+            });
+            // fallback dacă transitionend nu se declanșează (reduced-motion, tab in background etc.)
+            setTimeout(removeZbor, 900);
           };
           // butonul de limbă nu trebuie să închidă intro-ul
           const langBtn = document.getElementById('lang-toggle-btn');
