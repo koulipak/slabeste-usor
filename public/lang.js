@@ -692,10 +692,11 @@
 
   /* ── API publică ─────────────────────────────────────────────── */
   function getLang() {
+    /* paginile /en/ sunt mereu engleze — preferința din localStorage nu le poate suprascrie */
+    if (/^\/en\//.test(location.pathname)) return 'en';
     var s = localStorage.getItem('site-lang');
     if (s) return s;
-    /* fără preferință salvată: paginile /en/ sunt engleze implicit */
-    return /^\/en\//.test(location.pathname) ? 'en' : 'ro';
+    return 'ro';
   }
 
   function setLang(lang) {
@@ -841,20 +842,13 @@
         important pentru SEO: paginile /en/ indexate nu sunt deviate.) */
     var stored = localStorage.getItem('site-lang');
     var path = location.pathname;
+    /* Redirecționează spre /en/ dacă userul a ales EN explicit și e pe o pagină RO */
     if (stored === 'en' && /^\/dieta\//.test(path)) {
       location.replace('/en' + path + location.search + location.hash);
       return;
     }
-    if (stored === 'ro' && /^\/en\/dieta\//.test(path)) {
-      location.replace(path.slice(3) + location.search + location.hash);
-      return;
-    }
     if (stored === 'en' && /^\/articole\//.test(path)) {
       location.replace('/en' + path + location.search + location.hash);
-      return;
-    }
-    if (stored === 'ro' && /^\/en\/articole\//.test(path)) {
-      location.replace(path.slice(3) + location.search + location.hash);
       return;
     }
 
