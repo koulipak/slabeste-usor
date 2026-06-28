@@ -10,10 +10,21 @@ const diete = (await getCollection("diete", ({ data }) => !data.draft)).sort((a,
   a.data.titlu.localeCompare(b.data.titlu, "ro")
 );
 
-// Articole pentru widget-ul de recomandare (colț dreapta-jos)
+// Articole pentru widget-ul de recomandare (colț dreapta-jos) — RO + EN
+const articoleRoMap = Object.fromEntries(
+  (await getCollection("articole")).map((a) => [a.id, a.data.titlu])
+);
+const articoleEnMap = Object.fromEntries(
+  (await getCollection("articoleEn")).map((a) => [a.id, a.data.titlu])
+);
 const articoleReco = (await getCollection("articole"))
   .sort((a, b) => b.data.publicat.getTime() - a.data.publicat.getTime())
-  .map((a) => ({ slug: a.id, titlu: a.data.titlu, img: `/articole/img/${a.id}.jpg` }));
+  .map((a) => ({
+    slug: a.id,
+    titluRo: articoleRoMap[a.id] ?? a.data.titlu,
+    titluEn: articoleEnMap[a.id] ?? a.data.titlu,
+    img: `/articole/img/${a.id}.jpg`,
+  }));
 ---
 
 <Base
@@ -255,10 +266,12 @@ const articoleReco = (await getCollection("articole"))
     const titlu = document.getElementById("reco-titlu");
     const eticheta = document.getElementById("reco-eticheta");
     const lang = (window as any).siteI18n?.getLang?.() ?? "ro";
-    if (eticheta) eticheta.textContent = lang === "en" ? "📖 Recommended for you" : "📖 Recomandat pentru tine";
-    if (link) link.href = "/articole/" + art.slug + "/";
-    if (img) { img.src = art.img; img.alt = art.titlu; }
-    if (titlu) titlu.textContent = art.titlu;
+    const isEn = lang === "en";
+    if (eticheta) eticheta.textContent = isEn ? "📖 Recommended for you" : "📖 Recomandat pentru tine";
+    if (link) link.href = (isEn ? "/en/articole/" : "/articole/") + art.slug + "/";
+    const titluText = isEn ? (art as any).titluEn : (art as any).titluRo;
+    if (img) { img.src = art.img; img.alt = titluText; }
+    if (titlu) titlu.textContent = titluText;
 
     // re-trigger animație de schimbare
     popEl.classList.remove("reco-swap");
