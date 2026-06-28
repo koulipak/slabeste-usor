@@ -89,6 +89,7 @@ const foodDecor = Array.from({ length: SHOW }, (_, i) => FOOD_ALL[(pathHash + i)
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
 
     <title>{titluComplet}</title>
     <meta name="description" content={descriere} />
@@ -194,11 +195,11 @@ const foodDecor = Array.from({ length: SHOW }, (_, i) => FOOD_ALL[(pathHash + i)
             />
             <ul id="nav-search-results" role="listbox" aria-label="Rezultate căutare" hidden></ul>
           </div>
-          <a href="/" class="nav-cta" data-i18n="nav.diete">Diete</a>
-          <a href="/calculatoare/" class="nav-cta" data-i18n="nav.calculatoare">Calculatoare</a>
-          <a href="/articole/" class="nav-cta" data-i18n="nav.articole">Articole</a>
-          <a href="/alimente-sanatoase/" class="nav-cta nav-cta-special" data-i18n="nav.alimente">Alimente Sănătoase</a>
-          <a href="/despre/" class="nav-cta" data-i18n="nav.despre">Despre</a>
+          <a href="/" class="nav-cta"><i class="ti ti-salad" aria-hidden="true"></i><span data-i18n="nav.diete">Diete</span></a>
+          <a href="/calculatoare/" class="nav-cta"><i class="ti ti-calculator" aria-hidden="true"></i><span data-i18n="nav.calculatoare">Calculatoare</span></a>
+          <a href="/articole/" class="nav-cta"><i class="ti ti-article" aria-hidden="true"></i><span data-i18n="nav.articole">Articole</span></a>
+          <a href="/alimente-sanatoase/" class="nav-cta nav-cta-special"><i class="ti ti-plant-2" aria-hidden="true"></i><span data-i18n="nav.alimente">Alimente Sănătoase</span></a>
+          <a href="/despre/" class="nav-cta"><i class="ti ti-info-circle" aria-hidden="true"></i><span data-i18n="nav.despre">Despre</span></a>
           <button id="header-lang-btn" class="nav-lang-btn" aria-label="Switch language">
             <img id="header-lang-flag" src="/flags/ro.svg" alt="" width="22" height="16" aria-hidden="true" />
           </button>

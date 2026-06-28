@@ -203,12 +203,15 @@ img { max-width: 100%; height: auto; display: block; }
 .nav-links a { color: var(--text-soft); font-weight: 700; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.07em; }
 .nav-links a:hover { color: var(--navy); text-decoration: none; }
 .nav-cta-special {
-  color: var(--verde) !important;
-  border: 1.5px solid var(--verde);
-  border-radius: 20px;
-  padding: 0.25rem 0.75rem;
+  background: #e8faf2 !important;
+  color: #1a6e42 !important;
+  border-color: #9adcbc !important;
 }
-.nav-cta-special:hover { background: var(--verde); color: #fff !important; }
+.nav-cta-special:hover {
+  background: var(--verde) !important;
+  color: #fff !important;
+  border-color: var(--verde) !important;
+}
 
 /* ── Nav search ─────────────────────────────── */
 .nav-search-wrap { position: relative; }
@@ -242,22 +245,27 @@ img { max-width: 100%; height: auto; display: block; }
 #nav-search-results li:hover,
 #nav-search-results li.active { background: var(--galben-soft); color: var(--navy); }
 
-/* CTA nav — dark navy, ca butonul "STORE LOCATOR" de la Pa'lais */
+/* CTA nav — chip pill cu icon */
 .nav-cta {
-  background: var(--navy) !important;
-  color: #fff !important;
-  padding: 0.52rem 1.1rem;
-  border-radius: 6px;
-  font-weight: 700;
-  font-size: 0.82rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: background 0.14s ease, transform 0.12s ease;
-  box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #eef1f6;
+  color: #2a4060 !important;
+  border: 1.5px solid #dce4ef;
+  padding: 0.38rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.79rem;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
+.nav-cta i { font-size: 15px; }
 .nav-cta:hover {
-  background: var(--navy-inchis) !important;
-  transform: translateY(-1px);
+  background: #1a2e4a;
+  color: #fff !important;
+  border-color: #1a2e4a;
   text-decoration: none;
 }
 
