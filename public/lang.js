@@ -828,10 +828,15 @@
 
   /* ── Steag ───────────────────────────────────────────────────── */
   function updateFlag(lang) {
+    var roSrc = '/flags/ro.svg', enSrc = '/flags/us.svg';
     var flag = document.getElementById('lang-flag');
-    if (flag) flag.src = lang === 'ro' ? '/flags/ro.svg' : '/flags/us.svg';
+    if (flag) flag.src = lang === 'ro' ? roSrc : enSrc;
+    var headerFlag = document.getElementById('header-lang-flag');
+    if (headerFlag) headerFlag.src = lang === 'ro' ? roSrc : enSrc;
     var btn = document.getElementById('lang-toggle-btn');
     if (btn) btn.title = lang === 'ro' ? 'Switch to English' : 'Schimbă în Română';
+    var hBtn = document.getElementById('header-lang-btn');
+    if (hBtn) hBtn.title = lang === 'ro' ? 'Switch to English' : 'Schimbă în Română';
   }
 
   /* ── Inițializare ────────────────────────────────────────────── */
@@ -856,12 +861,32 @@
     apply(lang);
     updateFlag(lang);
 
-    /* buton toggle din header (dacă există) */
+    /* buton toggle din header — navighează spre versiunea EN/RO a paginii curente */
     var headerToggle = document.getElementById('header-lang-btn');
     if (headerToggle) {
-      headerToggle.addEventListener('click', function (e) {
-        e.stopPropagation();
-        toggle();
+      headerToggle.addEventListener('click', function () {
+        var p = location.pathname;
+        var curLang = getLang();
+        var roMatch = p.match(/^\/dieta\/([^/]+)\//);
+        var enMatch = p.match(/^\/en\/dieta\/([^/]+)\//);
+        var roArtMatch = p.match(/^\/articole\/(.*)/);
+        var enArtMatch = p.match(/^\/en\/articole\/(.*)/);
+        if (roMatch) {
+          try { localStorage.setItem('site-lang', 'en'); } catch(e) {}
+          location.href = '/en/dieta/' + roMatch[1] + '/';
+        } else if (enMatch) {
+          try { localStorage.setItem('site-lang', 'ro'); } catch(e) {}
+          location.href = '/dieta/' + enMatch[1] + '/';
+        } else if (roArtMatch) {
+          try { localStorage.setItem('site-lang', 'en'); } catch(e) {}
+          location.href = '/en/articole/' + roArtMatch[1];
+        } else if (enArtMatch) {
+          try { localStorage.setItem('site-lang', 'ro'); } catch(e) {}
+          location.href = '/articole/' + enArtMatch[1];
+        } else {
+          /* pagini fără echivalent EN/RO dedicat — toggle UI */
+          setLang(curLang === 'ro' ? 'en' : 'ro');
+        }
       });
     }
   }

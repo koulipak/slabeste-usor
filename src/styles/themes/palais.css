@@ -261,6 +261,23 @@ img { max-width: 100%; height: auto; display: block; }
   text-decoration: none;
 }
 
+/* ── Language toggle button (nav) ───────────── */
+.nav-lang-btn {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 7px;
+  cursor: pointer;
+  margin-left: 4px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.nav-lang-btn:hover {
+  border-color: var(--verde);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--verde) 20%, transparent);
+}
+
 /* ── Hamburger button ────────────────────────── */
 .nav-hamburger {
   display: none;
