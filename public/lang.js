@@ -817,8 +817,10 @@
       if (!href) return;
       if (lang === 'en') {
         if (href.indexOf('/dieta/') === 0) a.setAttribute('href', '/en' + href);
+        if (href.indexOf('/articole/') === 0) a.setAttribute('href', '/en' + href);
       } else {
         if (href.indexOf('/en/dieta/') === 0) a.setAttribute('href', href.slice(3));
+        if (href.indexOf('/en/articole/') === 0) a.setAttribute('href', href.slice(3));
       }
     });
   }
