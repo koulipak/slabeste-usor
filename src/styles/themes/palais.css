@@ -273,6 +273,7 @@ img { max-width: 100%; height: auto; display: block; }
 .nav-lang-btn {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   background: none;
   border: 1.5px solid var(--border);
   border-radius: 6px;
@@ -280,6 +281,11 @@ img { max-width: 100%; height: auto; display: block; }
   cursor: pointer;
   margin-left: 4px;
   transition: border-color 0.15s, box-shadow 0.15s;
+}
+.nav-lang-btn img {
+  width: 22px;
+  height: 16px;
+  flex-shrink: 0;
 }
 .nav-lang-btn:hover {
   border-color: var(--verde);
@@ -349,7 +355,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 /* ── Mobile nav ─────────────────────────────── */
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
 }
