@@ -43,7 +43,7 @@ const { car, diete } = Astro.props;
           )}
           <div class="card-body">
             <span class="badge badge-categorie" data-cat-sg={d.data.categorie}>{getCategorie(d.data.categorie)?.numeSingular}</span>
-            <h3 data-diet-titlu={d.id}>{d.data.titlu}</h3>
+            <h3><a href={`/dieta/${d.id}/`} data-diet-titlu={d.id}>{d.data.titlu}</a></h3>
             <p class="card-meta" data-diet-principiu={d.id}>{d.data.principiu}</p>
             <p class="card-meta"><small><span data-i18n="card.dificultate">Dificultate:</span> <span data-dif-val={d.data.dificultate}>{dificultateText(d.data.dificultate)}</span></small></p>
           </div>
