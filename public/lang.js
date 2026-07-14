@@ -91,8 +91,6 @@
       'alim.unicorn.cta': 'Vezi produse pe Unicorn Naturals →',
       'alim.parma.p':     'Magazin online cu produse alimentare de calitate — mezeluri, brânzeturi, conserve, condimente și specialități culinare. O sursă bună pentru ingrediente de calitate superioară, potrivite pentru o alimentație variată și echilibrată.',
       'alim.parma.cta':   'Vezi produse pe Parmashop.ro →',
-      'alim.minunea.p':   'Magazin online cu plante medicinale, ceaiuri, tincturi, uleiuri esențiale și produse naturiste. Ideal pentru completarea unei diete sănătoase cu remedii tradiționale și suplimente din natură, fără chimicale.',
-      'alim.minunea.cta': 'Vezi produse pe Minunea Naturii →',
       /* ── Titluri diete (dt.) ─────────────────────── */
       'dt.deficit-caloric':        'Dieta cu deficit caloric (numărat calorii)',
       'dt.dieta-alcalina':         'Dieta alcalină',
@@ -434,8 +432,6 @@
       'alim.unicorn.cta': 'See products on Unicorn Naturals →',
       'alim.parma.p':     'Online shop with quality food products — cured meats, cheeses, preserves, spices and culinary specialties. A good source for premium ingredients, suitable for a varied and balanced diet.',
       'alim.parma.cta':   'See products on Parmashop.ro →',
-      'alim.minunea.p':   'Online shop with medicinal plants, teas, tinctures, essential oils and natural health products. Ideal for complementing a healthy diet with traditional remedies and nature-based supplements, without chemicals.',
-      'alim.minunea.cta': 'See products on Minunea Naturii →',
       /* ── Titluri diete EN (dt.) ──────────────────── */
       'dt.deficit-caloric':        'Calorie Deficit Diet',
       'dt.dieta-alcalina':         'Alkaline Diet',
